@@ -1,0 +1,14 @@
+[
+  {
+    "cart": [
+      {
+        "name": "Routine Éclat au Curcuma",
+        "price": 29.99,
+        "image": "https://image.noelshack.com/fichiers/2026/18/7/1777803577-le-pack.jpg",
+        "quantity": 1
+      }
+    ],
+    "date": "2026-05-04T19:45:06.980Z",
+    "total": 29.99
+  }
+]

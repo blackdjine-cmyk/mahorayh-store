@@ -1,5 +1,5 @@
 import Stripe from "stripe";
-
+import { supabase } from "@/lib/supabase";
 
 // 🔐 Initialisation Stripe
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
@@ -32,7 +32,17 @@ const session = await stripe.checkout.sessions.create({
   cancel_url: `${req.headers.get("origin")}/panier`,
 });
     // 📁 Sauvegarde commande (JSON)
-   
+   await supabase.from("commandes").insert([
+  {
+    client: "Client Stripe",
+    total: cart.reduce(
+      (acc: number, item: any) =>
+        acc + item.price * item.quantity,
+      0
+    ),
+    produits: cart,
+  },
+]);
 
     // 🔁 Retour vers Stripe
     return Response.json({ url: session.url });

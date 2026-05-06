@@ -25,14 +25,13 @@ export async function POST(req: Request) {
     }));
 
     // 💳 Créer session Stripe
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
-      line_items,
-      mode: "payment",
-      success_url: "http://localhost:3000/success",
-      cancel_url: "http://localhost:3000/panier",
-    });
-
+const session = await stripe.checkout.sessions.create({
+  payment_method_types: ["card"],
+  line_items,
+  mode: "payment",
+  success_url: `${req.headers.get("origin")}/success`,
+  cancel_url: `${req.headers.get("origin")}/panier`,
+});
     // 📁 Sauvegarde commande (JSON)
     const filePath = path.join(process.cwd(), "app/data/commandes.json");
 

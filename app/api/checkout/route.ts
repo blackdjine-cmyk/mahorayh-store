@@ -1,6 +1,5 @@
 import Stripe from "stripe";
-import fs from "fs";
-import path from "path";
+
 
 // 🔐 Initialisation Stripe
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
@@ -33,28 +32,7 @@ const session = await stripe.checkout.sessions.create({
   cancel_url: `${req.headers.get("origin")}/panier`,
 });
     // 📁 Sauvegarde commande (JSON)
-    const filePath = path.join(process.cwd(), "app/data/commandes.json");
-
-    let commandes = [];
-
-    try {
-      const existing = fs.readFileSync(filePath, "utf-8");
-      commandes = JSON.parse(existing);
-    } catch (error) {
-      console.log("Fichier vide ou inexistant, création...");
-    }
-
-    commandes.push({
-      cart,
-      date: new Date().toISOString(),
-      total: cart.reduce(
-        (acc: number, item: any) =>
-          acc + item.price * item.quantity,
-        0
-      ),
-    });
-
-    fs.writeFileSync(filePath, JSON.stringify(commandes, null, 2));
+   
 
     // 🔁 Retour vers Stripe
     return Response.json({ url: session.url });

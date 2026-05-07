@@ -51,20 +51,17 @@ const { data, error } = await supabase
 
 console.log("SUPABASE DATA :", data);
 console.log("SUPABASE ERROR :", error);
-await resend.emails.send({
-  from: "Mahorayh <onboarding@resend.dev>",
+const email = await resend.emails.send({
+  from: "onboarding@resend.dev",
   to: "mahorayhbeaute@gmail.com",
   subject: "Nouvelle commande Mahorayh Beauté",
   html: `
     <h2>Nouvelle commande reçue</h2>
     <p>Client : Client Stripe</p>
-    <p>Total : ${cart.reduce(
-      (acc: number, item: any) =>
-        acc + item.price * item.quantity,
-      0
-    )} €</p>
   `,
 });
+
+console.log("EMAIL RESEND :", email);
     return Response.json({ url: session.url });
 
   } catch (error) {

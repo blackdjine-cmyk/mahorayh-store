@@ -65,22 +65,6 @@ await resend.emails.send({
     )} €</p>
   `,
 });
-
-    // 🔁 Retour vers Stripe
-    await resend.emails.send({
-  from: "onboarding@resend.dev",
-  to: "mahorayhbeaute@gmail.com",
-  subject: "Nouvelle commande Mahorayh Beauté",
-  html: `
-    <h2>Nouvelle commande reçue</h2>
-    <p><strong>Client :</strong> Client Stripe</p>
-    <p><strong>Total :</strong> ${cart.reduce(
-      (acc: number, item: any) =>
-        acc + item.price * item.quantity,
-      0
-    ).toFixed(2)} €</p>
-  `,
-});
     return Response.json({ url: session.url });
 
   } catch (error) {

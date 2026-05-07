@@ -42,7 +42,7 @@ const { data, error } = await supabase
           acc + item.price * item.quantity,
         0
       ),
-      produits: cart,
+      produits: JSON.parse(JSON.stringify(cart)),
     },
   ])
   .select();

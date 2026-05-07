@@ -31,7 +31,7 @@ const session = await stripe.checkout.sessions.create({
   success_url: `${req.headers.get("origin")}/success`,
   cancel_url: `${req.headers.get("origin")}/panier`,
 });
-  // 💾 Sauvegarde commande (JSON)
+// 💾 Sauvegarde commande (JSON)
 const { data, error } = await supabase
   .from("commandes")
   .insert([
@@ -44,10 +44,11 @@ const { data, error } = await supabase
       ),
       produits: cart,
     },
-  ]);
+  ])
+  .select();
 
-console.log("SUPABASE DATA:", data);
-console.log("SUPABASE ERROR:", error);
+console.log("SUPABASE DATA :", data);
+console.log("SUPABASE ERROR :", error);
 
     // 🔁 Retour vers Stripe
     return Response.json({ url: session.url });

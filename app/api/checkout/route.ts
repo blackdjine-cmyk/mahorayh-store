@@ -1,5 +1,7 @@
 import Stripe from "stripe";
 import { supabase } from "@/lib/supabase";
+import { Resend } from "resend";
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 // 🔐 Initialisation Stripe
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
@@ -51,6 +53,20 @@ console.log("SUPABASE DATA :", data);
 console.log("SUPABASE ERROR :", error);
 
     // 🔁 Retour vers Stripe
+    await resend.emails.send({
+  from: "onboarding@resend.dev",
+  to: "mahorayhbeaute@gmail.com",
+  subject: "Nouvelle commande Mahorayh Beauté",
+  html: `
+    <h2>Nouvelle commande reçue</h2>
+    <p><strong>Client :</strong> Client Stripe</p>
+    <p><strong>Total :</strong> ${cart.reduce(
+      (acc: number, item: any) =>
+        acc + item.price * item.quantity,
+      0
+    ).toFixed(2)} €</p>
+  `,
+});
     return Response.json({ url: session.url });
 
   } catch (error) {

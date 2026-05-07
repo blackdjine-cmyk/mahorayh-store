@@ -1,115 +1,82 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabase";
 
 export default function AdminPage() {
   const [commandes, setCommandes] = useState<any[]>([]);
-  const [auth, setAuth] = useState(false);
-  const [password, setPassword] = useState("");
 
-  // 🔐 Vérif mot de passe
-  const checkPassword = () => {
-    if (password === "admin123") {
-      setAuth(true);
-    } else {
-      alert("Mot de passe incorrect");
-    }
-  };
-
-  // 🔄 Charger commandes
+  // 📦 Charger commandes
   useEffect(() => {
-    if (auth) {
-      fetch("/api/commandes")
-        .then((res) => res.json())
-        .then((data) => setCommandes(data));
-    }
-  }, [auth]);
+    const fetchCommandes = async () => {
+      const { data, error } = await supabase
+        .from("commandes")
+        .select("*")
+        .order("created_at", { ascending: false });
 
-  // ❌ Supprimer commande
-  const deleteCommande = async (index: number) => {
-    await fetch("/api/commandes", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ index }),
-    });
+      if (error) {
+        console.log(error);
+      } else {
+        setCommandes(data || []);
+      }
+    };
 
-    // reload
-    const res = await fetch("/api/commandes");
-    const data = await res.json();
-    setCommandes(data);
-  };
+    fetchCommandes();
+  }, []);
 
-  // 🔐 Écran login
-  if (!auth) {
-    return (
-      <div className="flex flex-col items-center justify-center h-[70vh] gap-4">
-        <h1 className="text-2xl font-bold">🔐 Accès admin</h1>
-
-        <input
-          type="password"
-          placeholder="Mot de passe"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="border p-2 rounded"
-        />
-
-        <button
-          onClick={checkPassword}
-          className="bg-purple-600 text-white px-4 py-2 rounded"
-        >
-          Se connecter
-        </button>
-      </div>
-    );
-  }
-
-  // 📦 Interface admin
   return (
     <div className="max-w-5xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6">📦 Commandes</h1>
+      <h1 className="text-3xl font-bold mb-6">
+        📦 Commandes
+      </h1>
 
       {commandes.length === 0 ? (
-        <p className="text-gray-500">Aucune commande</p>
+        <p>Aucune commande</p>
       ) : (
         <div className="space-y-6">
-          {commandes.map((cmd, index) => (
+          {commandes.map((cmd) => (
             <div
-              key={index}
-              className="bg-white p-4 rounded-xl shadow"
+              key={cmd.id}
+              className="bg-white p-5 rounded-xl shadow"
             >
-              {/* Date */}
-              <p className="text-sm text-gray-500">
-                📅 {new Date(cmd.date).toLocaleString()}
-              </p>
+              <div className="flex justify-between mb-4">
+                <p className="font-bold">
+                  {cmd.client}
+                </p>
 
-              {/* Produits */}
-              <div className="mt-3 space-y-2">
-                {cmd.cart.map((item: any, i: number) => (
-                  <div key={i} className="flex justify-between">
-                    <span>
-                      {item.name} x {item.quantity}
-                    </span>
-                    <span>
-                      {(item.price * item.quantity).toFixed(2)}€
-                    </span>
-                  </div>
-                ))}
+                <p className="text-sm text-gray-500">
+                  {new Date(
+                    cmd.created_at
+                  ).toLocaleString()}
+                </p>
               </div>
 
-              {/* Total + bouton */}
-              <div className="flex justify-between items-center mt-4">
-                <div className="font-bold text-purple-600">
-                  Total : {cmd.total.toFixed(2)}€
-                </div>
+              <div className="space-y-2">
+                {cmd.produits.map(
+                  (item: any, index: number) => (
+                    <div
+                      key={index}
+                      className="flex justify-between border-b pb-2"
+                    >
+                      <span>
+                        {item.name} x{" "}
+                        {item.quantity}
+                      </span>
 
-                <button
-                  onClick={() => deleteCommande(index)}
-                  className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition"
-                >
-                  ❌ Supprimer
-                </button>
+                      <span>
+                        {(
+                          item.price *
+                          item.quantity
+                        ).toFixed(2)}
+                        €
+                      </span>
+                    </div>
+                  )
+                )}
+              </div>
+
+              <div className="mt-4 text-right font-bold text-purple-600">
+                Total : {cmd.total} €
               </div>
             </div>
           ))}

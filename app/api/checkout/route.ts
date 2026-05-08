@@ -11,6 +11,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
 // 🔥 Route POST
 export async function POST(req: Request) {
   try {
+    console.log("CHECKOUT API APPELÉE");
     const { cart } = await req.json();
 
     // 🛒 Transformer le panier pour Stripe

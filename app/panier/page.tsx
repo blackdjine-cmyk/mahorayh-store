@@ -1,8 +1,15 @@
 "use client";
 
 import { useCart } from "../context/CartContext";
+import { useState } from "react";
 
 export default function PanierPage() {
+const [nom, setNom] = useState("");
+const [email, setEmail] = useState("");
+const [telephone, setTelephone] = useState("");
+const [codePostal, setCodePostal] = useState("");
+const [adresse, setAdresse] = useState("");
+
   const {
     cart,
     removeFromCart,
@@ -112,6 +119,7 @@ export default function PanierPage() {
 
               {/* 💳 PAIEMENT */}
               <div className="space-y-4 mb-6">
+
               <input
              type="text"
              placeholder="Nom complet"
@@ -121,26 +129,36 @@ export default function PanierPage() {
              <input
              type="email"
              placeholder="Adresse e-mail"
+             value={email}
+             onChange={(e) => setEmail(e.target.value)}
+             className="w-full border p-3 rounded-lg"
+             />
+             
+             <input
+             type="tel"
+             placeholder="Téléphone"
+             value={telephone}
+             onChange={(e) => setTelephone(e.target.value)}
              className="w-full border p-3 rounded-lg"
              />
 
              <input
-             type="tel"
-             placeholder="Téléphone"
-             className="w-full border p-3 rounded-lg"
-             />
-             <input
              type="text"
              placeholder="Code postal"
+             value={codePostal}
+             onChange={(e) => setCodePostal(e.target.value)}
              className="w-full border p-3 rounded-lg"
              />
 
              <textarea
              placeholder="Adresse de livraison"
+             value={adresse}
+             onChange={(e) => setAdresse(e.target.value)}
              className="w-full border p-3 rounded-lg"
              />
+
             </div>
-            
+
               <button
                 onClick={handleCheckout}
                 className="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition"

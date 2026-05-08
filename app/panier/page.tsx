@@ -4,6 +4,7 @@ import { useCart } from "../context/CartContext";
 import { useState } from "react";
 
 export default function PanierPage() {
+
 const [nom, setNom] = useState("");
 const [email, setEmail] = useState("");
 const [telephone, setTelephone] = useState("");
@@ -31,7 +32,14 @@ const [adresse, setAdresse] = useState("");
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ cart }),
+      body: JSON.stringify({
+     cart,
+     nom,
+     email,
+     telephone,
+     codePostal,
+     adresse,
+     }),
     });
 
     const data = await res.json();

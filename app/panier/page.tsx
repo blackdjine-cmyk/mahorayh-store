@@ -128,9 +128,11 @@ const [adresse, setAdresse] = useState("");
               {/* 💳 PAIEMENT */}
               <div className="space-y-4 mb-6">
 
-              <input
+             <input
              type="text"
              placeholder="Nom complet"
+             value={nom}
+             onChange={(e) => setNom(e.target.value)}
              className="w-full border p-3 rounded-lg"
              />
 

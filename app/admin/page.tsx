@@ -84,6 +84,10 @@ export default function AdminPage() {
               <div className="flex justify-between mb-4">
                 <p className="font-bold">
                   {cmd.client}
+                  <p>Email : {cmd.email}</p>
+                  <p>Téléphone : {cmd.telephone}</p>
+                  <p>Code postal : {cmd.code_postal}</p>
+                  <p>Adresse : {cmd.adresse}</p>
                 </p>
 
                 <p className="text-sm text-gray-500">

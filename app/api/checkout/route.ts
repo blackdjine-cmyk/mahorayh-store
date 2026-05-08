@@ -44,23 +44,23 @@ const session = await stripe.checkout.sessions.create({
 // 💾 Sauvegarde commande (JSON)
 const { data, error } = await supabase
   .from("commandes")
-  .insert([
-   {
-  client: nom,
-  email: email,
-  telephone: telephone,
-  code_postal: codePostal,
-  adresse: adresse,
+ .insert([
+  {
+    client: nom,
+    email: email,
+    telephone: telephone,
+    code_postal: codePostal,
+    adresse: adresse,
 
-  total: cart.reduce(
-    (acc: number, item: any) =>
-      acc + item.price * item.quantity,
-    0
-  ),
+    total: cart.reduce(
+      (acc: number, item: any) =>
+        acc + item.price * item.quantity,
+      0
+    ),
 
-  produits: JSON.parse(JSON.stringify(cart)),
-},
-  ])
+    produits: JSON.parse(JSON.stringify(cart)),
+  },
+])
   .select();
 
 console.log("SUPABASE DATA :", data);

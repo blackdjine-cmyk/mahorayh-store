@@ -112,29 +112,35 @@ export default function PanierPage() {
 
               {/* 💳 PAIEMENT */}
               <div className="space-y-4 mb-6">
-  <input
-    type="text"
-    placeholder="Nom complet"
-    className="w-full border p-3 rounded-lg"
-  />
+              <input
+             type="text"
+             placeholder="Nom complet"
+             className="w-full border p-3 rounded-lg"
+             />
 
-  <input
-    type="email"
-    placeholder="Adresse e-mail"
-    className="w-full border p-3 rounded-lg"
-  />
+             <input
+             type="email"
+             placeholder="Adresse e-mail"
+             className="w-full border p-3 rounded-lg"
+             />
 
-  <input
-    type="tel"
-    placeholder="Téléphone"
-    className="w-full border p-3 rounded-lg"
-  />
+             <input
+             type="tel"
+             placeholder="Téléphone"
+             className="w-full border p-3 rounded-lg"
+             />
+             <input
+             type="text"
+             placeholder="Code postal"
+             className="w-full border p-3 rounded-lg"
+             />
 
-  <textarea
-    placeholder="Adresse de livraison"
-    className="w-full border p-3 rounded-lg"
-  />
-</div>
+             <textarea
+             placeholder="Adresse de livraison"
+             className="w-full border p-3 rounded-lg"
+             />
+            </div>
+            
               <button
                 onClick={handleCheckout}
                 className="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition"

@@ -54,7 +54,7 @@ console.log("SUPABASE DATA :", data);
 console.log("SUPABASE ERROR :", error);
 const email = await resend.emails.send({
   from: "onboarding@resend.dev",
-  to: "mahorayhbeaute@gmail.com",
+  to: "blackdjine@gmail.com",
   subject: "Nouvelle commande Mahorayh Beauté",
   html: `
     <h2>Nouvelle commande reçue</h2>

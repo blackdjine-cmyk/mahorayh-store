@@ -62,10 +62,11 @@ export default function Header() {
       </div>
 
       {/* MENU MOBILE DÉROULANT */}
+      
       {menuOpen && (
-        <div className="md:hidden absolute top-full left-0 w-full bg-white/95 backdrop-blur-xl shadow-2xl border-t border-gray-100 px-8 py-8 rounded-b-[2.5rem]">
+        <div className="md:hidden absolute top-full left-0 w-full bg-white/95 backdrop-blur-xl shadow-2xl border-t border-gray-100 px-8 py-6 rounded-b-[2rem]">
 
-          <nav className="flex flex-col gap-4 text-xl font-semibold text-gray-800">
+          <nav className="flex flex-col gap-3 text-lg font-semibold text-gray-800">
 
             <Link
               href="/"

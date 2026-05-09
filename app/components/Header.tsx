@@ -9,7 +9,7 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="bg-white shadow-sm sticky top-0 z-50">
+    <header className="bg-white shadow-sm sticky top-0 z-50 relative">
       <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
 
         {/* LOGO */}
@@ -29,7 +29,10 @@ export default function Header() {
         <div className="flex items-center gap-4">
 
           {/* PANIER */}
-          <Link href="/panier" className="relative text-2xl cursor-pointer">
+          <Link
+            href="/panier"
+            className="relative text-2xl cursor-pointer"
+          >
             🛒
 
             {cart.length > 0 && (
@@ -41,14 +44,14 @@ export default function Header() {
 
           {/* BOUTON */}
           <Link href="/produit">
-            <button className="bg-purple-600 text-white px-4 md:px-5 py-2 rounded-full shadow hover:scale-105 transition">
+            <button className="bg-purple-600 text-white px-4 md:px-5 py-2 rounded-full shadow-lg hover:scale-105 transition">
               Acheter
             </button>
           </Link>
 
-          {/* MENU MOBILE */}
+          {/* BOUTON MENU MOBILE */}
           <button
-            className="md:hidden text-3xl text-purple-700"
+            className="md:hidden text-4xl text-purple-700"
             onClick={() => setMenuOpen(!menuOpen)}
           >
             ☰
@@ -57,24 +60,45 @@ export default function Header() {
         </div>
       </div>
 
-      {/* MENU MOBILE DÉROULANT */}
+      {/* MENU MOBILE */}
       {menuOpen && (
-        <div className="md:hidden bg-white border-t shadow-lg px-6 py-4 flex flex-col gap-4 text-gray-700 font-medium">
-          <Link href="/" onClick={() => setMenuOpen(false)}>
-            Accueil
-          </Link>
+        <div className="md:hidden absolute top-full left-0 w-full bg-white/95 backdrop-blur-md shadow-xl border-t border-gray-100 px-6 py-6 rounded-b-3xl">
 
-          <Link href="/produit" onClick={() => setMenuOpen(false)}>
-            Produits
-          </Link>
+          <nav className="flex flex-col gap-5 text-lg font-semibold text-gray-800">
 
-          <Link href="#" onClick={() => setMenuOpen(false)}>
-            Résultats
-          </Link>
+            <Link
+              href="/"
+              onClick={() => setMenuOpen(false)}
+              className="hover:text-purple-600 transition"
+            >
+              Accueil
+            </Link>
 
-          <Link href="#" onClick={() => setMenuOpen(false)}>
-            Avis
-          </Link>
+            <Link
+              href="/produit"
+              onClick={() => setMenuOpen(false)}
+              className="hover:text-purple-600 transition"
+            >
+              Produits
+            </Link>
+
+            <Link
+              href="#"
+              onClick={() => setMenuOpen(false)}
+              className="hover:text-purple-600 transition"
+            >
+              Résultats
+            </Link>
+
+            <Link
+              href="#"
+              onClick={() => setMenuOpen(false)}
+              className="hover:text-purple-600 transition"
+            >
+              Avis
+            </Link>
+
+          </nav>
         </div>
       )}
     </header>

@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useCart } from "../context/CartContext";
 import { useState } from "react";
+import { useCart } from "../context/CartContext";
 
 export default function Header() {
   const { cart } = useCart();
@@ -10,7 +10,8 @@ export default function Header() {
 
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50 relative">
-      <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+
+      <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
 
         {/* LOGO */}
         <h1 className="text-xl md:text-2xl font-bold text-purple-700">
@@ -49,7 +50,7 @@ export default function Header() {
             </button>
           </Link>
 
-          {/* BOUTON MENU MOBILE */}
+          {/* MENU MOBILE */}
           <button
             className="md:hidden text-4xl text-purple-700"
             onClick={() => setMenuOpen(!menuOpen)}
@@ -60,11 +61,11 @@ export default function Header() {
         </div>
       </div>
 
-      {/* MENU MOBILE */}
+      {/* MENU MOBILE DÉROULANT */}
       {menuOpen && (
-        <div className="md:hidden absolute top-full left-0 w-full bg-white/95 backdrop-blur-md shadow-xl border-t border-gray-100 px-6 py-6 rounded-b-3xl">
+        <div className="md:hidden absolute top-full left-0 w-full bg-white/95 backdrop-blur-xl shadow-2xl border-t border-gray-100 px-8 py-8 rounded-b-[2.5rem]">
 
-          <nav className="flex flex-col gap-5 text-lg font-semibold text-gray-800">
+          <nav className="flex flex-col gap-4 text-xl font-semibold text-gray-800">
 
             <Link
               href="/"

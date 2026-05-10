@@ -26,6 +26,19 @@ export default function PanierPage() {
 
   // 💳 CHECKOUT
   const handleCheckout = async () => {
+
+    // ✅ VALIDATION
+    if (
+      !nom ||
+      !email ||
+      !telephone ||
+      !codePostal ||
+      !adresse
+    ) {
+      alert("Veuillez remplir tous les champs");
+      return;
+    }
+
     const res = await fetch("/api/checkout", {
       method: "POST",
       headers: {
@@ -134,7 +147,7 @@ export default function PanierPage() {
               placeholder="Nom complet"
               value={nom}
               onChange={(e) => setNom(e.target.value)}
-              className="w-full border p-4 rounded-xl"
+              className="w-full border p-4 rounded-xl text-black placeholder-gray-400"
             />
 
             <input
@@ -142,7 +155,7 @@ export default function PanierPage() {
               placeholder="Adresse e-mail"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full border p-4 rounded-xl"
+              className="w-full border p-4 rounded-xl text-black placeholder-gray-400"
             />
 
             <input
@@ -150,7 +163,7 @@ export default function PanierPage() {
               placeholder="Téléphone"
               value={telephone}
               onChange={(e) => setTelephone(e.target.value)}
-              className="w-full border p-4 rounded-xl"
+              className="w-full border p-4 rounded-xl text-black placeholder-gray-400"
             />
 
             <input
@@ -158,14 +171,14 @@ export default function PanierPage() {
               placeholder="Code postal"
               value={codePostal}
               onChange={(e) => setCodePostal(e.target.value)}
-              className="w-full border p-4 rounded-xl"
+              className="w-full border p-4 rounded-xl text-black placeholder-gray-400"
             />
 
             <textarea
               placeholder="Adresse de livraison"
               value={adresse}
               onChange={(e) => setAdresse(e.target.value)}
-              className="w-full border p-4 rounded-xl min-h-[120px]"
+              className="w-full border p-4 rounded-xl min-h-[120px] text-black placeholder-gray-400"
             />
 
             {/* BOUTONS */}

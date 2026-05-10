@@ -63,7 +63,7 @@ export default function ProduitPage() {
                   key={index}
                   src={img}
                   onClick={() => setSelected(index)}
-                  className={`w-20 h-20 object-cover rounded-lg cursor-pointer border ${
+                  className={`w-16 h-16 md:w-20 md:h-20 object-cover rounded-lg cursor-pointer border transition ${
                     selected === index
                       ? "border-purple-600"
                       : "border-gray-200"
@@ -77,7 +77,7 @@ export default function ProduitPage() {
 
               {/* IMAGE PRINCIPALE */}
               <div
-                className="relative w-full max-w-[420px] aspect-square rounded-xl overflow-hidden shadow-md"
+                className="relative w-full max-w-[420px] aspect-square rounded-2xl overflow-hidden shadow-lg bg-[#f8f5ef] p-2"
                 onMouseMove={handleMouseMove}
                 onMouseEnter={() => setShowZoom(true)}
                 onMouseLeave={() => setShowZoom(false)}
@@ -152,7 +152,7 @@ export default function ProduitPage() {
                 image: images[selected],
               })
             }
-            className="w-full bg-purple-600 text-white py-4 rounded-xl font-semibold hover:bg-purple-700 transition"
+            className="w-full bg-gradient-to-r from-fuchsia-600 to-purple-700 text-white py-4 rounded-2xl font-semibold shadow-lg hover:scale-[1.02] transition"
           >
             🛒 Ajouter au panier
           </button>

@@ -100,7 +100,7 @@ export default function Header() {
       {menuOpen && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50">
 
-          < div className="absolute right-0 top-0 h-full w-[85%] max-w-[320px] bg-white shadow-2xl p-6 rounded-l-3xl">
+          < div className="absolute right-0 top-0 h-auto min-h-screen w-[85%] max-w-[320px] bg-white shadow-2xl p-6 rounded-l-3xl">
 
             {/* HEADER MENU */}
             <div className="flex items-center justify-between mb-10">

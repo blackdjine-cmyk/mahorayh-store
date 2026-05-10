@@ -53,11 +53,11 @@ export default function ProduitPage() {
       <div className="grid md:grid-cols-2 gap-12 items-start">
 
         {/* LEFT */}
-        <div className="flex justify-center">
-          <div className="flex gap-4 items-start">
+         <div className="flex justify-center w-full">
+          <div className="flex flex-col md:flex-row gap-4 items-center md:items-start w-full">
 
             {/* MINIATURES */}
-            <div className="flex flex-col gap-3 max-h-[420px] overflow-y-auto">
+             <div className="flex md:flex-col gap-3 overflow-x-auto md:overflow-y-auto max-w-full md:max-h-[420px]">
               {images.map((img, index) => (
                 <img
                   key={index}
@@ -77,14 +77,14 @@ export default function ProduitPage() {
 
               {/* IMAGE PRINCIPALE */}
               <div
-                className="relative w-[420px] h-[420px] rounded-xl overflow-hidden shadow-md"
+                className="relative w-full max-w-[420px] aspect-square rounded-xl overflow-hidden shadow-md"
                 onMouseMove={handleMouseMove}
                 onMouseEnter={() => setShowZoom(true)}
                 onMouseLeave={() => setShowZoom(false)}
               >
                 <img
                   src={images[selected]}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain bg-white"
                 />
 
                 {/* FLECHE GAUCHE */}

@@ -98,9 +98,9 @@ export default function Header() {
 
       {/* MENU MOBILE */}
       {menuOpen && (
-        <div className="fixed inset-0 bg-black/40 z-50">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50">
 
-          <div className="absolute right-0 top-0 h-full w-[280px] bg-white shadow-2xl p-6">
+          < div className="absolute right-0 top-0 h-full w-[85%] max-w-[320px] bg-white shadow-2xl p-6 rounded-l-3xl">
 
             {/* HEADER MENU */}
             <div className="flex items-center justify-between mb-10">
@@ -116,7 +116,7 @@ export default function Header() {
             </div>
 
             {/* NAV */}
-            <nav className="flex flex-col text-lg font-medium">
+            <nav className="flex flex-col text-2xl font-semibold mt-8">
 
               <Link
                 href="/"

@@ -1,6 +1,6 @@
 export default function Hero() {
   return (
-    <section className="bg-[#f5efe6] py-20 px-6">
+    <section className="bg-[#f5efe6] py-10 md:py-20 px-6">
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
 
         {/* TEXTE */}
@@ -12,7 +12,7 @@ export default function Hero() {
           </p>
 
           {/* TITRE */}
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-6">
+          <h1 className="text-3xl md:text-5xl font-bold text-gray-900 leading-tight mb-5">
             Une peau éclatante, <br />
             <span className="text-yellow-600 italic font-semibold">
               naturellement
@@ -32,7 +32,7 @@ export default function Hero() {
           </div>
 
           {/* BOUTON */}
-          <button className="bg-gradient-to-r from-purple-700 to-purple-900 text-white px-8 py-3 rounded-full font-semibold shadow-xl hover:scale-105 hover:shadow-2xl transition duration-300">
+          <button className="w-full md:w-auto bg-gradient-to-r from-purple-700 to-purple-900 text-white px-8 py-4 rounded-full font-semibold shadow-xl hover:scale-105 hover:shadow-2xl transition duration-300">
             ✨ Découvrir la routine
           </button>
 

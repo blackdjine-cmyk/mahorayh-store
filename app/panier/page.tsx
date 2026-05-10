@@ -24,7 +24,7 @@ export default function PanierPage() {
     0
   );
 
-  // 💳 STRIPE CHECKOUT
+  // 💳 CHECKOUT
   const handleCheckout = async () => {
     const res = await fetch("/api/checkout", {
       method: "POST",
@@ -52,63 +52,58 @@ export default function PanierPage() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
-
-      {/* TITRE */}
-      <h1 className="text-3xl md:text-4xl font-bold mb-8">
+      <h1 className="text-4xl font-bold mb-8">
         🛒 Votre panier
       </h1>
 
       {cart.length === 0 ? (
-        <p className="text-gray-500">Votre panier est vide.</p>
+        <p className="text-gray-500">
+          Votre panier est vide.
+        </p>
       ) : (
         <>
           {/* PRODUITS */}
-          <div className="space-y-4">
-
+          <div className="space-y-5">
             {cart.map((item: any, index: number) => (
               <div
                 key={index}
-                className="bg-white p-4 rounded-2xl shadow flex flex-col md:flex-row md:items-center md:justify-between gap-4"
+                className="bg-white rounded-2xl shadow-sm border p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4"
               >
-
                 {/* GAUCHE */}
-                <div className="flex gap-4 items-center">
-
+                <div className="flex gap-4">
                   <img
                     src={item.image}
                     className="w-24 h-24 object-cover rounded-xl"
                   />
 
                   <div>
-                    <h2 className="font-semibold text-lg">
+                    <h2 className="font-semibold text-xl">
                       {item.name}
                     </h2>
 
-                    <p className="text-purple-600 font-bold text-xl">
+                    <p className="text-purple-600 font-bold text-2xl mt-1">
                       {item.price}€
                     </p>
 
                     {/* QUANTITÉ */}
-                    <div className="flex items-center gap-2 mt-3">
-
+                    <div className="flex items-center gap-3 mt-4">
                       <button
                         onClick={() => decreaseQuantity(index)}
-                        className="w-8 h-8 rounded bg-gray-200 hover:bg-gray-300"
+                        className="w-10 h-10 bg-gray-200 rounded-lg text-lg"
                       >
                         -
                       </button>
 
-                      <span className="font-medium">
+                      <span className="text-lg font-medium">
                         {item.quantity}
                       </span>
 
                       <button
                         onClick={() => increaseQuantity(index)}
-                        className="w-8 h-8 rounded bg-gray-200 hover:bg-gray-300"
+                        className="w-10 h-10 bg-gray-200 rounded-lg text-lg"
                       >
                         +
                       </button>
-
                     </div>
                   </div>
                 </div>
@@ -120,80 +115,84 @@ export default function PanierPage() {
                 >
                   Supprimer
                 </button>
-
               </div>
             ))}
           </div>
 
           {/* TOTAL */}
-          <div className="mt-10">
-
-            <h2 className="text-3xl font-bold text-right mb-6">
+          <div className="mt-10 text-right">
+            <h2 className="text-4xl font-bold">
               Total : {total.toFixed(2)}€
             </h2>
+          </div>
 
-            {/* FORMULAIRE */}
-            <div className="bg-white rounded-2xl shadow p-6 space-y-4">
+          {/* FORMULAIRE */}
+          <div className="mt-8 bg-white rounded-3xl shadow-sm border p-5 md:p-8 space-y-5">
 
-              <input
-                type="text"
-                placeholder="Nom complet"
-                value={nom}
-                onChange={(e) => setNom(e.target.value)}
-                className="w-full border p-4 rounded-xl"
-              />
+            <input
+              type="text"
+              placeholder="Nom complet"
+              value={nom}
+              onChange={(e) => setNom(e.target.value)}
+              className="w-full border p-4 rounded-xl"
+            />
 
-              <input
-                type="email"
-                placeholder="Adresse e-mail"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full border p-4 rounded-xl"
-              />
+            <input
+              type="email"
+              placeholder="Adresse e-mail"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full border p-4 rounded-xl"
+            />
 
-              <input
-                type="tel"
-                placeholder="Téléphone"
-                value={telephone}
-                onChange={(e) => setTelephone(e.target.value)}
-                className="w-full border p-4 rounded-xl"
-              />
+            <input
+              type="tel"
+              placeholder="Téléphone"
+              value={telephone}
+              onChange={(e) => setTelephone(e.target.value)}
+              className="w-full border p-4 rounded-xl"
+            />
 
-              <input
-                type="text"
-                placeholder="Code postal"
-                value={codePostal}
-                onChange={(e) => setCodePostal(e.target.value)}
-                className="w-full border p-4 rounded-xl"
-              />
+            <input
+              type="text"
+              placeholder="Code postal"
+              value={codePostal}
+              onChange={(e) => setCodePostal(e.target.value)}
+              className="w-full border p-4 rounded-xl"
+            />
 
-              <textarea
-                placeholder="Adresse de livraison"
-                value={adresse}
-                onChange={(e) => setAdresse(e.target.value)}
-                className="w-full border p-4 rounded-xl min-h-[120px]"
-              />
+            <textarea
+              placeholder="Adresse de livraison"
+              value={adresse}
+              onChange={(e) => setAdresse(e.target.value)}
+              className="w-full border p-4 rounded-xl min-h-[120px]"
+            />
 
-              {/* BOUTONS */}
-              <div className="flex flex-col md:flex-row gap-4 pt-2">
+            {/* BOUTONS */}
+            <div className="flex flex-col md:flex-row gap-4 pt-2">
 
-                <button
-                  onClick={clearCart}
-                  className="w-full md:w-auto bg-gray-200 px-6 py-4 rounded-xl hover:bg-gray-300 transition font-medium"
-                >
-                  Vider le panier
-                </button>
+              <button
+                onClick={clearCart}
+                className="w-full md:w-auto bg-gray-200 px-6 py-4 rounded-xl hover:bg-gray-300 transition font-medium"
+              >
+                Vider le panier
+              </button>
 
+              <div className="w-full">
                 <button
                   onClick={handleCheckout}
-                  className="w-full bg-purple-600 text-white px-6 py-4 rounded-xl hover:bg-purple-700 transition font-semibold text-lg"
+                  className="w-full bg-purple-600 text-white px-6 py-4 rounded-xl hover:bg-purple-700 transition font-semibold"
                 >
                   💳 Passer au paiement
                 </button>
 
+                <p className="text-sm text-gray-500 text-center mt-2">
+                  🔒 Paiement sécurisé • Livraison rapide
+                </p>
               </div>
 
             </div>
+
           </div>
         </>
       )}

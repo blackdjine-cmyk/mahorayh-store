@@ -2,169 +2,191 @@
 
 import { useState } from "react";
 import { useCart } from "../context/CartContext";
+import produits from "../data/commandes.json";
 
 export default function ProduitPage() {
   const { addToCart } = useCart();
-  
-  const images = [
-    "https://image.noelshack.com/fichiers/2026/18/7/1777803577-le-pack.jpg",
-    "https://image.noelshack.com/fichiers/2026/18/7/1777803558-body-lotion.png",
-    "https://image.noelshack.com/fichiers/2026/18/7/1777803558-booster-eve-cremme.png",
-    "https://image.noelshack.com/fichiers/2026/18/7/1777803558-face-cream.png",
-    "https://image.noelshack.com/fichiers/2026/18/7/1777803577-oil.png",
-    "https://image.noelshack.com/fichiers/2026/18/7/1777803595-facial-cleanser.png",
-    "https://image.noelshack.com/fichiers/2026/18/7/1777803595-serum.png",
-    "https://image.noelshack.com/fichiers/2026/18/7/1777803610-soap.png",
-    "https://image.noelshack.com/fichiers/2026/18/7/1777803558-avt-apres-black.png",
-    "https://image.noelshack.com/fichiers/2026/18/7/1777803576-metisse-avant.png",
-    "https://image.noelshack.com/fichiers/2026/18/7/1777803576-m-tisse-apres.png",
-  
-  ];
 
-   const [selected, setSelected] = useState(0);
-  const [zoomStyle, setZoomStyle] = useState({});
-  const [showZoom, setShowZoom] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(0);
 
-  const nextImage = () => {
-    setSelected((prev) => (prev + 1) % images.length);
-  };
-
-  const prevImage = () => {
-    setSelected((prev) => (prev - 1 + images.length) % images.length);
-  };
-
-  const handleMouseMove = (e: any) => {
-    const { left, top, width, height } =
-      e.currentTarget.getBoundingClientRect();
-
-    const x = ((e.clientX - left) / width) * 100;
-    const y = ((e.clientY - top) / height) * 100;
-
-    setZoomStyle({
-      backgroundImage: `url(${images[selected]})`,
-      backgroundPosition: `${x}% ${y}%`,
-      backgroundSize: "200%",
-      backgroundRepeat: "no-repeat",
-    });
-  };
+  const produit = produits[selectedProduct];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-10">
-      <div className="grid md:grid-cols-2 gap-12 items-start">
+    <div className="max-w-7xl mx-auto px-4 md:px-6 py-8">
 
-        {/* LEFT */}
-         <div className="flex justify-center w-full">
-          <div className="flex flex-col md:flex-row gap-4 items-center md:items-start w-full">
+      {/* TITRE */}
+      <div className="text-center mb-10">
+        <span className="bg-purple-100 text-purple-700 px-4 py-2 rounded-full text-sm font-medium">
+          ✨ Collection Mahorayh Beauté
+        </span>
 
-            {/* MINIATURES */}
-             <div className="flex md:flex-col gap-3 overflow-x-auto md:overflow-y-auto max-w-full md:max-h-[420px]">
-              {images.map((img, index) => (
-                <img
-                  key={index}
-                  src={img}
-                  onClick={() => setSelected(index)}
-                  className={`w-16 h-16 md:w-20 md:h-20 object-cover rounded-lg cursor-pointer border transition ${
-                    selected === index
-                      ? "border-purple-600 scale-105 shadow-md"
-                      : "border-gray-200"
-                  }`}
-                />
-              ))}
-            </div>
+        <h1 className="text-4xl md:text-5xl font-bold mt-5 mb-4">
+          Nos Produits
+        </h1>
 
-            {/* IMAGE + ZOOM */}
-            <div className="relative flex gap-6">
+        <p className="text-gray-600 max-w-2xl mx-auto">
+          Découvrez notre sélection de soins naturels conçus pour illuminer,
+          nourrir et révéler l’éclat des peaux noires et métissées.
+        </p>
+      </div>
 
-              {/* IMAGE PRINCIPALE */}
-              <div
-                className="relative w-full max-w-[420px] aspect-square rounded-2xl overflow-hidden shadow-lg bg-[#f8f5ef] p-2"
-                onMouseMove={handleMouseMove}
-                onMouseEnter={() => setShowZoom(true)}
-                onMouseLeave={() => setShowZoom(false)}
-              >
-                <img
-                  src={images[selected]}
-                  className="w-full h-full object-contain bg-white"
-                />
+      {/* GRID */}
+      <div className="grid lg:grid-cols-[120px_1fr_1fr] gap-10 items-start">
 
-                {/* FLECHE GAUCHE */}
-                <button
-                  onClick={prevImage}
-                  className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow"
-                >
-                  ←
-                </button>
+        {/* MINIATURES */}
+        <div className="flex lg:flex-col gap-4 overflow-x-auto">
 
-                {/* FLECHE DROITE */}
-                <button
-                  onClick={nextImage}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow"
-                >
-                  →
-                </button>
-              </div>
+          {produits.map((item, index) => (
+            <button
+              key={item.id}
+              onClick={() => setSelectedProduct(index)}
+              className={`min-w-[80px] border-2 rounded-2xl overflow-hidden transition ${
+                selectedProduct === index
+                  ? "border-purple-600 scale-105 shadow-lg"
+                  : "border-gray-200"
+              }`}
+            >
+              <img
+                src={item.image}
+                alt={item.name}
+                className="w-20 h-20 object-cover"
+              />
+            </button>
+          ))}
 
-              {/* ZOOM */}
-              {showZoom && (
-              <div
-               className="hidden lg:block w-[420px] h-[420px] rounded-xl border shadow absolute left-full ml-6 top-0 z-10"
-                style={zoomStyle}
-                />
-               )}
-            </div>
-          </div>
         </div>
 
-        {/* RIGHT */}
+        {/* IMAGE */}
+        <div className="bg-[#f8f5ef] rounded-[35px] p-4 shadow-lg">
+
+          <img
+            src={produit.image}
+            alt={produit.name}
+            className="w-full rounded-[25px] object-cover"
+          />
+
+        </div>
+
+        {/* INFOS */}
         <div>
-          <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm">
-            ⭐ Best-seller
+
+          <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm font-medium">
+            ⭐ Produit populaire
           </span>
 
-          <h1 className="text-3xl font-bold mt-4 mb-4">
-            Routine Éclat au Curcuma
-          </h1>
+          <h2 className="text-4xl font-bold mt-5 mb-4">
+            {produit.name}
+          </h2>
 
-          <p className="text-gray-600 mb-6">
-            Réduit les taches, illumine le teint et rend la peau éclatante.
+          <p className="text-gray-600 text-lg leading-relaxed mb-6">
+            {produit.description}
           </p>
 
-          <div className="flex items-center gap-4 mb-6">
-            <span className="text-3xl font-bold text-purple-600">
-              29,99€
+          {/* PRIX */}
+          <div className="flex items-center gap-4 mb-8">
+
+            <span className="text-4xl font-bold text-purple-700">
+              {produit.price}€
             </span>
-            <span className="line-through text-gray-400">
-              39,99€
+
+            <span className="text-gray-400 line-through text-xl">
+              {(produit.price + 10).toFixed(2)}€
             </span>
+
           </div>
 
-          <ul className="space-y-2 mb-6 text-gray-700">
-            <li>✔ Résultats visibles rapidement</li>
-            <li>✔ Produit naturel</li>
-            <li>✔ Convient à toutes les peaux</li>
-          </ul>
+          {/* AVANTAGES */}
+          <div className="space-y-3 mb-8 text-gray-700">
 
+            <p>✔ Réduit les taches visibles</p>
+            <p>✔ Illumine naturellement le teint</p>
+            <p>✔ Convient aux peaux sensibles</p>
+            <p>✔ Formule naturelle inspirée des traditions</p>
+
+          </div>
+
+          {/* BOUTON */}
           <button
             onClick={() =>
               addToCart({
-                name: "Routine Éclat au Curcuma",
-                price: 29.99,
-                image: images[selected],
+                name: produit.name,
+                price: produit.price,
+                image: produit.image,
               })
             }
-            className="w-full bg-gradient-to-r from-fuchsia-600 to-purple-700 text-white py-4 rounded-2xl font-semibold shadow-lg hover:scale-[1.02] transition"
+            className="w-full bg-gradient-to-r from-fuchsia-600 to-purple-700 text-white py-5 rounded-2xl font-semibold text-lg shadow-xl hover:scale-[1.02] transition"
           >
             🛒 Ajouter au panier
           </button>
 
-          <div className="mt-6 text-sm text-gray-500 space-y-1">
-            <p>✔ Livraison rapide</p>
-            <p>✔ Paiement sécurisé</p>
-            <p>✔ Satisfait ou remboursé</p>
+          {/* INFOS */}
+          <div className="mt-6 space-y-2 text-sm text-gray-500">
+
+            <p>🚚 Livraison rapide</p>
+            <p>🔒 Paiement sécurisé</p>
+            <p>💜 Satisfait ou remboursé</p>
+
           </div>
+
         </div>
 
       </div>
+
+      {/* SECTION PRODUITS */}
+      <div className="mt-24">
+
+        <h3 className="text-3xl font-bold text-center mb-10">
+          Découvrez aussi
+        </h3>
+
+        <div className="grid md:grid-cols-3 gap-8">
+
+          {produits.map((item, index) => (
+            <div
+              key={item.id}
+              className="bg-white rounded-3xl shadow-md overflow-hidden border hover:shadow-2xl transition"
+            >
+
+              <img
+                src={item.image}
+                alt={item.name}
+                className="w-full h-64 object-cover"
+              />
+
+              <div className="p-6">
+
+                <h4 className="text-2xl font-bold mb-2">
+                  {item.name}
+                </h4>
+
+                <p className="text-gray-600 text-sm mb-4">
+                  {item.description}
+                </p>
+
+                <div className="flex items-center justify-between">
+
+                  <span className="text-2xl font-bold text-purple-700">
+                    {item.price}€
+                  </span>
+
+                  <button
+                    onClick={() => setSelectedProduct(index)}
+                    className="bg-purple-600 text-white px-4 py-2 rounded-xl hover:bg-purple-700 transition"
+                  >
+                    Voir
+                  </button>
+
+                </div>
+
+              </div>
+
+            </div>
+          ))}
+
+        </div>
+
+      </div>
+
     </div>
   );
 }

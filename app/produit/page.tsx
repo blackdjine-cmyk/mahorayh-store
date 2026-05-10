@@ -49,7 +49,7 @@ export default function ProduitPage() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-10">
+    <div className="max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-10">
       <div className="grid md:grid-cols-2 gap-12 items-start">
 
         {/* LEFT */}
@@ -65,7 +65,7 @@ export default function ProduitPage() {
                   onClick={() => setSelected(index)}
                   className={`w-16 h-16 md:w-20 md:h-20 object-cover rounded-lg cursor-pointer border transition ${
                     selected === index
-                      ? "border-purple-600"
+                      ? "border-purple-600 scale-105 shadow-md"
                       : "border-gray-200"
                   }`}
                 />

@@ -1,10 +1,10 @@
 export default function Hero() {
   return (
     <section className="bg-[#f5efe6] py-20 px-6">
-      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
 
         {/* TEXTE */}
-        <div className="max-w-xl">
+         <div className="max-w-xl order-2 md:order-1">
 
           {/* BADGE */}
           <p className="inline-block bg-purple-100 text-purple-700 px-4 py-1 rounded-full text-sm font-semibold mb-4">
@@ -46,7 +46,7 @@ export default function Hero() {
         </div>
 
         {/* IMAGE */}
-        <div className="relative">
+        <div className="relative order-1 md:order-2">
           <img
             src="https://image.noelshack.com/fichiers/2026/18/6/1777727887-le-pack.jpg"
             alt="Mahorayh Beauté produits"

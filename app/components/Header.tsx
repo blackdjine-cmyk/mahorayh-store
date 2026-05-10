@@ -2,14 +2,14 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { ShoppingCart, Menu, X } from "lucide-react";
+import { Menu, X, ShoppingCart } from "lucide-react";
 import { useCart } from "../context/CartContext";
 
 export default function Header() {
-  const { cart } = useCart();
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // 🔢 Nombre total produits panier
+  const { cart } = useCart();
+
   const totalItems = cart.reduce(
     (acc: number, item: any) => acc + item.quantity,
     0
@@ -23,47 +23,58 @@ export default function Header() {
         {/* LOGO */}
         <Link
           href="/"
-          className="text-2xl font-bold text-purple-700"
+          className="text-2xl md:text-4xl font-bold text-purple-700"
         >
           Mahorayh Beauté
         </Link>
 
-        {/* DESKTOP MENU */}
-        <nav className="hidden md:flex items-center gap-8 font-medium">
+        {/* MENU DESKTOP */}
+        <nav className="hidden md:flex items-center gap-8 font-medium text-gray-700">
 
           <Link
             href="/"
-            className="hover:text-purple-600 transition"
+            className="hover:text-purple-700 transition"
           >
             Accueil
           </Link>
 
           <Link
             href="/produit"
-            className="hover:text-purple-600 transition"
+            className="hover:text-purple-700 transition"
           >
             Produits
           </Link>
 
           <Link
             href="/resultats"
-            className="hover:text-purple-600 transition"
+            className="hover:text-purple-700 transition"
           >
             Résultats
           </Link>
 
-        </nav>
-
-        {/* ACTIONS */}
-        <div className="flex items-center gap-4">
-
-          {/* PANIER */}
           <Link
             href="/panier"
-            className="relative"
+            className="relative hover:text-purple-700 transition"
           >
+            <ShoppingCart size={26} />
+
+            {totalItems > 0 && (
+              <span className="absolute -top-2 -right-3 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
+                {totalItems}
+              </span>
+            )}
+          </Link>
+
+        </nav>
+
+        {/* MOBILE ACTIONS */}
+        <div className="flex items-center gap-4 md:hidden">
+
+          {/* PANIER */}
+          <Link href="/panier" className="relative">
+
             <ShoppingCart
-              size={30}
+              size={28}
               className="text-gray-700"
             />
 
@@ -74,54 +85,56 @@ export default function Header() {
             )}
           </Link>
 
-          {/* BOUTON */}
-          <Link href="/produit">
-            <button className="hidden md:block bg-gradient-to-r from-purple-600 to-purple-800 text-white px-6 py-3 rounded-full shadow-lg hover:scale-105 transition">
-              Acheter
-            </button>
+          {/* BOUTON ACHETER */}
+          <Link
+            href="/produit"
+            className="bg-gradient-to-r from-purple-600 to-purple-800 text-white px-5 py-2 rounded-full font-medium shadow-lg"
+          >
+            Acheter
           </Link>
 
-          {/* MENU MOBILE */}
+          {/* MENU */}
           <button
             onClick={() => setMenuOpen(true)}
-            className="md:hidden"
+            className="text-purple-700"
           >
-            <Menu
-              size={34}
-              className="text-purple-700"
-            />
+            <Menu size={34} />
           </button>
 
         </div>
 
       </div>
 
-      {/* MENU MOBILE */}
+      {/* OVERLAY */}
       {menuOpen && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50">
+        <div className="fixed inset-0 z-50 bg-black/40">
 
-          < div className="absolute right-0 top-0 h-auto min-h-screen w-[85%] max-w-[320px] bg-white shadow-2xl p-6 rounded-l-3xl">
+          {/* MENU MOBILE */}
+          <div className="absolute right-0 top-0 h-screen w-[78%] max-w-[300px] bg-white shadow-2xl p-8 rounded-l-[35px]">
 
             {/* HEADER MENU */}
-            <div className="flex items-center justify-between mb-10">
+            <div className="flex items-center justify-between mb-12">
 
-              <h2 className="text-2xl font-bold text-purple-700">
+              <h2 className="text-3xl font-bold text-purple-700">
                 Menu
               </h2>
 
-              <button onClick={() => setMenuOpen(false)}>
-                <X size={32} />
+              <button
+                onClick={() => setMenuOpen(false)}
+                className="text-black"
+              >
+                <X size={40} />
               </button>
 
             </div>
 
-            {/* NAV */}
-            <nav className="flex flex-col text-2xl font-semibold mt-8">
+            {/* LIENS */}
+            <nav className="flex flex-col text-2xl font-semibold text-gray-900">
 
               <Link
                 href="/"
                 onClick={() => setMenuOpen(false)}
-                className="py-3 border-b hover:text-purple-600 transition"
+                className="py-5 border-b"
               >
                 Accueil
               </Link>
@@ -129,7 +142,7 @@ export default function Header() {
               <Link
                 href="/produit"
                 onClick={() => setMenuOpen(false)}
-                className="py-3 border-b hover:text-purple-600 transition"
+                className="py-5 border-b"
               >
                 Produits
               </Link>
@@ -137,7 +150,7 @@ export default function Header() {
               <Link
                 href="/resultats"
                 onClick={() => setMenuOpen(false)}
-                className="py-3 border-b hover:text-purple-600 transition"
+                className="py-5 border-b"
               >
                 Résultats
               </Link>
@@ -145,7 +158,7 @@ export default function Header() {
               <Link
                 href="/panier"
                 onClick={() => setMenuOpen(false)}
-                className="py-3 border-b hover:text-purple-600 transition"
+                className="py-5 border-b"
               >
                 Panier
               </Link>
@@ -156,7 +169,6 @@ export default function Header() {
 
         </div>
       )}
-
     </header>
   );
 }

@@ -16,27 +16,45 @@ export default function TrustSection() {
         {/* BLOCS */}
         <div className="grid md:grid-cols-3 gap-8">
 
-          <div className="p-6 rounded-xl shadow-md bg-[#f9f6f1]">
+          {/* BLOC 1 */}
+          <div className="p-6 rounded-2xl shadow-md hover:shadow-xl transition duration-300 bg-[#f9f6f1]">
             <div className="text-3xl mb-3">🌿</div>
-            <h3 className="font-semibold text-lg mb-2">Ingrédients naturels</h3>
+
+            <h3 className="font-semibold text-lg mb-2">
+              Ingrédients naturels
+            </h3>
+
             <p className="text-gray-600 text-sm">
-             Des actifs naturels puissants comme le curcuma, reconnus pour éclaircir et purifier la peau.
+              Des actifs naturels puissants comme le curcuma,
+              reconnus pour éclaircir et purifier la peau.
             </p>
           </div>
 
-          <div className="p-6 rounded-xl shadow-md bg-[#f9f6f1]">
+          {/* BLOC 2 */}
+          <div className="p-6 rounded-2xl shadow-md hover:shadow-xl transition duration-300 bg-[#f9f6f1]">
             <div className="text-3xl mb-3">💧</div>
-            <h3 className="font-semibold text-lg mb-2">Respectueux de la peau</h3>
+
+            <h3 className="font-semibold text-lg mb-2">
+              Respectueux de la peau
+            </h3>
+
             <p className="text-gray-600 text-sm">
-              Une routine douce qui respecte votre peau sans l’agresser ni la fragiliser.
+              Une routine douce qui respecte votre peau
+              sans l’agresser ni la fragiliser.
             </p>
           </div>
 
-          <div className="p-6 rounded-xl shadow-md bg-[#f9f6f1]">
+          {/* BLOC 3 */}
+          <div className="p-6 rounded-2xl shadow-md hover:shadow-xl transition duration-300 bg-[#f9f6f1]">
             <div className="text-3xl mb-3">✨</div>
-            <h3 className="font-semibold text-lg mb-2">Résultats visibles</h3>
+
+            <h3 className="font-semibold text-lg mb-2">
+              Résultats visibles
+            </h3>
+
             <p className="text-gray-600 text-sm">
-              Une peau plus lumineuse et uniforme dès les premières semaines.
+              Une peau plus lumineuse et uniforme
+              dès les premières semaines.
             </p>
           </div>
 

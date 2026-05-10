@@ -1,7 +1,7 @@
 export default function Testimonials() {
   return (
     <section className="bg-white py-20 px-6">
-      
+
       <div className="max-w-6xl mx-auto text-center">
 
         {/* TITRE */}
@@ -18,33 +18,69 @@ export default function Testimonials() {
         <div className="grid md:grid-cols-3 gap-8">
 
           {/* AVIS 1 */}
-          <div className="bg-[#f8f5f2] p-6 rounded-2xl shadow-md hover:shadow-xl transition duration-300 text-left">
-            <p className="text-yellow-500 mb-2">★★★★★</p>
-            <p className="text-gray-700 mb-4">
+          <div className="bg-[#f8f5f2] p-6 rounded-3xl shadow-md hover:shadow-2xl hover:-translate-y-1 transition duration-300 text-left border border-transparent hover:border-purple-200">
+            
+            <div className="flex items-center gap-1 text-yellow-500 mb-3">
+              ★★★★★
+            </div>
+
+            <p className="text-gray-700 mb-6 leading-relaxed">
               "J’avais des taches depuis des années… en 3 semaines ma peau est beaucoup plus nette. Franchement bluffée."
             </p>
-            <p className="text-sm font-semibold text-gray-900">Aïcha</p>
-            <p className="text-xs text-gray-500">Peau mixte</p>
+
+            <div>
+              <p className="text-sm font-semibold text-gray-900">
+                Aïcha
+              </p>
+
+              <p className="text-xs text-gray-500">
+                Peau mixte
+              </p>
+            </div>
           </div>
 
           {/* AVIS 2 */}
-          <div className="bg-[#f8f5f2] p-6 rounded-2xl shadow-md hover:shadow-xl transition duration-300 text-left">
-            <p className="text-yellow-500 mb-2">★★★★★</p>
-            <p className="text-gray-700 mb-4">
+          <div className="bg-[#f8f5f2] p-6 rounded-3xl shadow-md hover:shadow-2xl hover:-translate-y-1 transition duration-300 text-left border border-transparent hover:border-purple-200">
+            
+            <div className="flex items-center gap-1 text-yellow-500 mb-3">
+              ★★★★★
+            </div>
+
+            <p className="text-gray-700 mb-6 leading-relaxed">
               "Ma peau est plus lumineuse et surtout plus uniforme. J’ai enfin trouvé une routine simple et efficace."
             </p>
-            <p className="text-sm font-semibold text-gray-900">Fatou</p>
-            <p className="text-xs text-gray-500">Peau sensible</p>
+
+            <div>
+              <p className="text-sm font-semibold text-gray-900">
+                Fatou
+              </p>
+
+              <p className="text-xs text-gray-500">
+                Peau sensible
+              </p>
+            </div>
           </div>
 
           {/* AVIS 3 */}
-          <div className="bg-[#f8f5f2] p-6 rounded-2xl shadow-md hover:shadow-xl transition duration-300 text-left">
-            <p className="text-yellow-500 mb-2">★★★★★</p>
-            <p className="text-gray-700 mb-4">
+          <div className="bg-[#f8f5f2] p-6 rounded-3xl shadow-md hover:shadow-2xl hover:-translate-y-1 transition duration-300 text-left border border-transparent hover:border-purple-200">
+            
+            <div className="flex items-center gap-1 text-yellow-500 mb-3">
+              ★★★★★
+            </div>
+
+            <p className="text-gray-700 mb-6 leading-relaxed">
               "J’ai testé plein de produits avant… celui-ci fait vraiment la différence. Ma peau est plus douce et éclatante."
             </p>
-            <p className="text-sm font-semibold text-gray-900">Mariam</p>
-            <p className="text-xs text-gray-500">Peau normale</p>
+
+            <div>
+              <p className="text-sm font-semibold text-gray-900">
+                Mariam
+              </p>
+
+              <p className="text-xs text-gray-500">
+                Peau normale
+              </p>
+            </div>
           </div>
 
         </div>

@@ -17,6 +17,12 @@ export default function ProduitPage() {
         "https://image.noelshack.com/fichiers/2026/18/7/1777803577-le-pack.jpg",
         "https://image.noelshack.com/fichiers/2026/18/7/1777803558-body-lotion.png",
         "https://image.noelshack.com/fichiers/2026/18/7/1777803558-booster-eve-cremme.png",
+        "https://image.noelshack.com/fichiers/2026/18/7/1777803558-face-cream.png",
+        "https://image.noelshack.com/fichiers/2026/18/7/1777803595-facial-cleanser.png",
+        "https://image.noelshack.com/fichiers/2026/18/7/1777803595-serum.png",
+        "https://image.noelshack.com/fichiers/2026/18/7/1777803610-soap.png",
+        "https://image.noelshack.com/fichiers/2026/18/7/1777803576-metisse-avant.png",
+        "https://image.noelshack.com/fichiers/2026/18/7/1777803576-m-tisse-apres.png",
       ],
     },
 

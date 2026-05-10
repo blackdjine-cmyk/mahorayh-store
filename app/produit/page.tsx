@@ -144,17 +144,20 @@ export default function ProduitPage() {
           {produits.map((item, index) => (
             <div
               key={item.id}
-              className="bg-white rounded-3xl shadow-md overflow-hidden border hover:shadow-2xl transition"
+              className="bg-white rounded-[32px] overflow-hidden border border-[#eee] shadow-sm hover:shadow-2xl hover:-translate-y-1 transition duration-300"
             >
 
               <img
                 src={item.image}
                 alt={item.name}
-                className="w-full h-64 object-cover"
+                className="w-full h-72 object-cover bg-[#f8f5ef]"
               />
 
               <div className="p-6">
 
+                <span className="inline-block mb-3 bg-purple-100 text-purple-700 text-xs font-semibold px-3 py-1 rounded-full">
+                ✨ Naturel
+               </span>
                 <h4 className="text-2xl font-bold mb-2">
                   {item.name}
                 </h4>
@@ -171,7 +174,7 @@ export default function ProduitPage() {
 
                   <button
                     onClick={() => setSelectedProduct(index)}
-                    className="bg-purple-600 text-white px-4 py-2 rounded-xl hover:bg-purple-700 transition"
+                    className="bg-gradient-to-r from-fuchsia-600 to-purple-700 text-white px-5 py-2 rounded-2xl shadow-lg hover:scale-105 transition"
                   >
                     Voir
                   </button>

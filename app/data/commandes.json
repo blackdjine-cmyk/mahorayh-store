@@ -1,14 +1,23 @@
 [
   {
-    "cart": [
-      {
-        "name": "Routine Éclat au Curcuma",
-        "price": 29.99,
-        "image": "https://image.noelshack.com/fichiers/2026/18/7/1777803577-le-pack.jpg",
-        "quantity": 1
-      }
-    ],
-    "date": "2026-05-04T19:45:06.980Z",
-    "total": 29.99
+    "id": 1,
+    "name": "Routine Éclat au Curcuma",
+    "price": 29.99,
+    "image": "https://image.noelshack.com/fichiers/2026/18/6/1777727887-le-pack.jpg",
+    "description": "Routine complète pour réduire les taches et illuminer la peau."
+  },
+  {
+    "id": 2,
+    "name": "Savon Curcuma Éclat",
+    "price": 14.99,
+    "image": "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?q=80&w=1200&auto=format&fit=crop",
+    "description": "Savon naturel au curcuma pour nettoyer et purifier la peau."
+  },
+  {
+    "id": 3,
+    "name": "Huile Éclat Naturel",
+    "price": 19.99,
+    "image": "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=1200&auto=format&fit=crop",
+    "description": "Huile nourrissante pour une peau douce et lumineuse."
   }
 ]

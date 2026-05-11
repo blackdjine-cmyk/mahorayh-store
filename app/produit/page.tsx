@@ -172,7 +172,7 @@ console.log(products);
           <div className="flex items-center gap-4 mb-8">
 
             <span className="text-5xl font-bold text-purple-700">
-              {product.price.toFixed(2)}€
+              {Number(product.price).toFixed(2)}€
             </span>
 
             <span className="text-3xl text-gray-400 line-through">
@@ -223,7 +223,7 @@ console.log(products);
 
         <div className="grid md:grid-cols-3 gap-8">
 
-          {produits.map((produit, index) => (
+          {products.map((produit, index) => (
 
             <div
               key={index}
@@ -231,7 +231,7 @@ console.log(products);
             >
 
               <img
-                src={produit.images[0]}
+                src={produit.image}
                 className="w-full h-80 object-cover"
               />
 

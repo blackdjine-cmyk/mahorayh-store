@@ -7,6 +7,12 @@ export default function AdminPage() {
   const [commandes, setCommandes] = useState<any[]>([]);
   const [isAuth, setIsAuth] = useState(false);
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
+  const [oldPrice, setOldPrice] = useState("");
+  const [image, setImage] = useState("");
+  const [badge, setBadge] = useState("");
 
   // 🔐 Vérification mot de passe
   const handleLogin = () => {
@@ -65,9 +71,96 @@ export default function AdminPage() {
     );
   }
 
+  const addProduct = async () => {
+  const { error } = await supabase
+    .from("products")
+    .insert([
+      {
+        name,
+        description,
+        price: Number(price),
+        old_price: Number(oldPrice),
+        image,
+        badge,
+      },
+    ]);
+
+  if (error) {
+    console.log(error);
+    alert("Erreur");
+  } else {
+    alert("Produit ajouté !");
+  }
+};
+
   // 📦 Admin commandes
   return (
     <div className="max-w-5xl mx-auto p-6">
+      <div className="bg-white p-6 rounded-2xl shadow mb-10">
+
+  <h2 className="text-2xl font-bold mb-6">
+    ➕ Ajouter un produit
+  </h2>
+
+  <div className="space-y-4">
+
+    <input
+      type="text"
+      placeholder="Nom"
+      value={name}
+      onChange={(e) => setName(e.target.value)}
+      className="w-full border p-4 rounded-xl"
+    />
+
+    <textarea
+      placeholder="Description"
+      value={description}
+      onChange={(e) => setDescription(e.target.value)}
+      className="w-full border p-4 rounded-xl"
+    />
+
+    <input
+      type="number"
+      placeholder="Prix"
+      value={price}
+      onChange={(e) => setPrice(e.target.value)}
+      className="w-full border p-4 rounded-xl"
+    />
+
+    <input
+      type="number"
+      placeholder="Ancien prix"
+      value={oldPrice}
+      onChange={(e) => setOldPrice(e.target.value)}
+      className="w-full border p-4 rounded-xl"
+    />
+
+    <input
+      type="text"
+      placeholder="Image URL"
+      value={image}
+      onChange={(e) => setImage(e.target.value)}
+      className="w-full border p-4 rounded-xl"
+    />
+
+    <input
+      type="text"
+      placeholder="Badge"
+      value={badge}
+      onChange={(e) => setBadge(e.target.value)}
+      className="w-full border p-4 rounded-xl"
+    />
+
+    <button
+      onClick={addProduct}
+      className="w-full bg-purple-700 text-white py-4 rounded-xl font-bold"
+    >
+      Ajouter le produit
+    </button>
+
+  </div>
+
+</div>
       <h1 className="text-3xl font-bold mb-6">
         📦 Commandes
       </h1>

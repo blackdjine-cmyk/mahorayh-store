@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { supabase } from "@/lib/supabase";
+import { useEffect, useState } from "react";
 import { useCart } from "../context/CartContext";
 
 export default function ProduitPage() {
   const { addToCart } = useCart();
+  const [products, setProducts] = useState<any[]>([]);
 
   const produits = [
     {
@@ -70,6 +72,22 @@ export default function ProduitPage() {
       product.images.length
     );
   };
+
+  useEffect(() => {
+  fetchProducts();
+}, []);
+
+const fetchProducts = async () => {
+  const { data, error } = await supabase
+    .from("produits")
+    .select("*");
+
+  if (error) {
+    console.log(error);
+  } else {
+    setProducts(data);
+  }
+};
 
   return (
     <div className="max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-10">

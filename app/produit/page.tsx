@@ -79,7 +79,7 @@ export default function ProduitPage() {
 
 const fetchProducts = async () => {
   const { data, error } = await supabase
-    .from("produits")
+    .from("products")
     .select("*");
 
   if (error) {

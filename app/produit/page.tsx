@@ -58,6 +58,25 @@ export default function ProduitPage() {
   const [selectedProduct, setSelectedProduct] = useState(0);
   const [selectedImage, setSelectedImage] = useState(0);
 
+    useEffect(() => {
+  fetchProducts();
+}, []);
+
+const fetchProducts = async () => {
+  const { data, error } = await supabase
+    .from("products")
+    .select("*");
+    
+    console.log("DATA :", data);
+    console.log("ERROR :", error);
+
+  if (error) {
+    console.log(error);
+  } else {
+    setProducts(data);
+  }
+};
+
   const product = products[selectedProduct];
 
   if (!product) {
@@ -81,21 +100,7 @@ export default function ProduitPage() {
     );
   };
 
-  useEffect(() => {
-  fetchProducts();
-}, []);
 
-const fetchProducts = async () => {
-  const { data, error } = await supabase
-    .from("products")
-    .select("*");
-
-  if (error) {
-    console.log(error);
-  } else {
-    setProducts(data);
-  }
-};
 console.log(products);
 
   return (
@@ -184,7 +189,7 @@ console.log(products);
             </span>
 
             <span className="text-3xl text-gray-400 line-through">
-              {product.oldPrice.toFixed(2)}€
+              {Number(product.old_price).toFixed(2)}€
             </span>
 
           </div>

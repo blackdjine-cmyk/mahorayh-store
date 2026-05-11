@@ -252,7 +252,7 @@ console.log(products);
                 <div className="flex items-center justify-between">
 
                   <span className="text-4xl font-bold text-purple-700">
-                    {produit.price.toFixed(2)}€
+                    {Number(produit.price).toFixed(2)}€
                   </span>
 
                   <button

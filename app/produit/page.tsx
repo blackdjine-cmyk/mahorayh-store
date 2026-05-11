@@ -58,7 +58,15 @@ export default function ProduitPage() {
   const [selectedProduct, setSelectedProduct] = useState(0);
   const [selectedImage, setSelectedImage] = useState(0);
 
-  const product = produits[selectedProduct];
+  const product = products[selectedProduct];
+
+  if (!product) {
+  return (
+    <div className="text-center py-20 text-2xl">
+      Chargement des produits...
+    </div>
+  );
+}
 
   const nextImage = () => {
     setSelectedImage((prev) =>
@@ -104,7 +112,7 @@ console.log(products);
             {/* MINIATURES */}
             <div className="flex md:flex-col gap-3 overflow-x-auto max-w-full">
 
-              {product.images.map((img, index) => (
+              {[product.image].map((img, index) => (
                 <img
                   key={index}
                   src={img}
@@ -125,7 +133,7 @@ console.log(products);
               <div className="relative rounded-3xl overflow-hidden bg-[#f8f5ef] p-3 shadow-lg">
 
                 <img
-                  src={product.images[selectedImage]}
+                  src={product.image}
                   className="w-full rounded-2xl object-cover"
                 />
 
@@ -195,7 +203,7 @@ console.log(products);
               addToCart({
                 name: product.name,
                 price: product.price,
-                image: product.images[0],
+                image: product.image,
               })
             }
             className="w-full bg-gradient-to-r from-fuchsia-600 to-purple-700 text-white py-5 rounded-2xl font-bold text-xl shadow-xl hover:scale-[1.02] transition"

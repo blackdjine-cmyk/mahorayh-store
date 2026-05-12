@@ -1,46 +1,88 @@
-"use client";
-
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 
 export default function AdminPage() {
   const [commandes, setCommandes] = useState<any[]>([]);
+  const [products, setProducts] = useState<any[]>([]);
+
   const [isAuth, setIsAuth] = useState(false);
   const [password, setPassword] = useState("");
+
+  const [editingId, setEditingId] = useState<number | null>(null);
+
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [oldPrice, setOldPrice] = useState("");
   const [image, setImage] = useState("");
   const [badge, setBadge] = useState("");
+
+  // ➕ Ajouter produit
   const addProduct = async () => {
-  const { error } = await supabase
-    .from("products")
-    .insert([
-      {
+    const { error } = await supabase
+      .from("products")
+      .insert([
+        {
+          name,
+          description,
+          price: Number(price),
+          old_price: Number(oldPrice),
+          image,
+          badge,
+        },
+      ]);
+
+    if (error) {
+      console.log(error);
+      alert("Erreur lors de l'ajout");
+    } else {
+      alert("Produit ajouté !");
+
+      setName("");
+      setDescription("");
+      setPrice("");
+      setOldPrice("");
+      setImage("");
+      setBadge("");
+
+      location.reload();
+    }
+  };
+
+  // ✏️ Modifier produit
+  const updateProduct = async () => {
+    if (!editingId) return;
+
+    const { error } = await supabase
+      .from("products")
+      .update({
         name,
         description,
         price: Number(price),
         old_price: Number(oldPrice),
         image,
         badge,
-      },
-    ]);
+      })
+      .eq("id", editingId);
 
-  if (error) {
-    console.log(error);
-    alert("Erreur lors de l'ajout");
-  } else {
-    alert("Produit ajouté !");
-    
-    setName("");
-    setDescription("");
-    setPrice("");
-    setOldPrice("");
-    setImage("");
-    setBadge("");
-  }
-};
+    if (error) {
+      console.log(error);
+      alert("Erreur modification");
+    } else {
+      alert("Produit modifié !");
+
+      setEditingId(null);
+
+      setName("");
+      setDescription("");
+      setPrice("");
+      setOldPrice("");
+      setImage("");
+      setBadge("");
+
+      location.reload();
+    }
+  };
 
   // 🔐 Vérification mot de passe
   const handleLogin = () => {
@@ -51,24 +93,44 @@ export default function AdminPage() {
     }
   };
 
-  // 📦 Charger commandes
+  // 📦 Charger données
   useEffect(() => {
     if (!isAuth) return;
 
-    const fetchCommandes = async () => {
-      const { data, error } = await supabase
-        .from("commandes")
-        .select("*")
-        .order("created_at", { ascending: false });
+    const fetchData = async () => {
 
-      if (error) {
-        console.log("ERREUR SUPABASE :", error);
+      // 📦 Commandes
+      const { data: commandesData, error: commandesError } =
+        await supabase
+          .from("commandes")
+          .select("*")
+          .order("created_at", {
+            ascending: false,
+          });
+
+      if (commandesError) {
+        console.log(commandesError);
       } else {
-        setCommandes(data || []);
+        setCommandes(commandesData || []);
+      }
+
+      // 🛍️ Produits
+      const { data: productsData, error: productsError } =
+        await supabase
+          .from("products")
+          .select("*")
+          .order("created_at", {
+            ascending: false,
+          });
+
+      if (productsError) {
+        console.log(productsError);
+      } else {
+        setProducts(productsData || []);
       }
     };
 
-    fetchCommandes();
+    fetchData();
   }, [isAuth]);
 
   // 🔒 Écran connexion
@@ -99,75 +161,136 @@ export default function AdminPage() {
     );
   }
 
-
-  // 📦 Admin commandes
   return (
     <div className="max-w-5xl mx-auto p-6">
+
+      {/* FORMULAIRE */}
       <div className="bg-white p-6 rounded-2xl shadow mb-10">
 
-  <h2 className="text-2xl font-bold mb-6">
-    ➕ Ajouter un produit
-  </h2>
+        <h2 className="text-2xl font-bold mb-6">
+          {editingId
+            ? "✏️ Modifier le produit"
+            : "➕ Ajouter un produit"}
+        </h2>
 
-  <div className="space-y-4">
+        <div className="space-y-4">
 
-    <input
-      type="text"
-      placeholder="Nom"
-      value={name}
-      onChange={(e) => setName(e.target.value)}
-      className="w-full border p-4 rounded-xl"
-    />
+          <input
+            type="text"
+            placeholder="Nom"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="w-full border p-4 rounded-xl"
+          />
 
-    <textarea
-      placeholder="Description"
-      value={description}
-      onChange={(e) => setDescription(e.target.value)}
-      className="w-full border p-4 rounded-xl"
-    />
+          <textarea
+            placeholder="Description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            className="w-full border p-4 rounded-xl"
+          />
 
-    <input
-      type="number"
-      placeholder="Prix"
-      value={price}
-      onChange={(e) => setPrice(e.target.value)}
-      className="w-full border p-4 rounded-xl"
-    />
+          <input
+            type="number"
+            placeholder="Prix"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            className="w-full border p-4 rounded-xl"
+          />
 
-    <input
-      type="number"
-      placeholder="Ancien prix"
-      value={oldPrice}
-      onChange={(e) => setOldPrice(e.target.value)}
-      className="w-full border p-4 rounded-xl"
-    />
+          <input
+            type="number"
+            placeholder="Ancien prix"
+            value={oldPrice}
+            onChange={(e) => setOldPrice(e.target.value)}
+            className="w-full border p-4 rounded-xl"
+          />
 
-    <input
-      type="text"
-      placeholder="Image URL"
-      value={image}
-      onChange={(e) => setImage(e.target.value)}
-      className="w-full border p-4 rounded-xl"
-    />
+          <input
+            type="text"
+            placeholder="Image URL"
+            value={image}
+            onChange={(e) => setImage(e.target.value)}
+            className="w-full border p-4 rounded-xl"
+          />
 
-    <input
-      type="text"
-      placeholder="Badge"
-      value={badge}
-      onChange={(e) => setBadge(e.target.value)}
-      className="w-full border p-4 rounded-xl"
-    />
+          <input
+            type="text"
+            placeholder="Badge"
+            value={badge}
+            onChange={(e) => setBadge(e.target.value)}
+            className="w-full border p-4 rounded-xl"
+          />
 
-    <button
-      onClick={addProduct}
-      className="w-full bg-purple-700 text-white py-4 rounded-xl font-bold"
-    >
-      Ajouter le produit
-    </button>
+          <button
+            onClick={
+              editingId
+                ? updateProduct
+                : addProduct
+            }
+            className="w-full bg-purple-700 text-white py-4 rounded-xl font-bold"
+          >
+            {editingId
+              ? "Modifier le produit"
+              : "Ajouter le produit"}
+          </button>
 
-  </div>
+        </div>
+      </div>
 
-</div>
+      {/* PRODUITS */}
+      <h1 className="text-3xl font-bold mb-6">
+        🛍️ Produits
+      </h1>
+
+      <div className="grid md:grid-cols-2 gap-6 mb-12">
+        {products.map((product) => (
+          <div
+            key={product.id}
+            className="bg-white p-5 rounded-xl shadow"
+          >
+            <img
+              src={product.image}
+              alt={product.name}
+              className="w-full h-48 object-cover rounded-lg mb-4"
+            />
+
+            <h2 className="text-xl font-bold">
+              {product.name}
+            </h2>
+
+            <p className="text-gray-600 mb-2">
+              {product.description}
+            </p>
+
+            <p className="font-bold text-purple-700">
+              {product.price} €
+            </p>
+
+            <div className="flex gap-3 mt-4">
+
+              <button
+                onClick={() => {
+                  setEditingId(product.id);
+
+                  setName(product.name);
+                  setDescription(product.description);
+                  setPrice(product.price);
+                  setOldPrice(product.old_price);
+                  setImage(product.image);
+                  setBadge(product.badge);
+                }}
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg"
+              >
+                Modifier
+              </button>
+
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* COMMANDES */}
       <h1 className="text-3xl font-bold mb-6">
         📦 Commandes
       </h1>
@@ -182,13 +305,17 @@ export default function AdminPage() {
               className="bg-white p-5 rounded-xl shadow"
             >
               <div className="flex justify-between mb-4">
-                <p className="font-bold">
-                  {cmd.client}
+
+                <div>
+                  <p className="font-bold">
+                    {cmd.client}
+                  </p>
+
                   <p>Email : {cmd.email}</p>
                   <p>Téléphone : {cmd.telephone}</p>
                   <p>Code postal : {cmd.code_postal}</p>
                   <p>Adresse : {cmd.adresse}</p>
-                </p>
+                </div>
 
                 <p className="text-sm text-gray-500">
                   {new Date(

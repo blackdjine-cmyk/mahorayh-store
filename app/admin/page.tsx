@@ -277,8 +277,8 @@ export default function AdminPage() {
 
                   setName(product.name);
                   setDescription(product.description);
-                  setPrice(product.price);
-                  setOldPrice(product.old_price);
+                  setPrice(String(product.price));
+                  setOldPrice(String(product.old_price));
                   setImage(product.image);
                   setBadge(product.badge);
                 }}

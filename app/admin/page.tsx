@@ -13,6 +13,34 @@ export default function AdminPage() {
   const [oldPrice, setOldPrice] = useState("");
   const [image, setImage] = useState("");
   const [badge, setBadge] = useState("");
+  const addProduct = async () => {
+  const { error } = await supabase
+    .from("products")
+    .insert([
+      {
+        name,
+        description,
+        price: Number(price),
+        old_price: Number(oldPrice),
+        image,
+        badge,
+      },
+    ]);
+
+  if (error) {
+    console.log(error);
+    alert("Erreur lors de l'ajout");
+  } else {
+    alert("Produit ajouté !");
+    
+    setName("");
+    setDescription("");
+    setPrice("");
+    setOldPrice("");
+    setImage("");
+    setBadge("");
+  }
+};
 
   // 🔐 Vérification mot de passe
   const handleLogin = () => {
@@ -71,27 +99,6 @@ export default function AdminPage() {
     );
   }
 
-  const addProduct = async () => {
-  const { error } = await supabase
-    .from("products")
-    .insert([
-      {
-        name,
-        description,
-        price: Number(price),
-        old_price: Number(oldPrice),
-        image,
-        badge,
-      },
-    ]);
-
-  if (error) {
-    console.log(error);
-    alert("Erreur");
-  } else {
-    alert("Produit ajouté !");
-  }
-};
 
   // 📦 Admin commandes
   return (

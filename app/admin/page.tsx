@@ -62,7 +62,7 @@ export default function AdminPage() {
         .order("created_at", { ascending: false });
 
       if (error) {
-        console.log(error);
+        console.log("ERREUR SUPABASE :", error);
       } else {
         setCommandes(data || []);
       }

@@ -305,18 +305,27 @@ const deleteProduct = async (id: number) => {
             className="w-full border p-4 rounded-xl"
           />
 
-          <button
-            onClick={
-              editingId
-                ? updateProduct
-                : addProduct
-            }
-            className="w-full bg-purple-700 text-white py-4 rounded-xl font-bold"
-          >
-            {editingId
-              ? "Modifier le produit"
-              : "Ajouter le produit"}
-          </button>
+         <button
+           disabled={uploading}
+           onClick={
+           editingId
+           ? updateProduct
+           : addProduct
+         }
+           className={`w-full py-4 rounded-xl font-bold text-white ${
+           uploading
+            ? "bg-gray-400"
+            : "bg-purple-700"
+         }`}
+         >
+
+           {uploading
+             ? "Upload image..."
+             : editingId
+             ? "Modifier le produit"
+             : "Ajouter le produit"}
+
+         </button>
 
         </div>
       </div>

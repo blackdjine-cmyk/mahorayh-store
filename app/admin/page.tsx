@@ -389,6 +389,9 @@ const deleteProduct = async (id: number) => {
             <h2 className="text-xl font-bold">
               {product.name}
             </h2>
+             <p className="text-sm text-gray-500">
+             {product.category}
+             </p>
 
             <p className="text-gray-600 mb-2">
               {product.description}

@@ -176,6 +176,9 @@ console.log(products);
           <h1 className="text-4xl font-bold mt-5 mb-4">
             {product.name}
           </h1>
+          <p className="text-sm text-gray-500">
+          {product.category}
+          </p>
 
           <p className="text-gray-600 text-lg mb-6">
             {product.description}

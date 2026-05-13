@@ -18,6 +18,7 @@ export default function AdminPage() {
   const [oldPrice, setOldPrice] = useState("");
   const [image, setImage] = useState("");
   const [badge, setBadge] = useState("");
+  const [uploading, setUploading] = useState(false);
 
   // ➕ Ajouter produit
   const addProduct = async () => {
@@ -50,6 +51,41 @@ export default function AdminPage() {
       location.reload();
     }
   };
+
+  // 📸 Upload image
+const uploadImage = async (
+  e: React.ChangeEvent<HTMLInputElement>
+) => {
+
+  const file = e.target.files?.[0];
+
+  if (!file) return;
+
+  setUploading(true);
+
+  const fileName = `${Date.now()}-${file.name}`;
+
+  const { error } = await supabase.storage
+    .from("products")
+    .upload(fileName, file);
+
+  if (error) {
+    console.log(error);
+    alert("Erreur upload image");
+    setUploading(false);
+    return;
+  }
+
+  const {
+    data: { publicUrl },
+  } = supabase.storage
+    .from("products")
+    .getPublicUrl(fileName);
+
+  setImage(publicUrl);
+
+  setUploading(false);
+};
 
   // 🗑️ Supprimer produit
 const deleteProduct = async (id: number) => {
@@ -237,13 +273,29 @@ const deleteProduct = async (id: number) => {
             className="w-full border p-4 rounded-xl"
           />
 
-          <input
-            type="text"
-            placeholder="Image URL"
-            value={image}
-            onChange={(e) => setImage(e.target.value)}
-            className="w-full border p-4 rounded-xl"
+          <div className="space-y-2">
+
+           <input
+            type="file"
+            accept="image/*"
+            onChange={uploadImage}
+           className="w-full border p-4 rounded-xl"
           />
+
+           {uploading && (
+           <p className="text-purple-600">
+           Upload en cours...
+         </p>
+      )}
+
+         {image && (
+         <img
+         src={image}
+         alt="Preview"
+         className="w-40 rounded-xl"
+       />
+      )}
+      </div>
 
           <input
             type="text"

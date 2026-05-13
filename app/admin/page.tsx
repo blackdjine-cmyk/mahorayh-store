@@ -51,6 +51,35 @@ export default function AdminPage() {
     }
   };
 
+  // 🗑️ Supprimer produit
+const deleteProduct = async (id: number) => {
+
+  const confirmDelete = confirm(
+    "Supprimer ce produit ?"
+  );
+
+  if (!confirmDelete) return;
+
+  const { error } = await supabase
+    .from("products")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    console.log(error);
+    alert("Erreur suppression");
+  } else {
+
+    alert("Produit supprimé !");
+
+    setProducts(
+      products.filter(
+        (product) => product.id !== id
+      )
+    );
+  }
+};
+
   // ✏️ Modifier produit
   const updateProduct = async () => {
     if (!editingId) return;
@@ -286,6 +315,15 @@ export default function AdminPage() {
               >
                 Modifier
               </button>
+
+              <button
+                 onClick={() =>
+                  deleteProduct(product.id)
+               }
+               className="bg-red-600 text-white px-4 py-2 rounded-lg"
+              >
+                Supprimer
+               </button>
 
             </div>
           </div>

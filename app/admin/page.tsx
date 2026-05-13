@@ -305,27 +305,35 @@ const deleteProduct = async (id: number) => {
             className="w-full border p-4 rounded-xl"
           />
 
-         <button
-           disabled={uploading}
-           onClick={
-           editingId
-           ? updateProduct
-           : addProduct
-         }
-           className={`w-full py-4 rounded-xl font-bold text-white ${
-           uploading
-            ? "bg-gray-400"
-            : "bg-purple-700"
-         }`}
-         >
-
-           {uploading
-             ? "Upload image..."
-             : editingId
-             ? "Modifier le produit"
-             : "Ajouter le produit"}
-
-         </button>
+          <button
+  disabled={
+    uploading ||
+    !name ||
+    !description ||
+    !price ||
+    !image
+  }
+  onClick={
+    editingId
+      ? updateProduct
+      : addProduct
+  }
+  className={`w-full py-4 rounded-xl font-bold text-white transition ${
+    uploading ||
+    !name ||
+    !description ||
+    !price ||
+    !image
+      ? "bg-gray-400 cursor-not-allowed"
+      : "bg-purple-700 hover:bg-purple-800"
+  }`}
+>
+  {uploading
+    ? "Upload image..."
+    : editingId
+    ? "Modifier le produit"
+    : "Ajouter le produit"}
+</button>
 
         </div>
       </div>

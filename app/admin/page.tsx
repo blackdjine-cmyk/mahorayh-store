@@ -18,6 +18,7 @@ export default function AdminPage() {
   const [oldPrice, setOldPrice] = useState("");
   const [image, setImage] = useState("");
   const [badge, setBadge] = useState("");
+  const [category, setCategory] = useState("");
   const [uploading, setUploading] = useState(false);
 
   // ➕ Ajouter produit
@@ -32,6 +33,7 @@ export default function AdminPage() {
           old_price: Number(oldPrice),
           image,
           badge,
+          category,
         },
       ]);
 
@@ -47,6 +49,7 @@ export default function AdminPage() {
       setOldPrice("");
       setImage("");
       setBadge("");
+      setCategory("");
 
       location.reload();
     }
@@ -129,6 +132,7 @@ const deleteProduct = async (id: number) => {
         old_price: Number(oldPrice),
         image,
         badge,
+        category,
       })
       .eq("id", editingId);
 
@@ -146,6 +150,7 @@ const deleteProduct = async (id: number) => {
       setOldPrice("");
       setImage("");
       setBadge("");
+      setCategory("");
 
       location.reload();
     }
@@ -304,6 +309,32 @@ const deleteProduct = async (id: number) => {
             onChange={(e) => setBadge(e.target.value)}
             className="w-full border p-4 rounded-xl"
           />
+           
+          <select
+  value={category}
+  onChange={(e) => setCategory(e.target.value)}
+  className="w-full border p-4 rounded-xl"
+>
+  <option value="">
+    Choisir une catégorie
+  </option>
+
+  <option value="Soins visage">
+    Soins visage
+  </option>
+
+  <option value="Huiles">
+    Huiles
+  </option>
+
+  <option value="Savons">
+    Savons
+  </option>
+
+  <option value="Packs">
+    Packs
+  </option>
+</select>
 
           <button
   disabled={
@@ -372,6 +403,7 @@ const deleteProduct = async (id: number) => {
               <button
                 onClick={() => {
                   setEditingId(product.id);
+                  setCategory(product.category);
 
                   setName(product.name);
                   setDescription(product.description);

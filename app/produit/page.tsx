@@ -86,8 +86,10 @@ export default function ProduitPage() {
       );
 
     setSelectedModel(
-      relatedModel || null
-    );
+  relatedModel || null
+);
+
+setSelectedImage("");
 
     window.scrollTo({
       top: 0,
@@ -114,7 +116,9 @@ export default function ProduitPage() {
 
   // 🖼️ IMAGE ACTIVE
   const activeImage =
-  selectedImage || selectedProduct.image;
+  selectedModel?.model_image ||
+  selectedImage ||
+  selectedProduct.image;
   const galleryImages =
   selectedProduct.images || [];
 

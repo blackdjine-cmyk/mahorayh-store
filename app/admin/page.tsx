@@ -536,6 +536,21 @@ function editProduct(product: any) {
                           <p>
                             {model.model_price} €
                           </p>
+                          <div className="flex gap-2 mt-3">
+
+  <button
+    className="bg-blue-600 text-white px-3 py-1 rounded-lg"
+  >
+    Modifier modèle
+  </button>
+
+  <button
+    className="bg-red-600 text-white px-3 py-1 rounded-lg"
+  >
+    Supprimer modèle
+  </button>
+
+</div>
 
                         </div>
 

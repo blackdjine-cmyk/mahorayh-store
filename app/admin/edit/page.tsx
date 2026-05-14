@@ -21,6 +21,47 @@ export default function EditPage() {
 
   const [image, setImage] = useState("");
 
+  const [uploading, setUploading] =
+  useState(false);
+
+const uploadImage = async (
+  e: React.ChangeEvent<HTMLInputElement>
+) => {
+
+  const file = e.target.files?.[0];
+
+  if (!file) return;
+
+  setUploading(true);
+
+  const fileName = `${Date.now()}-${file.name}`;
+
+  const { error } = await supabase.storage
+    .from("products")
+    .upload(fileName, file);
+
+  if (error) {
+
+    console.log(error);
+
+    alert("Erreur upload image");
+
+    setUploading(false);
+
+    return;
+  }
+
+  const {
+    data: { publicUrl },
+  } = supabase.storage
+    .from("products")
+    .getPublicUrl(fileName);
+
+  setImage(publicUrl);
+
+  setUploading(false);
+};
+
   useEffect(() => {
 
     const storedProduct =
@@ -155,14 +196,30 @@ export default function EditPage() {
           className="w-full border p-4 rounded-xl"
         />
 
-        <input
-          type="text"
-          value={image}
-          onChange={(e) =>
-            setImage(e.target.value)
-          }
-          className="w-full border p-4 rounded-xl"
-        />
+        <div className="space-y-3">
+
+  <input
+    type="file"
+    accept="image/*"
+    onChange={uploadImage}
+    className="w-full border p-4 rounded-xl"
+  />
+
+  {uploading && (
+    <p className="text-purple-600">
+      Upload image...
+    </p>
+  )}
+
+  {image && (
+    <img
+      src={image}
+      alt="Preview"
+      className="w-40 rounded-2xl border"
+    />
+  )}
+
+</div>
 
         <button
           onClick={updateProduct}

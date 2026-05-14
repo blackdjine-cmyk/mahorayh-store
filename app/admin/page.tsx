@@ -175,9 +175,10 @@ export default function AdminPage() {
       ]);
 
     if (error) {
-      console.log(error);
-      alert("Erreur ajout modèle");
-    } else {
+  console.log(error);
+  alert(error.message);
+}
+     else {
 
       alert("Modèle ajouté");
 

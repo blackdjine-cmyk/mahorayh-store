@@ -4,14 +4,15 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 
 export default function AdminPage() {
-  const [commandes, setCommandes] = useState<any[]>([]);
-  const [products, setProducts] = useState<any[]>([]);
 
+  const [products, setProducts] = useState<any[]>([]);
+  const [models, setModels] = useState<any[]>([]);
+
+  // 🔐 LOGIN
   const [isAuth, setIsAuth] = useState(false);
   const [password, setPassword] = useState("");
 
-  const [editingId, setEditingId] = useState<number | null>(null);
-
+  // 📦 PRODUIT PRINCIPAL
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
@@ -20,17 +21,110 @@ export default function AdminPage() {
   const [badge, setBadge] = useState("");
   const [category, setCategory] = useState("");
 
-  const [variant, setVariant] = useState("");
-  const [variantPrice, setVariantPrice] = useState("");
+  // 🎨 MODELES
+  const [selectedProductId, setSelectedProductId] =
+    useState("");
 
-  const [model, setModel] = useState("");
-  const [modelImage, setModelImage] = useState("");
+  const [modelName, setModelName] = useState("");
   const [modelPrice, setModelPrice] = useState("");
+  const [modelImage, setModelImage] = useState("");
+  const [modelDescription, setModelDescription] =
+    useState("");
 
   const [uploading, setUploading] = useState(false);
 
-  // ➕ Ajouter produit
+  // 🔐 LOGIN
+  const handleLogin = () => {
+    if (password === "admin123") {
+      setIsAuth(true);
+    } else {
+      alert("Mot de passe incorrect");
+    }
+  };
+
+  // 📦 FETCH DATA
+  useEffect(() => {
+
+    if (!isAuth) return;
+
+    fetchProducts();
+    fetchModels();
+
+  }, [isAuth]);
+
+  const fetchProducts = async () => {
+
+    const { data, error } = await supabase
+      .from("products")
+      .select("*")
+      .order("created_at", {
+        ascending: false,
+      });
+
+    if (error) {
+      console.log(error);
+    } else {
+      setProducts(data || []);
+    }
+  };
+
+  const fetchModels = async () => {
+
+    const { data, error } = await supabase
+      .from("product_models")
+      .select("*");
+
+    if (error) {
+      console.log(error);
+    } else {
+      setModels(data || []);
+    }
+  };
+
+  // 📸 UPLOAD IMAGE
+  const uploadImage = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+    type: "product" | "model"
+  ) => {
+
+    const file = e.target.files?.[0];
+
+    if (!file) return;
+
+    setUploading(true);
+
+    const fileName =
+      `${Date.now()}-${file.name}`;
+
+    const { error } = await supabase.storage
+      .from("products")
+      .upload(fileName, file);
+
+    if (error) {
+      console.log(error);
+      alert("Erreur upload");
+      setUploading(false);
+      return;
+    }
+
+    const {
+      data: { publicUrl },
+    } = supabase.storage
+      .from("products")
+      .getPublicUrl(fileName);
+
+    if (type === "product") {
+      setImage(publicUrl);
+    } else {
+      setModelImage(publicUrl);
+    }
+
+    setUploading(false);
+  };
+
+  // ➕ AJOUT PRODUIT
   const addProduct = async () => {
+
     const { error } = await supabase
       .from("products")
       .insert([
@@ -42,21 +136,15 @@ export default function AdminPage() {
           image,
           badge,
           category,
-
-          variant,
-          variant_price: Number(variantPrice),
-
-          model,
-          model_image: modelImage,
-          model_price: Number(modelPrice),
         },
       ]);
 
     if (error) {
       console.log(error);
-      alert("Erreur lors de l'ajout");
+      alert("Erreur ajout produit");
     } else {
-      alert("Produit ajouté !");
+
+      alert("Produit ajouté");
 
       setName("");
       setDescription("");
@@ -66,171 +154,65 @@ export default function AdminPage() {
       setBadge("");
       setCategory("");
 
-      setVariant("");
-      setVariantPrice("");
-
-      setModel("");
-      setModelImage("");
-      setModelPrice("");
-
-      location.reload();
+      fetchProducts();
     }
   };
 
-  // 📸 Upload image
-  const uploadImage = async (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const file = e.target.files?.[0];
+  // ➕ AJOUT MODELE
+  const addModel = async () => {
 
-    if (!file) return;
-
-    setUploading(true);
-
-    const fileName = `${Date.now()}-${file.name}`;
-
-    const { error } = await supabase.storage
-      .from("products")
-      .upload(fileName, file);
+    const { error } = await supabase
+      .from("product_models")
+      .insert([
+        {
+          product_id: Number(selectedProductId),
+          model_name: modelName,
+          model_price: Number(modelPrice),
+          model_image: modelImage,
+          model_description:
+            modelDescription,
+        },
+      ]);
 
     if (error) {
       console.log(error);
-      alert("Erreur upload image");
-      setUploading(false);
-      return;
+      alert("Erreur ajout modèle");
+    } else {
+
+      alert("Modèle ajouté");
+
+      setModelName("");
+      setModelPrice("");
+      setModelImage("");
+      setModelDescription("");
+
+      fetchModels();
     }
-
-    const {
-      data: { publicUrl },
-    } = supabase.storage
-      .from("products")
-      .getPublicUrl(fileName);
-
-    setImage(publicUrl);
-
-    setUploading(false);
   };
 
-  // 🗑️ Supprimer produit
+  // 🗑️ DELETE PRODUIT
   const deleteProduct = async (id: number) => {
+
     const confirmDelete = confirm(
       "Supprimer ce produit ?"
     );
 
     if (!confirmDelete) return;
 
-    const { error } = await supabase
+    await supabase
       .from("products")
       .delete()
       .eq("id", id);
 
-    if (error) {
-      console.log(error);
-      alert("Erreur suppression");
-    } else {
-      alert("Produit supprimé !");
-
-      setProducts(
-        products.filter(
-          (product) => product.id !== id
-        )
-      );
-    }
+    fetchProducts();
   };
 
-  // ✏️ Modifier produit
-  const updateProduct = async () => {
-    if (!editingId) return;
-
-    const { error } = await supabase
-      .from("products")
-      .update({
-        name,
-        description,
-        price: Number(price),
-        old_price: Number(oldPrice),
-        image,
-        badge,
-        category,
-
-        variant,
-        variant_price: Number(variantPrice),
-
-        model,
-        model_image: modelImage,
-        model_price: Number(modelPrice),
-      })
-      .eq("id", editingId);
-
-    if (error) {
-      console.log(error);
-      alert("Erreur modification");
-    } else {
-      alert("Produit modifié !");
-
-      setEditingId(null);
-
-      setName("");
-      setDescription("");
-      setPrice("");
-      setOldPrice("");
-      setImage("");
-      setBadge("");
-      setCategory("");
-
-      setVariant("");
-      setVariantPrice("");
-
-      setModel("");
-      setModelImage("");
-      setModelPrice("");
-
-      location.reload();
-    }
-  };
-
-  // 🔐 Vérification mot de passe
-  const handleLogin = () => {
-    if (password === "admin123") {
-      setIsAuth(true);
-    } else {
-      alert("Mot de passe incorrect");
-    }
-  };
-
-  // 📦 Charger données
-  useEffect(() => {
-    if (!isAuth) return;
-
-    const fetchData = async () => {
-      const { data: commandesData } =
-        await supabase
-          .from("commandes")
-          .select("*")
-          .order("created_at", {
-            ascending: false,
-          });
-
-      setCommandes(commandesData || []);
-
-      const { data: productsData } =
-        await supabase
-          .from("products")
-          .select("*")
-          .order("created_at", {
-            ascending: false,
-          });
-
-      setProducts(productsData || []);
-    };
-
-    fetchData();
-  }, [isAuth]);
-
-  // 🔒 Login
+  // 🔒 LOGIN PAGE
   if (!isAuth) {
+
     return (
       <div className="flex flex-col items-center justify-center h-screen gap-4">
+
         <h1 className="text-3xl font-bold">
           🔐 Accès Admin
         </h1>
@@ -251,20 +233,21 @@ export default function AdminPage() {
         >
           Connexion
         </button>
+
       </div>
     );
   }
 
   return (
-    <div className="max-w-5xl mx-auto p-6">
 
-      {/* FORMULAIRE */}
+    <div className="max-w-6xl mx-auto p-6">
+
+      {/* PRODUIT PRINCIPAL */}
+
       <div className="bg-white p-6 rounded-2xl shadow mb-10">
 
-        <h2 className="text-2xl font-bold mb-6">
-          {editingId
-            ? "✏️ Modifier le produit"
-            : "➕ Ajouter un produit"}
+        <h2 className="text-3xl font-bold mb-6">
+          ➕ Ajouter un produit
         </h2>
 
         <div className="space-y-4">
@@ -273,7 +256,9 @@ export default function AdminPage() {
             type="text"
             placeholder="Nom"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) =>
+              setName(e.target.value)
+            }
             className="w-full border p-4 rounded-xl"
           />
 
@@ -290,7 +275,9 @@ export default function AdminPage() {
             type="number"
             placeholder="Prix"
             value={price}
-            onChange={(e) => setPrice(e.target.value)}
+            onChange={(e) =>
+              setPrice(e.target.value)
+            }
             className="w-full border p-4 rounded-xl"
           />
 
@@ -304,40 +291,32 @@ export default function AdminPage() {
             className="w-full border p-4 rounded-xl"
           />
 
-          {/* IMAGE */}
-          <div className="space-y-2">
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) =>
+              uploadImage(e, "product")
+            }
+            className="w-full border p-4 rounded-xl"
+          />
 
-            <input
-              type="file"
-              accept="image/*"
-              onChange={uploadImage}
-              className="w-full border p-4 rounded-xl"
+          {image && (
+            <img
+              src={image}
+              className="w-40 rounded-xl"
             />
-
-            {uploading && (
-              <p className="text-purple-600">
-                Upload en cours...
-              </p>
-            )}
-
-            {image && (
-              <img
-                src={image}
-                alt="Preview"
-                className="w-40 rounded-xl"
-              />
-            )}
-          </div>
+          )}
 
           <input
             type="text"
             placeholder="Badge"
             value={badge}
-            onChange={(e) => setBadge(e.target.value)}
+            onChange={(e) =>
+              setBadge(e.target.value)
+            }
             className="w-full border p-4 rounded-xl"
           />
 
-          {/* CATÉGORIE */}
           <select
             value={category}
             onChange={(e) =>
@@ -353,57 +332,74 @@ export default function AdminPage() {
               Soins visage
             </option>
 
-            <option value="Huiles">
-              Huiles
-            </option>
-
             <option value="Savons">
               Savons
+            </option>
+
+            <option value="Huiles">
+              Huiles
             </option>
 
             <option value="Packs">
               Packs
             </option>
+
           </select>
 
-          {/* VARIANTE */}
-          <input
-            type="text"
-            placeholder="Variante (30ml, 50ml...)"
-            value={variant}
+          <button
+            onClick={addProduct}
+            className="w-full bg-purple-700 text-white py-4 rounded-xl font-bold"
+          >
+            Ajouter le produit
+          </button>
+
+        </div>
+
+      </div>
+
+      {/* AJOUT MODELES */}
+
+      <div className="bg-white p-6 rounded-2xl shadow mb-10">
+
+        <h2 className="text-3xl font-bold mb-6">
+          🎨 Ajouter un modèle
+        </h2>
+
+        <div className="space-y-4">
+
+          <select
+            value={selectedProductId}
             onChange={(e) =>
-              setVariant(e.target.value)
+              setSelectedProductId(
+                e.target.value
+              )
             }
             className="w-full border p-4 rounded-xl"
-          />
+          >
 
-          <input
-            type="number"
-            placeholder="Prix variante"
-            value={variantPrice}
-            onChange={(e) =>
-              setVariantPrice(e.target.value)
-            }
-            className="w-full border p-4 rounded-xl"
-          />
+            <option value="">
+              Choisir un produit
+            </option>
 
-          {/* MODÈLE */}
+            {products.map((product) => (
+
+              <option
+                key={product.id}
+                value={product.id}
+              >
+                {product.name}
+              </option>
+
+            ))}
+
+          </select>
+
           <input
             type="text"
             placeholder="Nom du modèle"
-            value={model}
+            value={modelName}
             onChange={(e) =>
-              setModel(e.target.value)
-            }
-            className="w-full border p-4 rounded-xl"
-          />
-
-          <input
-            type="text"
-            placeholder="Image du modèle (URL)"
-            value={modelImage}
-            onChange={(e) =>
-              setModelImage(e.target.value)
+              setModelName(e.target.value)
             }
             className="w-full border p-4 rounded-xl"
           />
@@ -418,243 +414,144 @@ export default function AdminPage() {
             className="w-full border p-4 rounded-xl"
           />
 
-          {/* BOUTON */}
+          <textarea
+            placeholder="Description modèle"
+            value={modelDescription}
+            onChange={(e) =>
+              setModelDescription(
+                e.target.value
+              )
+            }
+            className="w-full border p-4 rounded-xl"
+          />
+
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) =>
+              uploadImage(e, "model")
+            }
+            className="w-full border p-4 rounded-xl"
+          />
+
+          {modelImage && (
+            <img
+              src={modelImage}
+              className="w-40 rounded-xl"
+            />
+          )}
+
           <button
-            disabled={
-              uploading ||
-              !name ||
-              !description ||
-              !price ||
-              !image
-            }
-            onClick={
-              editingId
-                ? updateProduct
-                : addProduct
-            }
-            className={`w-full py-4 rounded-xl font-bold text-white transition ${
-              uploading ||
-              !name ||
-              !description ||
-              !price ||
-              !image
-                ? "bg-gray-400 cursor-not-allowed"
-                : "bg-purple-700 hover:bg-purple-800"
-            }`}
+            onClick={addModel}
+            className="w-full bg-fuchsia-600 text-white py-4 rounded-xl font-bold"
           >
-            {uploading
-              ? "Upload image..."
-              : editingId
-              ? "Modifier le produit"
-              : "Ajouter le produit"}
+            Ajouter le modèle
           </button>
 
         </div>
+
       </div>
 
       {/* PRODUITS */}
+
       <h1 className="text-3xl font-bold mb-6">
         🛍️ Produits
       </h1>
 
-      <div className="grid md:grid-cols-2 gap-6 mb-12">
+      <div className="grid md:grid-cols-2 gap-6">
 
-        {products.map((product) => (
+        {products.map((product) => {
 
-          <div
-            key={product.id}
-            className="bg-white p-5 rounded-xl shadow"
-          >
+          const relatedModels =
+            models.filter(
+              (model) =>
+                model.product_id === product.id
+            );
 
-            <img
-              src={product.image}
-              alt={product.name}
-              className="w-full h-48 object-cover rounded-lg mb-4"
-            />
+          return (
 
-            <h2 className="text-xl font-bold">
-              {product.name}
-            </h2>
+            <div
+              key={product.id}
+              className="bg-white p-5 rounded-2xl shadow"
+            >
 
-            <p className="text-sm text-gray-500">
-              {product.category}
-            </p>
-
-            <p className="text-sm text-gray-500">
-              Variante : {product.variant}
-            </p>
-
-            <p className="text-sm text-gray-500">
-              Prix variante :
-              {product.variant_price} €
-            </p>
-
-            <p className="text-sm text-gray-500">
-              Modèle : {product.model}
-            </p>
-
-            <p className="text-sm text-gray-500">
-              Prix modèle :
-              {product.model_price} €
-            </p>
-
-            {product.model_image && (
               <img
-                src={product.model_image}
-                className="w-24 h-24 object-cover rounded-lg mt-2"
+                src={product.image}
+                className="w-full h-60 object-cover rounded-xl mb-4"
               />
-            )}
 
-            <p className="text-gray-600 mb-2 mt-3">
-              {product.description}
-            </p>
+              <h2 className="text-2xl font-bold">
+                {product.name}
+              </h2>
 
-            <p className="font-bold text-purple-700">
-              {product.price} €
-            </p>
+              <p className="text-gray-500 mb-2">
+                {product.category}
+              </p>
 
-            <div className="flex gap-3 mt-4">
+              <p className="font-bold text-purple-700 text-2xl">
+                {product.price} €
+              </p>
 
-              <button
-                onClick={() => {
-                  setEditingId(product.id);
+              <div className="mt-6">
 
-                  setCategory(product.category);
+                <h3 className="font-bold mb-3">
+                  🎨 Modèles :
+                </h3>
 
-                  setName(product.name);
-                  setDescription(product.description);
-                  setPrice(String(product.price));
-                  setOldPrice(
-                    String(product.old_price)
-                  );
+                <div className="space-y-3">
 
-                  setImage(product.image);
-                  setBadge(product.badge);
+                  {relatedModels.map((model) => (
 
-                  setVariant(product.variant);
+                    <div
+                      key={model.id}
+                      className="border rounded-xl p-3"
+                    >
 
-                  setVariantPrice(
-                    String(product.variant_price)
-                  );
+                      <div className="flex gap-3">
 
-                  setModel(product.model);
+                        <img
+                          src={model.model_image}
+                          className="w-20 h-20 rounded-xl object-cover"
+                        />
 
-                  setModelImage(
-                    product.model_image
-                  );
+                        <div>
 
-                  setModelPrice(
-                    String(product.model_price)
-                  );
-                }}
-                className="bg-blue-600 text-white px-4 py-2 rounded-lg"
-              >
-                Modifier
-              </button>
+                          <p className="font-bold">
+                            {model.model_name}
+                          </p>
+
+                          <p>
+                            {model.model_price} €
+                          </p>
+
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                  ))}
+
+                </div>
+
+              </div>
 
               <button
                 onClick={() =>
                   deleteProduct(product.id)
                 }
-                className="bg-red-600 text-white px-4 py-2 rounded-lg"
+                className="mt-5 bg-red-600 text-white px-4 py-2 rounded-xl"
               >
                 Supprimer
               </button>
 
             </div>
 
-          </div>
-
-        ))}
+          );
+        })}
 
       </div>
 
-      {/* COMMANDES */}
-      <h1 className="text-3xl font-bold mb-6">
-        📦 Commandes
-      </h1>
-
-      {commandes.length === 0 ? (
-        <p>Aucune commande</p>
-      ) : (
-        <div className="space-y-6">
-
-          {commandes.map((cmd) => (
-
-            <div
-              key={cmd.id}
-              className="bg-white p-5 rounded-xl shadow"
-            >
-
-              <div className="flex justify-between mb-4">
-
-                <div>
-                  <p className="font-bold">
-                    {cmd.client}
-                  </p>
-
-                  <p>Email : {cmd.email}</p>
-                  <p>
-                    Téléphone : {cmd.telephone}
-                  </p>
-                  <p>
-                    Code postal : {cmd.code_postal}
-                  </p>
-                  <p>
-                    Adresse : {cmd.adresse}
-                  </p>
-                </div>
-
-                <p className="text-sm text-gray-500">
-                  {new Date(
-                    cmd.created_at
-                  ).toLocaleString()}
-                </p>
-
-              </div>
-
-              <div className="space-y-2">
-
-                {cmd.produits.map(
-                  (
-                    item: any,
-                    index: number
-                  ) => (
-
-                    <div
-                      key={index}
-                      className="flex justify-between border-b pb-2"
-                    >
-
-                      <span>
-                        {item.name} x{" "}
-                        {item.quantity}
-                      </span>
-
-                      <span>
-                        {(
-                          item.price *
-                          item.quantity
-                        ).toFixed(2)}
-                        €
-                      </span>
-
-                    </div>
-                  )
-                )}
-
-              </div>
-
-              <div className="mt-4 text-right font-bold text-purple-600">
-                Total : {cmd.total} €
-              </div>
-
-            </div>
-
-          ))}
-
-        </div>
-      )}
     </div>
   );
 }

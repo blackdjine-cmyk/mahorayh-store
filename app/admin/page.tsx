@@ -187,7 +187,7 @@ export default function AdminPage() {
       setModelImage("");
       setModelDescription("");
 
-      fetchModels();
+      location.reload();
     }
   };
 

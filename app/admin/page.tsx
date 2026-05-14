@@ -207,7 +207,22 @@ const deleteProduct = async (id: number) => {
 
   fetchProducts();
 };
+// 🗑 SUPPRIMER MODELE
+const deleteModel = async (id: number) => {
 
+  const confirmDelete = confirm(
+    "Supprimer ce modèle ?"
+  );
+
+  if (!confirmDelete) return;
+
+  await supabase
+    .from("product_models")
+    .delete()
+    .eq("id", id);
+
+  fetchModels();
+};
 // ✏️ MODIFIER PRODUIT
 function editProduct(product: any) {
 
@@ -545,8 +560,9 @@ function editProduct(product: any) {
                        </button>
 
                        <button
-                          className="bg-red-600 text-white px-3 py-1 rounded-lg"
-                      >
+                          onClick={() => deleteModel(model.id)}
+                           className="bg-red-600 text-white px-3 py-1 rounded-lg"
+                          >
                          Supprimer modèle
                          </button>
 

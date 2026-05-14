@@ -108,8 +108,9 @@ export default function ProduitPage() {
 
   // 🖼️ IMAGE ACTIVE
   const activeImage =
-    selectedModel?.model_image ||
-    selectedProduct.image;
+  selectedModel?.model_image
+    ? selectedModel.model_image
+    : selectedProduct.image;
 
   // 💰 PRIX ACTIF
   const activePrice =
@@ -316,7 +317,12 @@ export default function ProduitPage() {
 
         <div className="grid md:grid-cols-3 gap-8">
 
-          {products.map((product) => (
+          {products
+         .filter(
+         (product) =>
+         product.id !== selectedProduct.id
+        )
+         .map((product) => (
 
             <div
               key={product.id}

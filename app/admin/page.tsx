@@ -19,9 +19,15 @@ export default function AdminPage() {
   const [image, setImage] = useState("");
   const [badge, setBadge] = useState("");
   const [category, setCategory] = useState("");
-  const [uploading, setUploading] = useState(false);
+
   const [variant, setVariant] = useState("");
   const [variantPrice, setVariantPrice] = useState("");
+
+  const [model, setModel] = useState("");
+  const [modelImage, setModelImage] = useState("");
+  const [modelPrice, setModelPrice] = useState("");
+
+  const [uploading, setUploading] = useState(false);
 
   // ➕ Ajouter produit
   const addProduct = async () => {
@@ -36,8 +42,13 @@ export default function AdminPage() {
           image,
           badge,
           category,
+
           variant,
           variant_price: Number(variantPrice),
+
+          model,
+          model_image: modelImage,
+          model_price: Number(modelPrice),
         },
       ]);
 
@@ -54,76 +65,78 @@ export default function AdminPage() {
       setImage("");
       setBadge("");
       setCategory("");
+
       setVariant("");
       setVariantPrice("");
+
+      setModel("");
+      setModelImage("");
+      setModelPrice("");
 
       location.reload();
     }
   };
 
   // 📸 Upload image
-const uploadImage = async (
-  e: React.ChangeEvent<HTMLInputElement>
-) => {
+  const uploadImage = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = e.target.files?.[0];
 
-  const file = e.target.files?.[0];
+    if (!file) return;
 
-  if (!file) return;
+    setUploading(true);
 
-  setUploading(true);
+    const fileName = `${Date.now()}-${file.name}`;
 
-  const fileName = `${Date.now()}-${file.name}`;
+    const { error } = await supabase.storage
+      .from("products")
+      .upload(fileName, file);
 
-  const { error } = await supabase.storage
-    .from("products")
-    .upload(fileName, file);
+    if (error) {
+      console.log(error);
+      alert("Erreur upload image");
+      setUploading(false);
+      return;
+    }
 
-  if (error) {
-    console.log(error);
-    alert("Erreur upload image");
+    const {
+      data: { publicUrl },
+    } = supabase.storage
+      .from("products")
+      .getPublicUrl(fileName);
+
+    setImage(publicUrl);
+
     setUploading(false);
-    return;
-  }
-
-  const {
-    data: { publicUrl },
-  } = supabase.storage
-    .from("products")
-    .getPublicUrl(fileName);
-
-  setImage(publicUrl);
-
-  setUploading(false);
-};
+  };
 
   // 🗑️ Supprimer produit
-const deleteProduct = async (id: number) => {
-
-  const confirmDelete = confirm(
-    "Supprimer ce produit ?"
-  );
-
-  if (!confirmDelete) return;
-
-  const { error } = await supabase
-    .from("products")
-    .delete()
-    .eq("id", id);
-
-  if (error) {
-    console.log(error);
-    alert("Erreur suppression");
-  } else {
-
-    alert("Produit supprimé !");
-
-    setProducts(
-      products.filter(
-        (product) => product.id !== id
-      )
+  const deleteProduct = async (id: number) => {
+    const confirmDelete = confirm(
+      "Supprimer ce produit ?"
     );
-  }
-};
+
+    if (!confirmDelete) return;
+
+    const { error } = await supabase
+      .from("products")
+      .delete()
+      .eq("id", id);
+
+    if (error) {
+      console.log(error);
+      alert("Erreur suppression");
+    } else {
+      alert("Produit supprimé !");
+
+      setProducts(
+        products.filter(
+          (product) => product.id !== id
+        )
+      );
+    }
+  };
 
   // ✏️ Modifier produit
   const updateProduct = async () => {
@@ -139,8 +152,13 @@ const deleteProduct = async (id: number) => {
         image,
         badge,
         category,
+
         variant,
         variant_price: Number(variantPrice),
+
+        model,
+        model_image: modelImage,
+        model_price: Number(modelPrice),
       })
       .eq("id", editingId);
 
@@ -159,8 +177,13 @@ const deleteProduct = async (id: number) => {
       setImage("");
       setBadge("");
       setCategory("");
+
       setVariant("");
       setVariantPrice("");
+
+      setModel("");
+      setModelImage("");
+      setModelPrice("");
 
       location.reload();
     }
@@ -180,9 +203,7 @@ const deleteProduct = async (id: number) => {
     if (!isAuth) return;
 
     const fetchData = async () => {
-
-      // 📦 Commandes
-      const { data: commandesData, error: commandesError } =
+      const { data: commandesData } =
         await supabase
           .from("commandes")
           .select("*")
@@ -190,14 +211,9 @@ const deleteProduct = async (id: number) => {
             ascending: false,
           });
 
-      if (commandesError) {
-        console.log(commandesError);
-      } else {
-        setCommandes(commandesData || []);
-      }
+      setCommandes(commandesData || []);
 
-      // 🛍️ Produits
-      const { data: productsData, error: productsError } =
+      const { data: productsData } =
         await supabase
           .from("products")
           .select("*")
@@ -205,17 +221,13 @@ const deleteProduct = async (id: number) => {
             ascending: false,
           });
 
-      if (productsError) {
-        console.log(productsError);
-      } else {
-        setProducts(productsData || []);
-      }
+      setProducts(productsData || []);
     };
 
     fetchData();
   }, [isAuth]);
 
-  // 🔒 Écran connexion
+  // 🔒 Login
   if (!isAuth) {
     return (
       <div className="flex flex-col items-center justify-center h-screen gap-4">
@@ -268,7 +280,9 @@ const deleteProduct = async (id: number) => {
           <textarea
             placeholder="Description"
             value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={(e) =>
+              setDescription(e.target.value)
+            }
             className="w-full border p-4 rounded-xl"
           />
 
@@ -284,33 +298,36 @@ const deleteProduct = async (id: number) => {
             type="number"
             placeholder="Ancien prix"
             value={oldPrice}
-            onChange={(e) => setOldPrice(e.target.value)}
+            onChange={(e) =>
+              setOldPrice(e.target.value)
+            }
             className="w-full border p-4 rounded-xl"
           />
 
+          {/* IMAGE */}
           <div className="space-y-2">
 
-           <input
-            type="file"
-            accept="image/*"
-            onChange={uploadImage}
-           className="w-full border p-4 rounded-xl"
-          />
+            <input
+              type="file"
+              accept="image/*"
+              onChange={uploadImage}
+              className="w-full border p-4 rounded-xl"
+            />
 
-           {uploading && (
-           <p className="text-purple-600">
-           Upload en cours...
-         </p>
-      )}
+            {uploading && (
+              <p className="text-purple-600">
+                Upload en cours...
+              </p>
+            )}
 
-         {image && (
-         <img
-         src={image}
-         alt="Preview"
-         className="w-40 rounded-xl"
-       />
-      )}
-      </div>
+            {image && (
+              <img
+                src={image}
+                alt="Preview"
+                className="w-40 rounded-xl"
+              />
+            )}
+          </div>
 
           <input
             type="text"
@@ -319,84 +336,118 @@ const deleteProduct = async (id: number) => {
             onChange={(e) => setBadge(e.target.value)}
             className="w-full border p-4 rounded-xl"
           />
-           
+
+          {/* CATÉGORIE */}
           <select
-  value={category}
-  onChange={(e) => setCategory(e.target.value)}
-  className="w-full border p-4 rounded-xl"
->
-  <option value="">
-    Choisir une catégorie
-  </option>
+            value={category}
+            onChange={(e) =>
+              setCategory(e.target.value)
+            }
+            className="w-full border p-4 rounded-xl"
+          >
+            <option value="">
+              Choisir une catégorie
+            </option>
 
-  <option value="Soins visage">
-    Soins visage
-  </option>
+            <option value="Soins visage">
+              Soins visage
+            </option>
 
-  <option value="Huiles">
-    Huiles
-  </option>
+            <option value="Huiles">
+              Huiles
+            </option>
 
-  <option value="Savons">
-    Savons
-  </option>
+            <option value="Savons">
+              Savons
+            </option>
 
-  <option value="Packs">
-    Packs
-  </option>
-</select>
+            <option value="Packs">
+              Packs
+            </option>
+          </select>
 
-<input
-  type="text"
-  placeholder="Variante (30ml, 50ml...)"
-  value={variant}
-  onChange={(e) =>
-    setVariant(e.target.value)
-  }
-  className="w-full border p-4 rounded-xl"
-/>
+          {/* VARIANTE */}
+          <input
+            type="text"
+            placeholder="Variante (30ml, 50ml...)"
+            value={variant}
+            onChange={(e) =>
+              setVariant(e.target.value)
+            }
+            className="w-full border p-4 rounded-xl"
+          />
 
-<input
-  type="number"
-  placeholder="Prix variante"
-  value={variantPrice}
-  onChange={(e) =>
-    setVariantPrice(e.target.value)
-  }
-  className="w-full border p-4 rounded-xl"
-/>
+          <input
+            type="number"
+            placeholder="Prix variante"
+            value={variantPrice}
+            onChange={(e) =>
+              setVariantPrice(e.target.value)
+            }
+            className="w-full border p-4 rounded-xl"
+          />
 
+          {/* MODÈLE */}
+          <input
+            type="text"
+            placeholder="Nom du modèle"
+            value={model}
+            onChange={(e) =>
+              setModel(e.target.value)
+            }
+            className="w-full border p-4 rounded-xl"
+          />
 
+          <input
+            type="text"
+            placeholder="Image du modèle (URL)"
+            value={modelImage}
+            onChange={(e) =>
+              setModelImage(e.target.value)
+            }
+            className="w-full border p-4 rounded-xl"
+          />
 
+          <input
+            type="number"
+            placeholder="Prix du modèle"
+            value={modelPrice}
+            onChange={(e) =>
+              setModelPrice(e.target.value)
+            }
+            className="w-full border p-4 rounded-xl"
+          />
+
+          {/* BOUTON */}
           <button
-  disabled={
-    uploading ||
-    !name ||
-    !description ||
-    !price ||
-    !image
-  }
-  onClick={
-    editingId
-      ? updateProduct
-      : addProduct
-  }
-  className={`w-full py-4 rounded-xl font-bold text-white transition ${
-    uploading ||
-    !name ||
-    !description ||
-    !price ||
-    !image
-      ? "bg-gray-400 cursor-not-allowed"
-      : "bg-purple-700 hover:bg-purple-800"
-  }`}
->
-  {uploading
-    ? "Upload image..."
-    : editingId
-    ? "Modifier le produit"
-    : "Ajouter le produit"}
-</button>
+            disabled={
+              uploading ||
+              !name ||
+              !description ||
+              !price ||
+              !image
+            }
+            onClick={
+              editingId
+                ? updateProduct
+                : addProduct
+            }
+            className={`w-full py-4 rounded-xl font-bold text-white transition ${
+              uploading ||
+              !name ||
+              !description ||
+              !price ||
+              !image
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-purple-700 hover:bg-purple-800"
+            }`}
+          >
+            {uploading
+              ? "Upload image..."
+              : editingId
+              ? "Modifier le produit"
+              : "Ajouter le produit"}
+          </button>
 
         </div>
       </div>
@@ -407,11 +458,14 @@ const deleteProduct = async (id: number) => {
       </h1>
 
       <div className="grid md:grid-cols-2 gap-6 mb-12">
+
         {products.map((product) => (
+
           <div
             key={product.id}
             className="bg-white p-5 rounded-xl shadow"
           >
+
             <img
               src={product.image}
               alt={product.name}
@@ -421,19 +475,37 @@ const deleteProduct = async (id: number) => {
             <h2 className="text-xl font-bold">
               {product.name}
             </h2>
-             <p className="text-sm text-gray-500">
-             {product.category}
-             </p>
-             <p className="text-sm text-gray-500">
-               Variante : {product.variant}
-             </p>
 
-             <p className="text-sm text-gray-500">
+            <p className="text-sm text-gray-500">
+              {product.category}
+            </p>
+
+            <p className="text-sm text-gray-500">
+              Variante : {product.variant}
+            </p>
+
+            <p className="text-sm text-gray-500">
               Prix variante :
-             {product.variant_price} €
-             </p>
+              {product.variant_price} €
+            </p>
 
-            <p className="text-gray-600 mb-2">
+            <p className="text-sm text-gray-500">
+              Modèle : {product.model}
+            </p>
+
+            <p className="text-sm text-gray-500">
+              Prix modèle :
+              {product.model_price} €
+            </p>
+
+            {product.model_image && (
+              <img
+                src={product.model_image}
+                className="w-24 h-24 object-cover rounded-lg mt-2"
+              />
+            )}
+
+            <p className="text-gray-600 mb-2 mt-3">
               {product.description}
             </p>
 
@@ -446,18 +518,34 @@ const deleteProduct = async (id: number) => {
               <button
                 onClick={() => {
                   setEditingId(product.id);
+
                   setCategory(product.category);
 
                   setName(product.name);
                   setDescription(product.description);
                   setPrice(String(product.price));
-                  setOldPrice(String(product.old_price));
+                  setOldPrice(
+                    String(product.old_price)
+                  );
+
                   setImage(product.image);
                   setBadge(product.badge);
+
                   setVariant(product.variant);
+
                   setVariantPrice(
-                  String(product.variant_price)
-                );
+                    String(product.variant_price)
+                  );
+
+                  setModel(product.model);
+
+                  setModelImage(
+                    product.model_image
+                  );
+
+                  setModelPrice(
+                    String(product.model_price)
+                  );
                 }}
                 className="bg-blue-600 text-white px-4 py-2 rounded-lg"
               >
@@ -465,17 +553,20 @@ const deleteProduct = async (id: number) => {
               </button>
 
               <button
-                 onClick={() =>
+                onClick={() =>
                   deleteProduct(product.id)
-               }
-               className="bg-red-600 text-white px-4 py-2 rounded-lg"
+                }
+                className="bg-red-600 text-white px-4 py-2 rounded-lg"
               >
                 Supprimer
-               </button>
+              </button>
 
             </div>
+
           </div>
+
         ))}
+
       </div>
 
       {/* COMMANDES */}
@@ -487,11 +578,14 @@ const deleteProduct = async (id: number) => {
         <p>Aucune commande</p>
       ) : (
         <div className="space-y-6">
+
           {commandes.map((cmd) => (
+
             <div
               key={cmd.id}
               className="bg-white p-5 rounded-xl shadow"
             >
+
               <div className="flex justify-between mb-4">
 
                 <div>
@@ -500,9 +594,15 @@ const deleteProduct = async (id: number) => {
                   </p>
 
                   <p>Email : {cmd.email}</p>
-                  <p>Téléphone : {cmd.telephone}</p>
-                  <p>Code postal : {cmd.code_postal}</p>
-                  <p>Adresse : {cmd.adresse}</p>
+                  <p>
+                    Téléphone : {cmd.telephone}
+                  </p>
+                  <p>
+                    Code postal : {cmd.code_postal}
+                  </p>
+                  <p>
+                    Adresse : {cmd.adresse}
+                  </p>
                 </div>
 
                 <p className="text-sm text-gray-500">
@@ -510,15 +610,22 @@ const deleteProduct = async (id: number) => {
                     cmd.created_at
                   ).toLocaleString()}
                 </p>
+
               </div>
 
               <div className="space-y-2">
+
                 {cmd.produits.map(
-                  (item: any, index: number) => (
+                  (
+                    item: any,
+                    index: number
+                  ) => (
+
                     <div
                       key={index}
                       className="flex justify-between border-b pb-2"
                     >
+
                       <span>
                         {item.name} x{" "}
                         {item.quantity}
@@ -531,16 +638,21 @@ const deleteProduct = async (id: number) => {
                         ).toFixed(2)}
                         €
                       </span>
+
                     </div>
                   )
                 )}
+
               </div>
 
               <div className="mt-4 text-right font-bold text-purple-600">
                 Total : {cmd.total} €
               </div>
+
             </div>
+
           ))}
+
         </div>
       )}
     </div>

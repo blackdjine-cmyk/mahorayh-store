@@ -320,9 +320,10 @@ export default function ProduitPage() {
           {products
          .filter(
          (product) =>
-         product.id !== selectedProduct.id
-        )
+          product.id !== selectedProduct.id
+          )
          .map((product) => (
+          
 
             <div
               key={product.id}
@@ -368,6 +369,7 @@ export default function ProduitPage() {
                   >
                     Voir
                   </button>
+                  ))
 
                 </div>
 

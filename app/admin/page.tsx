@@ -20,6 +20,8 @@ export default function AdminPage() {
   const [badge, setBadge] = useState("");
   const [category, setCategory] = useState("");
   const [uploading, setUploading] = useState(false);
+  const [variant, setVariant] = useState("");
+  const [variantPrice, setVariantPrice] = useState("");
 
   // ➕ Ajouter produit
   const addProduct = async () => {
@@ -34,6 +36,8 @@ export default function AdminPage() {
           image,
           badge,
           category,
+          variant,
+          variant_price: Number(variantPrice),
         },
       ]);
 
@@ -50,6 +54,8 @@ export default function AdminPage() {
       setImage("");
       setBadge("");
       setCategory("");
+      setVariant("");
+      setVariantPrice("");
 
       location.reload();
     }
@@ -133,6 +139,8 @@ const deleteProduct = async (id: number) => {
         image,
         badge,
         category,
+        variant,
+        variant_price: Number(variantPrice),
       })
       .eq("id", editingId);
 
@@ -151,6 +159,8 @@ const deleteProduct = async (id: number) => {
       setImage("");
       setBadge("");
       setCategory("");
+      setVariant("");
+      setVariantPrice("");
 
       location.reload();
     }
@@ -336,6 +346,28 @@ const deleteProduct = async (id: number) => {
   </option>
 </select>
 
+<input
+  type="text"
+  placeholder="Variante (30ml, 50ml...)"
+  value={variant}
+  onChange={(e) =>
+    setVariant(e.target.value)
+  }
+  className="w-full border p-4 rounded-xl"
+/>
+
+<input
+  type="number"
+  placeholder="Prix variante"
+  value={variantPrice}
+  onChange={(e) =>
+    setVariantPrice(e.target.value)
+  }
+  className="w-full border p-4 rounded-xl"
+/>
+
+
+
           <button
   disabled={
     uploading ||
@@ -392,6 +424,14 @@ const deleteProduct = async (id: number) => {
              <p className="text-sm text-gray-500">
              {product.category}
              </p>
+             <p className="text-sm text-gray-500">
+               Variante : {product.variant}
+             </p>
+
+             <p className="text-sm text-gray-500">
+              Prix variante :
+             {product.variant_price} €
+             </p>
 
             <p className="text-gray-600 mb-2">
               {product.description}
@@ -414,6 +454,10 @@ const deleteProduct = async (id: number) => {
                   setOldPrice(String(product.old_price));
                   setImage(product.image);
                   setBadge(product.badge);
+                  setVariant(product.variant);
+                  setVariantPrice(
+                  String(product.variant_price)
+                );
                 }}
                 className="bg-blue-600 text-white px-4 py-2 rounded-lg"
               >

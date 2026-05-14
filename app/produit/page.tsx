@@ -17,6 +17,9 @@ export default function ProduitPage() {
   const [selectedModel, setSelectedModel] =
     useState<any>(null);
 
+  const [selectedImage, setSelectedImage] =
+    useState("");
+
   // 📦 FETCH DATA
   useEffect(() => {
     fetchData();
@@ -108,9 +111,7 @@ export default function ProduitPage() {
 
   // 🖼️ IMAGE ACTIVE
   const activeImage =
-  selectedModel?.model_image
-    ? selectedModel.model_image
-    : selectedProduct.image;
+  selectedImage || selectedProduct.image;
 
   // 💰 PRIX ACTIF
   const activePrice =
@@ -158,11 +159,10 @@ export default function ProduitPage() {
 
                     <button
                       key={model.id}
-                      onClick={() =>
-                        setSelectedModel(
-                          model
-                        )
-                      }
+                      onClick={() => {
+                     setSelectedModel(model);
+                     setSelectedImage(model.model_image);
+                     }}
                       className={`border-2 rounded-2xl p-2 transition hover:scale-105 ${
                         selectedModel?.id ===
                         model.id
@@ -362,9 +362,17 @@ export default function ProduitPage() {
                   </span>
 
                   <button
-                    onClick={() =>
-                      changeProduct(product)
-                    }
+                    onClick={() => {
+                    changeProduct(product);
+
+                   setSelectedImage("");
+                   setSelectedModel(null);
+
+                   window.scrollTo({
+                   top: 0,
+                   behavior: "smooth",
+                 });
+                }}
                     className="bg-gradient-to-r from-fuchsia-600 to-purple-700 text-white px-6 py-3 rounded-2xl font-semibold shadow-lg hover:scale-105 transition"
                   >
                     Voir

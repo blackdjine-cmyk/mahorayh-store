@@ -102,7 +102,10 @@ export default function EditPage() {
       uploadedImages.push(publicUrl);
     }
 
-    setImages(uploadedImages);
+    setImages((prev) => [
+  ...prev,
+  ...uploadedImages,
+]);
 
     setUploading(false);
   };

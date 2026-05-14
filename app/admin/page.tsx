@@ -31,13 +31,20 @@ export default function AdminPage() {
   const [modelDescription, setModelDescription] =
     useState("");
 
+  const [editingModelId, setEditingModelId] =
+    useState<number | null>(null);
+
   const [uploading, setUploading] = useState(false);
 
   // 🔐 LOGIN
   const handleLogin = () => {
+
     if (password === "admin123") {
+
       setIsAuth(true);
+
     } else {
+
       alert("Mot de passe incorrect");
     }
   };
@@ -62,8 +69,11 @@ export default function AdminPage() {
       });
 
     if (error) {
+
       console.log(error);
+
     } else {
+
       setProducts(data || []);
     }
   };
@@ -75,8 +85,11 @@ export default function AdminPage() {
       .select("*");
 
     if (error) {
+
       console.log(error);
+
     } else {
+
       setModels(data || []);
     }
   };
@@ -101,6 +114,7 @@ export default function AdminPage() {
       .upload(fileName, file);
 
     if (error) {
+
       console.log(error);
       alert("Erreur upload");
       setUploading(false);
@@ -114,8 +128,11 @@ export default function AdminPage() {
       .getPublicUrl(fileName);
 
     if (type === "product") {
+
       setImage(publicUrl);
+
     } else {
+
       setModelImage(publicUrl);
     }
 
@@ -140,8 +157,10 @@ export default function AdminPage() {
       ]);
 
     if (error) {
+
       console.log(error);
       alert("Erreur ajout produit");
+
     } else {
 
       alert("Produit ajouté");
@@ -158,87 +177,159 @@ export default function AdminPage() {
     }
   };
 
-  // ➕ AJOUT MODELE
+  // ➕ / ✏️ AJOUT OU MODIFICATION MODELE
   const addModel = async () => {
 
-    const { error } = await supabase
-      .from("product_models")
-      .insert([
-        {
-          product_id: Number(selectedProductId),
+    if (editingModelId) {
+
+      const { error } = await supabase
+        .from("product_models")
+        .update({
           model_name: modelName,
           model_price: Number(modelPrice),
           model_image: modelImage,
           model_description:
             modelDescription,
-        },
-      ]);
+        })
+        .eq("id", editingModelId);
 
-    if (error) {
-  console.log(error);
-  alert(error.message);
-}
-     else {
+      if (error) {
 
-      alert("Modèle ajouté");
+        console.log(error);
+        alert(error.message);
 
-      setModelName("");
-      setModelPrice("");
-      setModelImage("");
-      setModelDescription("");
+      } else {
 
-      location.reload();
+        alert("Modèle modifié");
+
+        setEditingModelId(null);
+
+        setModelName("");
+        setModelPrice("");
+        setModelImage("");
+        setModelDescription("");
+
+        fetchModels();
+      }
+
+    } else {
+
+      const { error } = await supabase
+        .from("product_models")
+        .insert([
+          {
+            product_id: Number(selectedProductId),
+            model_name: modelName,
+            model_price: Number(modelPrice),
+            model_image: modelImage,
+            model_description:
+              modelDescription,
+          },
+        ]);
+
+      if (error) {
+
+        console.log(error);
+        alert(error.message);
+
+      } else {
+
+        alert("Modèle ajouté");
+
+        setModelName("");
+        setModelPrice("");
+        setModelImage("");
+        setModelDescription("");
+
+        fetchModels();
+      }
     }
   };
 
   // 🗑 DELETE PRODUIT
-const deleteProduct = async (id: number) => {
+  const deleteProduct = async (
+    id: number
+  ) => {
 
-  const confirmDelete = confirm(
-    "Supprimer ce produit ?"
-  );
+    const confirmDelete = confirm(
+      "Supprimer ce produit ?"
+    );
 
-  if (!confirmDelete) return;
+    if (!confirmDelete) return;
 
-  await supabase
-    .from("products")
-    .delete()
-    .eq("id", id);
+    await supabase
+      .from("products")
+      .delete()
+      .eq("id", id);
 
-  fetchProducts();
-};
-// 🗑 SUPPRIMER MODELE
-const deleteModel = async (id: number) => {
+    fetchProducts();
+  };
 
-  const confirmDelete = confirm(
-    "Supprimer ce modèle ?"
-  );
+  // 🗑 DELETE MODELE
+  const deleteModel = async (
+    id: number
+  ) => {
 
-  if (!confirmDelete) return;
+    const confirmDelete = confirm(
+      "Supprimer ce modèle ?"
+    );
 
-  await supabase
-    .from("product_models")
-    .delete()
-    .eq("id", id);
+    if (!confirmDelete) return;
 
-  fetchModels();
-};
-// ✏️ MODIFIER PRODUIT
-function editProduct(product: any) {
+    await supabase
+      .from("product_models")
+      .delete()
+      .eq("id", id);
 
-  localStorage.setItem(
-    "productToEdit",
-    JSON.stringify(product)
-  );
+    fetchModels();
+  };
 
-  window.location.href = "/admin/edit";
-}
-  
+  // ✏️ MODIFIER PRODUIT
+  function editProduct(product: any) {
+
+    localStorage.setItem(
+      "productToEdit",
+      JSON.stringify(product)
+    );
+
+    window.location.href =
+      "/admin/edit";
+  }
+
+  // ✏️ MODIFIER MODELE
+  const editModel = (model: any) => {
+
+    setEditingModelId(model.id);
+
+    setSelectedProductId(
+      String(model.product_id)
+    );
+
+    setModelName(model.model_name || "");
+
+    setModelPrice(
+      String(model.model_price || "")
+    );
+
+    setModelImage(
+      model.model_image || ""
+    );
+
+    setModelDescription(
+      model.model_description || ""
+    );
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
 
   // 🔒 LOGIN PAGE
   if (!isAuth) {
 
     return (
+
       <div className="flex flex-col items-center justify-center h-screen gap-4">
 
         <h1 className="text-3xl font-bold">
@@ -270,7 +361,7 @@ function editProduct(product: any) {
 
     <div className="max-w-6xl mx-auto p-6">
 
-      {/* PRODUIT PRINCIPAL */}
+      {/* PRODUIT */}
 
       <div className="bg-white p-6 rounded-2xl shadow mb-10">
 
@@ -329,6 +420,7 @@ function editProduct(product: any) {
           />
 
           {image && (
+
             <img
               src={image}
               className="w-40 rounded-xl"
@@ -352,6 +444,7 @@ function editProduct(product: any) {
             }
             className="w-full border p-4 rounded-xl"
           >
+
             <option value="">
               Choisir une catégorie
             </option>
@@ -385,12 +478,16 @@ function editProduct(product: any) {
 
       </div>
 
-      {/* AJOUT MODELES */}
+      {/* MODELES */}
 
       <div className="bg-white p-6 rounded-2xl shadow mb-10">
 
         <h2 className="text-3xl font-bold mb-6">
-          🎨 Ajouter un modèle
+
+          {editingModelId
+            ? "✏️ Modifier un modèle"
+            : "🎨 Ajouter un modèle"}
+
         </h2>
 
         <div className="space-y-4">
@@ -463,6 +560,7 @@ function editProduct(product: any) {
           />
 
           {modelImage && (
+
             <img
               src={modelImage}
               className="w-40 rounded-xl"
@@ -473,14 +571,18 @@ function editProduct(product: any) {
             onClick={addModel}
             className="w-full bg-fuchsia-600 text-white py-4 rounded-xl font-bold"
           >
-            Ajouter le modèle
+
+            {editingModelId
+              ? "Sauvegarder modèle"
+              : "Ajouter le modèle"}
+
           </button>
 
         </div>
 
       </div>
 
-      {/* PRODUITS */}
+      {/* LISTE PRODUITS */}
 
       <h1 className="text-3xl font-bold mb-6">
         🛍️ Produits
@@ -551,22 +653,28 @@ function editProduct(product: any) {
                           <p>
                             {model.model_price} €
                           </p>
+
                           <div className="flex gap-2 mt-3">
 
-                        <button
-                           className="bg-blue-600 text-white px-3 py-1 rounded-lg"
-                         >
-                         Modifier modèle
-                       </button>
+                            <button
+                              onClick={() =>
+                                editModel(model)
+                              }
+                              className="bg-blue-600 text-white px-3 py-1 rounded-lg"
+                            >
+                              Modifier modèle
+                            </button>
 
-                       <button
-                          onClick={() => deleteModel(model.id)}
-                           className="bg-red-600 text-white px-3 py-1 rounded-lg"
-                          >
-                         Supprimer modèle
-                         </button>
+                            <button
+                              onClick={() =>
+                                deleteModel(model.id)
+                              }
+                              className="bg-red-600 text-white px-3 py-1 rounded-lg"
+                            >
+                              Supprimer modèle
+                            </button>
 
-                       </div>
+                          </div>
 
                         </div>
 
@@ -581,23 +689,28 @@ function editProduct(product: any) {
               </div>
 
               <div className="flex gap-3 mt-5">
-  <button
-    onClick={() => editProduct(product)}
-    className="bg-blue-600 text-white px-4 py-2 rounded-xl"
-  >
-    Modifier
-  </button>
 
-  <button
-    onClick={() => deleteProduct(product.id)}
-    className="bg-red-600 text-white px-4 py-2 rounded-xl"
-  >
-    Supprimer
-  </button>
-</div>
+                <button
+                  onClick={() =>
+                    editProduct(product)
+                  }
+                  className="bg-blue-600 text-white px-4 py-2 rounded-xl"
+                >
+                  Modifier
+                </button>
+
+                <button
+                  onClick={() =>
+                    deleteProduct(product.id)
+                  }
+                  className="bg-red-600 text-white px-4 py-2 rounded-xl"
+                >
+                  Supprimer
+                </button>
+
+              </div>
 
             </div>
-
           );
         })}
 

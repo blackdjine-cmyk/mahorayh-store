@@ -20,6 +20,9 @@ export default function ProduitPage() {
   const [selectedImage, setSelectedImage] =
     useState("");
 
+  const [temporaryImage, setTemporaryImage] =
+    useState<string | null>(null);
+
   // 📦 FETCH DATA
   useEffect(() => {
     fetchData();
@@ -112,6 +115,8 @@ export default function ProduitPage() {
   // 🖼️ IMAGE ACTIVE
   const activeImage =
   selectedImage || selectedProduct.image;
+  const galleryImages =
+  selectedProduct.images || [];
 
   // 💰 PRIX ACTIF
   const activePrice =
@@ -136,10 +141,45 @@ export default function ProduitPage() {
 
           <div className="bg-[#f8f5ef] rounded-3xl p-4 shadow-lg">
 
-            <img
-              src={activeImage}
-              className="w-full rounded-2xl object-cover"
-            />
+            <div className="space-y-4">
+
+  {/* IMAGE PRINCIPALE */}
+
+  <img
+    src={activeImage}
+    className="w-full rounded-3xl shadow-xl"
+  />
+
+  {/* MINIATURES */}
+
+  {selectedProduct.images &&
+    selectedProduct.images.length > 0 && (
+
+    <div className="flex gap-3 flex-wrap">
+
+      {selectedProduct.images.map(
+        (img: string, index: number) => (
+
+          <img
+            key={index}
+            src={img}
+            onClick={() =>
+              setSelectedModel({
+                ...selectedModel,
+                model_image: img,
+              })
+            }
+            className="w-24 h-24 object-cover rounded-2xl border-2 border-purple-500 cursor-pointer hover:scale-105 transition"
+          />
+
+        )
+      )}
+
+    </div>
+
+  )}
+
+</div>
 
           </div>
 
@@ -159,10 +199,9 @@ export default function ProduitPage() {
 
                     <button
                       key={model.id}
-                      onClick={() => {
-                     setSelectedModel(model);
-                     setSelectedImage(model.model_image);
-                     }}
+                      onClick={() =>
+                     setSelectedImage(model.model_image)
+                     }
                       className={`border-2 rounded-2xl p-2 transition hover:scale-105 ${
                         selectedModel?.id ===
                         model.id

@@ -20,47 +20,92 @@ export default function EditPage() {
     useState("");
 
   const [image, setImage] = useState("");
+  const [images, setImages] =
+    useState<string[]>([]);
 
   const [uploading, setUploading] =
-  useState(false);
+    useState(false);
 
-const uploadImage = async (
-  e: React.ChangeEvent<HTMLInputElement>
-) => {
+  // 📸 IMAGE PRINCIPALE
+  const uploadImage = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
 
-  const file = e.target.files?.[0];
+    const file = e.target.files?.[0];
 
-  if (!file) return;
+    if (!file) return;
 
-  setUploading(true);
+    setUploading(true);
 
-  const fileName = `${Date.now()}-${file.name}`;
+    const fileName =
+      `${Date.now()}-${file.name}`;
 
-  const { error } = await supabase.storage
-    .from("products")
-    .upload(fileName, file);
+    const { error } = await supabase.storage
+      .from("products")
+      .upload(fileName, file);
 
-  if (error) {
+    if (error) {
 
-    console.log(error);
+      console.log(error);
 
-    alert("Erreur upload image");
+      alert("Erreur upload image");
+
+      setUploading(false);
+
+      return;
+    }
+
+    const {
+      data: { publicUrl },
+    } = supabase.storage
+      .from("products")
+      .getPublicUrl(fileName);
+
+    setImage(publicUrl);
 
     setUploading(false);
+  };
 
-    return;
-  }
+  // 🖼️ GALERIE MULTI IMAGES
+  const uploadGalleryImages = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
 
-  const {
-    data: { publicUrl },
-  } = supabase.storage
-    .from("products")
-    .getPublicUrl(fileName);
+    const files = e.target.files;
 
-  setImage(publicUrl);
+    if (!files) return;
 
-  setUploading(false);
-};
+    setUploading(true);
+
+    const uploadedImages: string[] = [];
+
+    for (const file of Array.from(files)) {
+
+      const fileName =
+        `${Date.now()}-${file.name}`;
+
+      const { error } = await supabase.storage
+        .from("products")
+        .upload(fileName, file);
+
+      if (error) {
+        console.log(error);
+        continue;
+      }
+
+      const {
+        data: { publicUrl },
+      } = supabase.storage
+        .from("products")
+        .getPublicUrl(fileName);
+
+      uploadedImages.push(publicUrl);
+    }
+
+    setImages(uploadedImages);
+
+    setUploading(false);
+  };
 
   useEffect(() => {
 
@@ -75,25 +120,31 @@ const uploadImage = async (
       setProduct(parsed);
 
       setName(parsed.name || "");
+
       setDescription(
         parsed.description || ""
       );
 
       setPrice(parsed.price || "");
+
       setOldPrice(
         parsed.old_price || ""
       );
 
       setBadge(parsed.badge || "");
+
       setCategory(
         parsed.category || ""
       );
 
       setImage(parsed.image || "");
+
+      setImages(parsed.images || []);
     }
 
   }, []);
 
+  // 💾 SAVE
   const updateProduct = async () => {
 
     if (!product) return;
@@ -108,12 +159,14 @@ const uploadImage = async (
         badge,
         category,
         image,
+        images,
       })
       .eq("id", product.id);
 
     if (error) {
 
       console.log(error);
+
       alert("Erreur modification");
 
     } else {
@@ -196,30 +249,66 @@ const uploadImage = async (
           className="w-full border p-4 rounded-xl"
         />
 
+        {/* IMAGE PRINCIPALE */}
+
         <div className="space-y-3">
 
-  <input
-    type="file"
-    accept="image/*"
-    onChange={uploadImage}
-    className="w-full border p-4 rounded-xl"
-  />
+          <input
+            type="file"
+            accept="image/*"
+            onChange={uploadImage}
+            className="w-full border p-4 rounded-xl"
+          />
 
-  {uploading && (
-    <p className="text-purple-600">
-      Upload image...
-    </p>
-  )}
+          {image && (
 
-  {image && (
-    <img
-      src={image}
-      alt="Preview"
-      className="w-40 rounded-2xl border"
-    />
-  )}
+            <img
+              src={image}
+              alt="Preview"
+              className="w-40 rounded-2xl border"
+            />
 
-</div>
+          )}
+
+        </div>
+
+        {/* GALERIE */}
+
+        <div className="space-y-4">
+
+          <input
+            type="file"
+            accept="image/*"
+            multiple
+            onChange={uploadGalleryImages}
+            className="w-full border p-4 rounded-xl"
+          />
+
+          <div className="flex gap-3 flex-wrap">
+
+            {images.map((img, index) => (
+
+              <img
+                key={index}
+                src={img}
+                className="w-24 h-24 object-cover rounded-xl border"
+              />
+
+            ))}
+
+          </div>
+
+        </div>
+
+        {/* LOADING */}
+
+        {uploading && (
+
+          <p className="text-purple-600">
+            Upload image...
+          </p>
+
+        )}
 
         <button
           onClick={updateProduct}

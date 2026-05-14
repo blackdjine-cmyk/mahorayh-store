@@ -116,8 +116,8 @@ setSelectedImage("");
 
   // 🖼️ IMAGE ACTIVE
   const activeImage =
-  selectedModel?.model_image ||
   selectedImage ||
+  selectedModel?.model_image ||
   selectedProduct.image;
   const galleryImages =
   selectedProduct.images || [];
@@ -167,12 +167,16 @@ setSelectedImage("");
           <img
             key={index}
             src={img}
-            onClick={() =>
-              setSelectedModel({
-                ...selectedModel,
-                model_image: img,
-              })
-            }
+           onClick={() => {
+
+           setSelectedModel({
+           ...selectedModel,
+           model_image: img,
+           });
+
+           setSelectedImage(img);
+
+         }}
             className="w-24 h-24 object-cover rounded-2xl border-2 border-purple-500 cursor-pointer hover:scale-105 transition"
           />
 

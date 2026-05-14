@@ -191,22 +191,34 @@ export default function AdminPage() {
     }
   };
 
-  // 🗑️ DELETE PRODUIT
-  const deleteProduct = async (id: number) => {
+  // 🗑 DELETE PRODUIT
+const deleteProduct = async (id: number) => {
 
-    const confirmDelete = confirm(
-      "Supprimer ce produit ?"
-    );
+  const confirmDelete = confirm(
+    "Supprimer ce produit ?"
+  );
 
-    if (!confirmDelete) return;
+  if (!confirmDelete) return;
 
-    await supabase
-      .from("products")
-      .delete()
-      .eq("id", id);
+  await supabase
+    .from("products")
+    .delete()
+    .eq("id", id);
 
-    fetchProducts();
-  };
+  fetchProducts();
+};
+
+// ✏️ MODIFIER PRODUIT
+function editProduct(product: any) {
+
+  localStorage.setItem(
+    "productToEdit",
+    JSON.stringify(product)
+  );
+
+  window.location.href = "/admin/edit";
+}
+  
 
   // 🔒 LOGIN PAGE
   if (!isAuth) {
@@ -537,14 +549,21 @@ export default function AdminPage() {
 
               </div>
 
-              <button
-                onClick={() =>
-                  deleteProduct(product.id)
-                }
-                className="mt-5 bg-red-600 text-white px-4 py-2 rounded-xl"
-              >
-                Supprimer
-              </button>
+              <div className="flex gap-3 mt-5">
+  <button
+    onClick={() => editProduct(product)}
+    className="bg-blue-600 text-white px-4 py-2 rounded-xl"
+  >
+    Modifier
+  </button>
+
+  <button
+    onClick={() => deleteProduct(product.id)}
+    className="bg-red-600 text-white px-4 py-2 rounded-xl"
+  >
+    Supprimer
+  </button>
+</div>
 
             </div>
 

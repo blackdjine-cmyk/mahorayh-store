@@ -9,85 +9,78 @@ export default function ProduitPage() {
   const { addToCart } = useCart();
 
   const [products, setProducts] = useState<any[]>([]);
+  const [models, setModels] = useState<any[]>([]);
 
   const [selectedProduct, setSelectedProduct] =
-    useState(0);
-
-  const [selectedImage, setSelectedImage] =
-    useState("");
+    useState<any>(null);
 
   const [selectedModel, setSelectedModel] =
-    useState("");
+    useState<any>(null);
 
-  const [selectedPrice, setSelectedPrice] =
-    useState(0);
-
-  // 📦 Charger produits
+  // 📦 FETCH DATA
   useEffect(() => {
-    fetchProducts();
+    fetchData();
   }, []);
 
-  const fetchProducts = async () => {
+  const fetchData = async () => {
 
-    const { data, error } = await supabase
-      .from("products")
-      .select("*");
+    // 📦 PRODUITS
+    const { data: productsData } =
+      await supabase
+        .from("products")
+        .select("*")
+        .order("created_at", {
+          ascending: false,
+        });
 
-    if (error) {
-      console.log(error);
-    } else {
+    // 🎨 MODELES
+    const { data: modelsData } =
+      await supabase
+        .from("product_models")
+        .select("*");
 
-      setProducts(data || []);
+    setProducts(productsData || []);
+    setModels(modelsData || []);
 
-      // Initialisation premier produit
-      if (data && data.length > 0) {
+    // PRODUIT PAR DEFAUT
+    if (
+      productsData &&
+      productsData.length > 0
+    ) {
 
-        setSelectedImage(
-          data[0].model_image ||
-          data[0].image
+      const firstProduct =
+        productsData[0];
+
+      setSelectedProduct(firstProduct);
+
+      // PREMIER MODELE DU PRODUIT
+      const firstModel =
+        modelsData?.find(
+          (model) =>
+            model.product_id ===
+            firstProduct.id
         );
 
-        setSelectedModel(
-          data[0].model || ""
-        );
-
-        setSelectedPrice(
-          data[0].model_price ||
-          data[0].price
-        );
-      }
+      setSelectedModel(firstModel || null);
     }
   };
 
-  const product = products[selectedProduct];
+  // 🔄 CHANGER PRODUIT
+  const changeProduct = (
+    product: any
+  ) => {
 
-  if (!product) {
-    return (
-      <div className="text-center py-20 text-2xl">
-        Chargement des produits...
-      </div>
-    );
-  }
+    setSelectedProduct(product);
 
-  // 🔄 Changer produit
-  const changeProduct = (index: number) => {
-
-    const newProduct = products[index];
-
-    setSelectedProduct(index);
-
-    setSelectedImage(
-      newProduct.model_image ||
-      newProduct.image
-    );
+    const relatedModel =
+      models.find(
+        (model) =>
+          model.product_id ===
+          product.id
+      );
 
     setSelectedModel(
-      newProduct.model || ""
-    );
-
-    setSelectedPrice(
-      newProduct.model_price ||
-      newProduct.price
+      relatedModel || null
     );
 
     window.scrollTo({
@@ -96,10 +89,44 @@ export default function ProduitPage() {
     });
   };
 
+  if (!selectedProduct) {
+
+    return (
+      <div className="text-center py-20 text-2xl">
+        Chargement...
+      </div>
+    );
+  }
+
+  // 🎨 MODELES LIES
+  const relatedModels =
+    models.filter(
+      (model) =>
+        model.product_id ===
+        selectedProduct.id
+    );
+
+  // 🖼️ IMAGE ACTIVE
+  const activeImage =
+    selectedModel?.model_image ||
+    selectedProduct.image;
+
+  // 💰 PRIX ACTIF
+  const activePrice =
+    selectedModel?.model_price ||
+    selectedProduct.price;
+
+  // 📝 DESCRIPTION ACTIVE
+  const activeDescription =
+    selectedModel?.model_description ||
+    selectedProduct.description;
+
   return (
+
     <div className="max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-10">
 
-      {/* SECTION PRODUIT */}
+      {/* PRODUIT PRINCIPAL */}
+
       <div className="grid md:grid-cols-2 gap-12 items-start">
 
         {/* IMAGE */}
@@ -108,56 +135,56 @@ export default function ProduitPage() {
           <div className="bg-[#f8f5ef] rounded-3xl p-4 shadow-lg">
 
             <img
-              src={selectedImage}
+              src={activeImage}
               className="w-full rounded-2xl object-cover"
             />
 
           </div>
 
-          {/* MODÈLE */}
-          {product.model && (
+          {/* MODELES */}
+          {relatedModels.length > 0 && (
 
-            <div className="mt-6">
+            <div className="mt-8">
 
-              <h3 className="font-bold text-lg mb-4">
+              <h3 className="text-xl font-bold mb-4">
                 Choisir un modèle
               </h3>
 
-              <div className="flex gap-4">
+              <div className="flex gap-4 flex-wrap">
 
-                <button
-                  onClick={() => {
+                {relatedModels.map(
+                  (model) => (
 
-                    setSelectedModel(
-                      product.model
-                    );
+                    <button
+                      key={model.id}
+                      onClick={() =>
+                        setSelectedModel(
+                          model
+                        )
+                      }
+                      className={`border-2 rounded-2xl p-2 transition hover:scale-105 ${
+                        selectedModel?.id ===
+                        model.id
+                          ? "border-purple-600"
+                          : "border-gray-200"
+                      }`}
+                    >
 
-                    setSelectedImage(
-                      product.model_image ||
-                      product.image
-                    );
+                      <img
+                        src={
+                          model.model_image
+                        }
+                        className="w-24 h-24 object-cover rounded-xl"
+                      />
 
-                    setSelectedPrice(
-                      product.model_price ||
-                      product.price
-                    );
-                  }}
-                  className="border-2 border-purple-600 rounded-2xl p-2 hover:scale-105 transition"
-                >
+                      <p className="text-sm font-medium mt-2">
+                        {model.model_name}
+                      </p>
 
-                  <img
-                    src={
-                      product.model_image ||
-                      product.image
-                    }
-                    className="w-24 h-24 object-cover rounded-xl"
-                  />
+                    </button>
 
-                  <p className="text-sm mt-2 font-medium text-center">
-                    {product.model}
-                  </p>
-
-                </button>
+                  )
+                )}
 
               </div>
 
@@ -174,43 +201,45 @@ export default function ProduitPage() {
             ⭐ Produit populaire
           </span>
 
-          <h1 className="text-4xl font-bold mt-5 mb-2">
-            {product.name}
+          <h1 className="text-4xl font-bold mt-5 mb-3">
+            {selectedProduct.name}
           </h1>
 
-          <p className="text-gray-500 mb-4">
-            {product.category}
+          <p className="text-gray-500 mb-5">
+            {selectedProduct.category}
           </p>
 
-          {/* MODÈLE ACTIF */}
+          {/* MODELE ACTIF */}
           {selectedModel && (
 
-            <div className="mb-4">
+            <div className="mb-5">
 
               <span className="bg-black text-white px-4 py-2 rounded-full text-sm">
                 Modèle :
                 {" "}
-                {selectedModel}
+                {
+                  selectedModel.model_name
+                }
               </span>
 
             </div>
 
           )}
 
-          <p className="text-gray-600 text-lg mb-6">
-            {product.description}
+          <p className="text-gray-600 text-lg mb-8">
+            {activeDescription}
           </p>
 
           {/* PRIX */}
-          <div className="flex items-center gap-4 mb-8">
+          <div className="flex items-center gap-4 mb-10">
 
             <span className="text-5xl font-bold text-purple-700">
-              {Number(selectedPrice).toFixed(2)}€
+              {Number(activePrice).toFixed(2)}€
             </span>
 
             <span className="text-3xl text-gray-400 line-through">
               {Number(
-                product.old_price
+                selectedProduct.old_price
               ).toFixed(2)}€
             </span>
 
@@ -232,23 +261,23 @@ export default function ProduitPage() {
             </li>
 
             <li>
-              ✔ Formule naturelle
+              ✔ Formule naturelle premium
             </li>
 
           </ul>
 
-          {/* BOUTON PANIER */}
+          {/* PANIER */}
           <button
             onClick={() =>
               addToCart({
                 name:
                   selectedModel
-                    ? `${product.name} - ${selectedModel}`
-                    : product.name,
+                    ? `${selectedProduct.name} - ${selectedModel.model_name}`
+                    : selectedProduct.name,
 
-                price: selectedPrice,
+                price: activePrice,
 
-                image: selectedImage,
+                image: activeImage,
               })
             }
             className="w-full bg-gradient-to-r from-fuchsia-600 to-purple-700 text-white py-5 rounded-2xl font-bold text-xl shadow-xl hover:scale-[1.02] transition"
@@ -259,11 +288,17 @@ export default function ProduitPage() {
           {/* INFOS */}
           <div className="mt-6 text-gray-500 space-y-2">
 
-            <p>✔ Livraison rapide</p>
+            <p>
+              ✔ Livraison rapide
+            </p>
 
-            <p>✔ Paiement sécurisé</p>
+            <p>
+              ✔ Paiement sécurisé
+            </p>
 
-            <p>✔ Satisfait ou remboursé</p>
+            <p>
+              ✔ Satisfait ou remboursé
+            </p>
 
           </div>
 
@@ -272,6 +307,7 @@ export default function ProduitPage() {
       </div>
 
       {/* AUTRES PRODUITS */}
+
       <div className="mt-28">
 
         <h2 className="text-5xl font-bold text-center mb-16">
@@ -280,18 +316,15 @@ export default function ProduitPage() {
 
         <div className="grid md:grid-cols-3 gap-8">
 
-          {products.map((produit, index) => (
+          {products.map((product) => (
 
             <div
-              key={index}
+              key={product.id}
               className="bg-white rounded-3xl overflow-hidden shadow-lg border hover:shadow-2xl transition duration-300"
             >
 
               <img
-                src={
-                  produit.model_image ||
-                  produit.image
-                }
+                src={product.image}
                 className="w-full h-80 object-cover"
               />
 
@@ -302,39 +335,28 @@ export default function ProduitPage() {
                 </span>
 
                 <h3 className="text-2xl font-bold mt-4 mb-2">
-                  {produit.name}
+                  {product.name}
                 </h3>
 
-                <p className="text-gray-500 text-sm mb-2">
-                  {produit.category}
+                <p className="text-gray-500 text-sm mb-3">
+                  {product.category}
                 </p>
 
-                {produit.model && (
-                  <p className="text-sm text-gray-500 mb-2">
-                    Modèle :
-                    {" "}
-                    {produit.model}
-                  </p>
-                )}
-
                 <p className="text-gray-600 mb-5">
-                  {produit.description}
+                  {product.description}
                 </p>
 
                 <div className="flex items-center justify-between">
 
                   <span className="text-4xl font-bold text-purple-700">
-
                     {Number(
-                      produit.model_price ||
-                      produit.price
+                      product.price
                     ).toFixed(2)}€
-
                   </span>
 
                   <button
                     onClick={() =>
-                      changeProduct(index)
+                      changeProduct(product)
                     }
                     className="bg-gradient-to-r from-fuchsia-600 to-purple-700 text-white px-6 py-3 rounded-2xl font-semibold shadow-lg hover:scale-105 transition"
                   >

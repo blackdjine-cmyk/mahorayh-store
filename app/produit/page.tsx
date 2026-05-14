@@ -369,7 +369,6 @@ export default function ProduitPage() {
                   >
                     Voir
                   </button>
-                  ))
 
                 </div>
 

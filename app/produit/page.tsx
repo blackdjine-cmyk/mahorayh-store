@@ -137,7 +137,11 @@ setSelectedImage("");
 
       <div className="grid md:grid-cols-2 gap-12 items-start">
 
-        {/* IMAGE */}
+  {/* MOBILE */}
+
+        {/* INFOS */}
+        <div>
+                 {/* IMAGE */}
         <div>
 
           <div className="bg-[#f8f5ef] rounded-3xl p-4 shadow-lg">
@@ -204,12 +208,16 @@ setSelectedImage("");
 
                     <button
                       key={model.id}
-                     onClick={() => {
-                     setSelectedModel(model);
-                     setSelectedImage(
-                       model.model_image
-                    );
-                   }}
+                    onClick={() => {
+                    setSelectedModel(model);
+                    setSelectedImage(
+                    model.model_image
+                 );
+                   window.scrollTo({
+                   top: 0,
+                   behavior: "smooth",
+                   });
+                  }}
                       className={`border-2 rounded-2xl p-2 transition hover:scale-105 ${
                         selectedModel?.id ===
                         model.id
@@ -241,10 +249,6 @@ setSelectedImage("");
           )}
 
         </div>
-
-        {/* INFOS */}
-        <div>
-
           <span className="bg-purple-100 text-purple-700 px-4 py-1 rounded-full text-sm font-medium">
             ⭐ Produit populaire
           </span>

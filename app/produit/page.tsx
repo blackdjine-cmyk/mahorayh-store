@@ -12,16 +12,13 @@ export default function ProduitPage() {
   const [models, setModels] = useState<any[]>([]);
 
   const [selectedProduct, setSelectedProduct] =
-    useState<any>(null);
+    useState<any>(null);  
 
   const [selectedModel, setSelectedModel] =
     useState<any>(null);
 
   const [selectedImage, setSelectedImage] =
     useState("");
-
-  const [temporaryImage, setTemporaryImage] =
-    useState<string | null>(null);
 
   // 📦 FETCH DATA
   useEffect(() => {
@@ -207,9 +204,12 @@ setSelectedImage("");
 
                     <button
                       key={model.id}
-                      onClick={() =>
-                     setSelectedImage(model.model_image)
-                     }
+                     onClick={() => {
+                     setSelectedModel(model);
+                     setSelectedImage(
+                       model.model_image
+                    );
+                   }}
                       className={`border-2 rounded-2xl p-2 transition hover:scale-105 ${
                         selectedModel?.id ===
                         model.id
@@ -249,9 +249,11 @@ setSelectedImage("");
             ⭐ Produit populaire
           </span>
 
-          <h1 className="text-4xl font-bold mt-5 mb-3">
-            {selectedProduct.name}
-          </h1>
+         <h1 className="text-4xl font-bold mt-5 mb-3">
+           {selectedModel
+            ? `${selectedProduct.name} — ${selectedModel.model_name}`
+            : selectedProduct.name}
+         </h1>
 
           <p className="text-gray-500 mb-5">
             {selectedProduct.category}

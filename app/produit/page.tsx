@@ -12,7 +12,7 @@ export default function ProduitPage() {
   const [models, setModels] = useState<any[]>([]);
 
   const [selectedProduct, setSelectedProduct] =
-    useState<any>(null);  
+    useState<any>(null);
 
   const [selectedModel, setSelectedModel] =
     useState<any>(null);
@@ -83,10 +83,10 @@ export default function ProduitPage() {
       );
 
     setSelectedModel(
-  relatedModel || null
-);
+      relatedModel || null
+    );
 
-setSelectedImage("");
+    setSelectedImage("");
 
     window.scrollTo({
       top: 0,
@@ -113,11 +113,9 @@ setSelectedImage("");
 
   // 🖼️ IMAGE ACTIVE
   const activeImage =
-  selectedImage ||
-  selectedModel?.model_image ||
-  selectedProduct.image;
-  const galleryImages =
-  selectedProduct.images || [];
+    selectedImage ||
+    selectedModel?.model_image ||
+    selectedProduct.image;
 
   // 💰 PRIX ACTIF
   const activePrice =
@@ -135,129 +133,20 @@ setSelectedImage("");
 
       {/* PRODUIT PRINCIPAL */}
 
-      <div className="grid md:grid-cols-2 gap-12 items-start">
-
-  {/* MOBILE */}
+      <div className="flex flex-col-reverse md:grid md:grid-cols-2 gap-12 items-start">
 
         {/* INFOS */}
         <div>
-                 {/* IMAGE */}
-        <div>
 
-          <div className="bg-[#f8f5ef] rounded-3xl p-4 shadow-lg">
-
-            <div className="space-y-4">
-
-  {/* IMAGE PRINCIPALE */}
-
-  <img
-    src={activeImage}
-    className="w-full rounded-3xl shadow-xl"
-  />
-
-  {/* MINIATURES */}
-
-  {selectedProduct.images &&
-    selectedProduct.images.length > 0 && (
-
-    <div className="flex gap-3 flex-wrap">
-
-      {selectedProduct.images.map(
-        (img: string, index: number) => (
-
-          <img
-            key={index}
-            src={img}
-           onClick={() => {
-
-           setSelectedModel({
-           ...selectedModel,
-           model_image: img,
-           });
-
-           setSelectedImage(img);
-
-         }}
-            className="w-24 h-24 object-cover rounded-2xl border-2 border-purple-500 cursor-pointer hover:scale-105 transition"
-          />
-
-        )
-      )}
-
-    </div>
-
-  )}
-
-</div>
-
-          </div>
-
-          {/* MODELES */}
-          {relatedModels.length > 0 && (
-
-            <div className="mt-8">
-
-              <h3 className="text-xl font-bold mb-4">
-                Choisir un modèle
-              </h3>
-
-              <div className="flex gap-4 flex-wrap">
-
-                {relatedModels.map(
-                  (model) => (
-
-                    <button
-                      key={model.id}
-                    onClick={() => {
-                    setSelectedModel(model);
-                    setSelectedImage(
-                    model.model_image
-                 );
-                   window.scrollTo({
-                   top: 0,
-                   behavior: "smooth",
-                   });
-                  }}
-                      className={`border-2 rounded-2xl p-2 transition hover:scale-105 ${
-                        selectedModel?.id ===
-                        model.id
-                          ? "border-purple-600"
-                          : "border-gray-200"
-                      }`}
-                    >
-
-                      <img
-                        src={
-                          model.model_image
-                        }
-                        className="w-24 h-24 object-cover rounded-xl"
-                      />
-
-                      <p className="text-sm font-medium mt-2">
-                        {model.model_name}
-                      </p>
-
-                    </button>
-
-                  )
-                )}
-
-              </div>
-
-            </div>
-
-          )}
-
-        </div>
           <span className="bg-purple-100 text-purple-700 px-4 py-1 rounded-full text-sm font-medium">
             ⭐ Produit populaire
           </span>
 
-         <h1 className="text-4xl font-bold mt-5 mb-3">
-           {selectedModel
-            ? `${selectedProduct.name} — ${selectedModel.model_name}`
-            : selectedProduct.name}
-         </h1>
+          <h1 className="text-4xl font-bold mt-5 mb-3">
+            {selectedModel
+              ? `${selectedProduct.name} — ${selectedModel.model_name}`
+              : selectedProduct.name}
+          </h1>
 
           <p className="text-gray-500 mb-5">
             {selectedProduct.category}
@@ -358,6 +247,119 @@ setSelectedImage("");
 
         </div>
 
+        {/* IMAGE */}
+        <div>
+
+          <div className="bg-[#f8f5ef] rounded-3xl p-4 shadow-lg">
+
+            <div className="space-y-4">
+
+              {/* IMAGE PRINCIPALE */}
+
+              <img
+                src={activeImage}
+                className="w-full rounded-3xl shadow-xl"
+              />
+
+              {/* MINIATURES */}
+
+              {selectedProduct.images &&
+                selectedProduct.images.length > 0 && (
+
+                <div className="flex gap-3 flex-wrap">
+
+                  {selectedProduct.images.map(
+                    (img: string, index: number) => (
+
+                      <img
+                        key={index}
+                        src={img}
+                        onClick={() => {
+
+                          setSelectedModel({
+                            ...selectedModel,
+                            model_image: img,
+                          });
+
+                          setSelectedImage(img);
+
+                        }}
+                        className="w-24 h-24 object-cover rounded-2xl border-2 border-purple-500 cursor-pointer hover:scale-105 transition"
+                      />
+
+                    )
+                  )}
+
+                </div>
+
+              )}
+
+            </div>
+
+          </div>
+
+          {/* MODELES */}
+          {relatedModels.length > 0 && (
+
+            <div className="mt-8">
+
+              <h3 className="text-xl font-bold mb-4">
+                Choisir un modèle
+              </h3>
+
+              <div className="flex gap-4 flex-wrap">
+
+                {relatedModels.map(
+                  (model) => (
+
+                    <button
+                      key={model.id}
+                      onClick={() => {
+
+                        setSelectedModel(model);
+
+                        setSelectedImage(
+                          model.model_image
+                        );
+
+                        window.scrollTo({
+                          top: 0,
+                          behavior: "smooth",
+                        });
+
+                      }}
+                      className={`border-2 rounded-2xl p-2 transition hover:scale-105 ${
+                        selectedModel?.id ===
+                        model.id
+                          ? "border-purple-600"
+                          : "border-gray-200"
+                      }`}
+                    >
+
+                      <img
+                        src={
+                          model.model_image
+                        }
+                        className="w-24 h-24 object-cover rounded-xl"
+                      />
+
+                      <p className="text-sm font-medium mt-2">
+                        {model.model_name}
+                      </p>
+
+                    </button>
+
+                  )
+                )}
+
+              </div>
+
+            </div>
+
+          )}
+
+        </div>
+
       </div>
 
       {/* AUTRES PRODUITS */}
@@ -371,73 +373,74 @@ setSelectedImage("");
         <div className="grid md:grid-cols-3 gap-8">
 
           {products
-         .filter(
-         (product) =>
-          product.id !== selectedProduct.id
-          )
-         .map((product) => (
-          
+            .filter(
+              (product) =>
+                product.id !== selectedProduct.id
+            )
+            .map((product) => (
 
-            <div
-              key={product.id}
-              className="bg-white rounded-3xl overflow-hidden shadow-lg border hover:shadow-2xl transition duration-300"
-            >
+              <div
+                key={product.id}
+                className="bg-white rounded-3xl overflow-hidden shadow-lg border hover:shadow-2xl transition duration-300"
+              >
 
-              <img
-                src={product.image}
-                className="w-full h-80 object-cover"
-              />
+                <img
+                  src={product.image}
+                  className="w-full h-80 object-cover"
+                />
 
-              <div className="p-6">
+                <div className="p-6">
 
-                <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm font-medium">
-                  ✨ Naturel
-                </span>
-
-                <h3 className="text-2xl font-bold mt-4 mb-2">
-                  {product.name}
-                </h3>
-
-                <p className="text-gray-500 text-sm mb-3">
-                  {product.category}
-                </p>
-
-                <p className="text-gray-600 mb-5">
-                  {product.description}
-                </p>
-
-                <div className="flex items-center justify-between">
-
-                  <span className="text-4xl font-bold text-purple-700">
-                    {Number(
-                      product.price
-                    ).toFixed(2)}€
+                  <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm font-medium">
+                    ✨ Naturel
                   </span>
 
-                  <button
-                    onClick={() => {
-                    changeProduct(product);
+                  <h3 className="text-2xl font-bold mt-4 mb-2">
+                    {product.name}
+                  </h3>
 
-                   setSelectedImage("");
-                   setSelectedModel(null);
+                  <p className="text-gray-500 text-sm mb-3">
+                    {product.category}
+                  </p>
 
-                   window.scrollTo({
-                   top: 0,
-                   behavior: "smooth",
-                 });
-                }}
-                    className="bg-gradient-to-r from-fuchsia-600 to-purple-700 text-white px-6 py-3 rounded-2xl font-semibold shadow-lg hover:scale-105 transition"
-                  >
-                    Voir
-                  </button>
+                  <p className="text-gray-600 mb-5">
+                    {product.description}
+                  </p>
+
+                  <div className="flex items-center justify-between">
+
+                    <span className="text-4xl font-bold text-purple-700">
+                      {Number(
+                        product.price
+                      ).toFixed(2)}€
+                    </span>
+
+                    <button
+                      onClick={() => {
+
+                        changeProduct(product);
+
+                        setSelectedImage("");
+                        setSelectedModel(null);
+
+                        window.scrollTo({
+                          top: 0,
+                          behavior: "smooth",
+                        });
+
+                      }}
+                      className="bg-gradient-to-r from-fuchsia-600 to-purple-700 text-white px-6 py-3 rounded-2xl font-semibold shadow-lg hover:scale-105 transition"
+                    >
+                      Voir
+                    </button>
+
+                  </div>
 
                 </div>
 
               </div>
 
-            </div>
-
-          ))}
+            ))}
 
         </div>
 

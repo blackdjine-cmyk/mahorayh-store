@@ -136,7 +136,7 @@ export default function ProduitPage() {
       <div className="flex flex-col md:grid md:grid-cols-2 gap-12 items-start">
 
         {/* INFOS */}
-        <div className="order-1">
+         <div className="order-2">
 
           <span className="bg-purple-100 text-purple-700 px-4 py-1 rounded-full text-sm font-medium">
             ⭐ Produit populaire
@@ -227,7 +227,7 @@ export default function ProduitPage() {
         </div>
 
         {/* IMAGE */}
-        <div className="order-2">
+         <div className="order-1">
 
           <div className="bg-[#f8f5ef] rounded-3xl p-4 shadow-lg">
 

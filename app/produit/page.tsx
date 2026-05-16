@@ -132,7 +132,7 @@ export default function ProduitPage() {
       <div className="grid md:grid-cols-2 gap-12 items-start">
 
         {/* IMAGE */}
-        <div>
+         <div className="md:order-1 order-2">
 
           <div className="bg-[#f8f5ef] rounded-3xl p-4 shadow-lg">
 
@@ -248,8 +248,8 @@ export default function ProduitPage() {
         </div>
 
         {/* INFOS */}
-        <div>
-
+         <div className="md:order-2 order-1">
+        
           <span className="bg-purple-100 text-purple-700 px-4 py-1 rounded-full text-sm font-medium">
             ⭐ Produit populaire
           </span>

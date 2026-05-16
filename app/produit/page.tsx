@@ -131,7 +131,40 @@ export default function ProduitPage() {
 
       <div className="grid md:grid-cols-2 gap-12 items-start">
 
-        {/* IMAGE */}
+        {/* INFOS */}
+         <div className="md:order-2 order-1">
+        
+          <span className="bg-purple-100 text-purple-700 px-4 py-1 rounded-full text-sm font-medium">
+            ⭐ Produit populaire
+          </span>
+
+          <h1 className="text-4xl font-bold mt-5 mb-3">
+
+            {selectedModel
+              ? `${selectedProduct.name} — ${selectedModel.model_name}`
+              : selectedProduct.name}
+
+          </h1>
+
+          <p className="text-gray-500 mb-5">
+            {selectedProduct.category}
+          </p>
+
+          {/* MODELE ACTIF */}
+          {selectedModel && (
+
+            <div className="mb-5">
+
+              <span className="bg-black text-white px-4 py-2 rounded-full text-sm">
+                Modèle :
+                {" "}
+                {selectedModel.model_name}
+              </span>
+
+            </div>
+            )}
+
+                   {/* IMAGE */}
          <div className="md:order-1 order-2">
 
           <div className="bg-[#f8f5ef] rounded-3xl p-4 shadow-lg">
@@ -247,39 +280,7 @@ export default function ProduitPage() {
 
         </div>
 
-        {/* INFOS */}
-         <div className="md:order-2 order-1">
-        
-          <span className="bg-purple-100 text-purple-700 px-4 py-1 rounded-full text-sm font-medium">
-            ⭐ Produit populaire
-          </span>
-
-          <h1 className="text-4xl font-bold mt-5 mb-3">
-
-            {selectedModel
-              ? `${selectedProduct.name} — ${selectedModel.model_name}`
-              : selectedProduct.name}
-
-          </h1>
-
-          <p className="text-gray-500 mb-5">
-            {selectedProduct.category}
-          </p>
-
-          {/* MODELE ACTIF */}
-          {selectedModel && (
-
-            <div className="mb-5">
-
-              <span className="bg-black text-white px-4 py-2 rounded-full text-sm">
-                Modèle :
-                {" "}
-                {selectedModel.model_name}
-              </span>
-
-            </div>
-
-          )}
+          
 
           {/* PRIX */}
           <div className="flex items-center gap-4 mb-10">

@@ -133,7 +133,7 @@ export default function ProduitPage() {
 
       {/* PRODUIT PRINCIPAL */}
 
-      <div className="flex flex-col-reverse md:grid md:grid-cols-2 gap-12 items-start">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
 
         {/* INFOS */}
         <div>

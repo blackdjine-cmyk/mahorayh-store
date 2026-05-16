@@ -135,120 +135,8 @@ export default function ProduitPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
 
-        {/* INFOS */}
-        <div>
-
-          <span className="bg-purple-100 text-purple-700 px-4 py-1 rounded-full text-sm font-medium">
-            ⭐ Produit populaire
-          </span>
-
-          <h1 className="text-4xl font-bold mt-5 mb-3">
-            {selectedModel
-              ? `${selectedProduct.name} — ${selectedModel.model_name}`
-              : selectedProduct.name}
-          </h1>
-
-          <p className="text-gray-500 mb-5">
-            {selectedProduct.category}
-          </p>
-
-          {/* MODELE ACTIF */}
-          {selectedModel && (
-
-            <div className="mb-5">
-
-              <span className="bg-black text-white px-4 py-2 rounded-full text-sm">
-                Modèle :
-                {" "}
-                {
-                  selectedModel.model_name
-                }
-              </span>
-
-            </div>
-
-          )}
-
-          <p className="text-gray-600 text-lg mb-8">
-            {activeDescription}
-          </p>
-
-          {/* PRIX */}
-          <div className="flex items-center gap-4 mb-10">
-
-            <span className="text-5xl font-bold text-purple-700">
-              {Number(activePrice).toFixed(2)}€
-            </span>
-
-            <span className="text-3xl text-gray-400 line-through">
-              {Number(
-                selectedProduct.old_price
-              ).toFixed(2)}€
-            </span>
-
-          </div>
-
-          {/* AVANTAGES */}
-          <ul className="space-y-4 text-gray-700 text-lg mb-10">
-
-            <li>
-              ✔ Réduit les taches visibles
-            </li>
-
-            <li>
-              ✔ Illumine naturellement le teint
-            </li>
-
-            <li>
-              ✔ Convient aux peaux sensibles
-            </li>
-
-            <li>
-              ✔ Formule naturelle premium
-            </li>
-
-          </ul>
-
-          {/* PANIER */}
-          <button
-            onClick={() =>
-              addToCart({
-                name:
-                  selectedModel
-                    ? `${selectedProduct.name} - ${selectedModel.model_name}`
-                    : selectedProduct.name,
-
-                price: activePrice,
-
-                image: activeImage,
-              })
-            }
-            className="w-full bg-gradient-to-r from-fuchsia-600 to-purple-700 text-white py-5 rounded-2xl font-bold text-xl shadow-xl hover:scale-[1.02] transition"
-          >
-            🛒 Ajouter au panier
-          </button>
-
-          {/* INFOS */}
-          <div className="mt-6 text-gray-500 space-y-2">
-
-            <p>
-              ✔ Livraison rapide
-            </p>
-
-            <p>
-              ✔ Paiement sécurisé
-            </p>
-
-            <p>
-              ✔ Satisfait ou remboursé
-            </p>
-
-          </div>
-
-        </div>
-
         {/* IMAGE */}
-        <div>
+        <div className="order-2 md:order-1">
 
           <div className="bg-[#f8f5ef] rounded-3xl p-4 shadow-lg">
 
@@ -357,6 +245,98 @@ export default function ProduitPage() {
             </div>
 
           )}
+
+        </div>
+
+        {/* INFOS */}
+        <div className="order-1 md:order-2">
+
+          <span className="bg-purple-100 text-purple-700 px-4 py-1 rounded-full text-sm font-medium">
+            ⭐ Produit populaire
+          </span>
+
+          <h1 className="text-4xl font-bold mt-5 mb-3">
+            {selectedModel
+              ? `${selectedProduct.name} — ${selectedModel.model_name}`
+              : selectedProduct.name}
+          </h1>
+
+          <p className="text-gray-500 mb-5">
+            {selectedProduct.category}
+          </p>
+
+          {/* MODELE ACTIF */}
+          {selectedModel && (
+
+            <div className="mb-5">
+
+              <span className="bg-black text-white px-4 py-2 rounded-full text-sm">
+                Modèle :
+                {" "}
+                {
+                  selectedModel.model_name
+                }
+              </span>
+
+            </div>
+
+          )}
+
+          {/* PRIX */}
+          <div className="flex items-center gap-4 mb-10">
+
+            <span className="text-5xl font-bold text-purple-700">
+              {Number(activePrice).toFixed(2)}€
+            </span>
+
+            <span className="text-3xl text-gray-400 line-through">
+              {Number(
+                selectedProduct.old_price
+              ).toFixed(2)}€
+            </span>
+
+          </div>
+
+          {/* DESCRIPTION */}
+          <p className="text-gray-600 text-lg mb-10">
+            {activeDescription}
+          </p>
+
+          {/* PANIER */}
+          <button
+            onClick={() =>
+              addToCart({
+                name:
+                  selectedModel
+                    ? `${selectedProduct.name} - ${selectedModel.model_name}`
+                    : selectedProduct.name,
+
+                price: activePrice,
+
+                image: activeImage,
+              })
+            }
+            className="w-full bg-gradient-to-r from-fuchsia-600 to-purple-700 text-white py-5 rounded-2xl font-bold text-xl shadow-xl hover:scale-[1.02] transition"
+          >
+            🛒 Ajouter au panier
+          </button>
+
+          {/* INFOS */}
+          <div className="mt-6 text-gray-500 space-y-2">
+
+            <p>
+              ✔ Livraison rapide
+            </p>
+
+            <p>
+              ✔ Paiement sécurisé
+            </p>
+
+            <p>
+              ✔ Satisfait ou remboursé
+            </p>
+
+          </div>
 
         </div>
 

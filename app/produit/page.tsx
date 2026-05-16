@@ -27,7 +27,6 @@ export default function ProduitPage() {
 
   const fetchData = async () => {
 
-    // 📦 PRODUITS
     const { data: productsData } =
       await supabase
         .from("products")
@@ -36,7 +35,6 @@ export default function ProduitPage() {
           ascending: false,
         });
 
-    // 🎨 MODELES
     const { data: modelsData } =
       await supabase
         .from("product_models")
@@ -45,7 +43,6 @@ export default function ProduitPage() {
     setProducts(productsData || []);
     setModels(modelsData || []);
 
-    // PRODUIT PAR DEFAUT
     if (
       productsData &&
       productsData.length > 0
@@ -56,7 +53,6 @@ export default function ProduitPage() {
 
       setSelectedProduct(firstProduct);
 
-      // PREMIER MODELE
       const firstModel =
         modelsData?.find(
           (model) =>
@@ -133,84 +129,10 @@ export default function ProduitPage() {
 
       {/* PRODUIT PRINCIPAL */}
 
-      <div className="flex flex-col md:grid md:grid-cols-2 gap-12 items-start">
-
-        {/* INFOS */}
-         <div className="order-2">
-
-          <span className="bg-purple-100 text-purple-700 px-4 py-1 rounded-full text-sm font-medium">
-            ⭐ Produit populaire
-          </span>
-
-          <h1 className="text-4xl font-bold mt-5 mb-3">
-
-            {selectedModel
-              ? `${selectedProduct.name} — ${selectedModel.model_name}`
-              : selectedProduct.name}
-
-          </h1>
-
-          <p className="text-gray-500 mb-5">
-            {selectedProduct.category}
-          </p>
-
-          {/* MODELE ACTIF */}
-          {selectedModel && (
-
-            <div className="mb-5">
-
-              <span className="bg-black text-white px-4 py-2 rounded-full text-sm">
-                Modèle :
-                {" "}
-                {selectedModel.model_name}
-              </span>
-
-            </div>
-
-          )}
-
-          {/* PRIX */}
-          <div className="flex items-center gap-4 mb-10">
-
-            <span className="text-5xl font-bold text-purple-700">
-              {Number(activePrice).toFixed(2)}€
-            </span>
-
-            <span className="text-3xl text-gray-400 line-through">
-              {Number(
-                selectedProduct.old_price
-              ).toFixed(2)}€
-            </span>
-
-          </div>
-
-          <p className="text-gray-600 text-lg mb-8">
-            {activeDescription}
-          </p>
-
-          {/* PANIER */}
-          <button
-            onClick={() =>
-              addToCart({
-                name:
-                  selectedModel
-                    ? `${selectedProduct.name} - ${selectedModel.model_name}`
-                    : selectedProduct.name,
-
-                price: activePrice,
-
-                image: activeImage,
-              })
-            }
-            className="w-full bg-gradient-to-r from-fuchsia-600 to-purple-700 text-white py-5 rounded-2xl font-bold text-xl shadow-xl hover:scale-[1.02] transition"
-          >
-            🛒 Ajouter au panier
-          </button>
-
-        </div>
+      <div className="grid md:grid-cols-2 gap-12 items-start">
 
         {/* IMAGE */}
-         <div className="order-1">
+        <div>
 
           <div className="bg-[#f8f5ef] rounded-3xl p-4 shadow-lg">
 
@@ -322,6 +244,95 @@ export default function ProduitPage() {
             </div>
 
           )}
+
+        </div>
+
+        {/* INFOS */}
+        <div>
+
+          <span className="bg-purple-100 text-purple-700 px-4 py-1 rounded-full text-sm font-medium">
+            ⭐ Produit populaire
+          </span>
+
+          <h1 className="text-4xl font-bold mt-5 mb-3">
+
+            {selectedModel
+              ? `${selectedProduct.name} — ${selectedModel.model_name}`
+              : selectedProduct.name}
+
+          </h1>
+
+          <p className="text-gray-500 mb-5">
+            {selectedProduct.category}
+          </p>
+
+          {/* MODELE ACTIF */}
+          {selectedModel && (
+
+            <div className="mb-5">
+
+              <span className="bg-black text-white px-4 py-2 rounded-full text-sm">
+                Modèle :
+                {" "}
+                {selectedModel.model_name}
+              </span>
+
+            </div>
+
+          )}
+
+          {/* MOBILE IMAGE */}
+          <div className="block md:hidden mb-8">
+
+            <div className="bg-[#f8f5ef] rounded-3xl p-4 shadow-lg">
+
+              <img
+                src={activeImage}
+                className="w-full rounded-3xl shadow-xl"
+              />
+
+            </div>
+
+          </div>
+
+          {/* PRIX */}
+          <div className="flex items-center gap-4 mb-10">
+
+            <span className="text-5xl font-bold text-purple-700">
+              {Number(activePrice).toFixed(2)}€
+            </span>
+
+            <span className="text-3xl text-gray-400 line-through">
+              {Number(
+                selectedProduct.old_price
+              ).toFixed(2)}€
+            </span>
+
+          </div>
+
+          {/* DESCRIPTION */}
+          <p className="text-gray-600 text-lg mb-8">
+            {activeDescription}
+          </p>
+
+          {/* PANIER */}
+          <button
+            onClick={() =>
+              addToCart({
+                name:
+                  selectedModel
+                    ? `${selectedProduct.name} - ${selectedModel.model_name}`
+                    : selectedProduct.name,
+
+                price: activePrice,
+
+                image: activeImage,
+              })
+            }
+            className="w-full bg-gradient-to-r from-fuchsia-600 to-purple-700 text-white py-5 rounded-2xl font-bold text-xl shadow-xl hover:scale-[1.02] transition"
+          >
+            🛒 Ajouter au panier
+          </button>
 
         </div>
 

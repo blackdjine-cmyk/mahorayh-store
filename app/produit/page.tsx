@@ -207,23 +207,6 @@ export default function ProduitPage() {
             🛒 Ajouter au panier
           </button>
 
-          {/* INFOS */}
-          <div className="mt-6 text-gray-500 space-y-2">
-
-            <p>
-              ✔ Livraison rapide
-            </p>
-
-            <p>
-              ✔ Paiement sécurisé
-            </p>
-
-            <p>
-              ✔ Satisfait ou remboursé
-            </p>
-
-          </div>
-
         </div>
 
         {/* IMAGE */}

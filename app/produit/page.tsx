@@ -169,10 +169,6 @@ export default function ProduitPage() {
 
           )}
 
-          <p className="text-gray-600 text-lg mb-8">
-            {activeDescription}
-          </p>
-
           {/* PRIX */}
           <div className="flex items-center gap-4 mb-10">
 
@@ -187,6 +183,10 @@ export default function ProduitPage() {
             </span>
 
           </div>
+
+          <p className="text-gray-600 text-lg mb-8">
+            {activeDescription}
+          </p>
 
           {/* PANIER */}
           <button

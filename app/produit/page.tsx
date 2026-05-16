@@ -281,20 +281,6 @@ export default function ProduitPage() {
 
           )}
 
-          {/* MOBILE IMAGE */}
-          <div className="block md:hidden mb-8">
-
-            <div className="bg-[#f8f5ef] rounded-3xl p-4 shadow-lg">
-
-              <img
-                src={activeImage}
-                className="w-full rounded-3xl shadow-xl"
-              />
-
-            </div>
-
-          </div>
-
           {/* PRIX */}
           <div className="flex items-center gap-4 mb-10">
 

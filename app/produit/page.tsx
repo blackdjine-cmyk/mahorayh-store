@@ -137,13 +137,7 @@ export default function ProduitPage() {
     <div className="bg-[#f8f5ef] rounded-3xl p-4 shadow-lg">
 
       <div className="flex gap-4 items-start">
-
-        <img
-          src={activeImage}
-          className="w-full rounded-3xl shadow-xl"
-        />
-
-        {selectedProduct.images &&
+               {selectedProduct.images &&
           selectedProduct.images.length > 0 && (
 
           <div className="flex flex-col gap-3 shrink-0">
@@ -178,6 +172,12 @@ export default function ProduitPage() {
         )}
 
       </div>
+        <img
+          src={activeImage}
+          className="w-full rounded-3xl shadow-xl"
+        />
+
+
 
     </div>
 

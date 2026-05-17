@@ -141,7 +141,7 @@ export default function ProduitPage() {
         {selectedProduct.images &&
           selectedProduct.images.length > 0 && (
 
-          <div className="flex flex-col gap-4 shrink-0 pt-2">
+          <div className="flex flex-col gap-5 shrink-0 pt-4">
 
             {selectedProduct.images.map(
               (
@@ -162,7 +162,7 @@ export default function ProduitPage() {
                     setSelectedImage(img);
 
                   }}
-                  className="w-28 h-28 shrink-0 object-cover rounded-2xl border-2 border-purple-500 cursor-pointer hover:scale-105 hover:shadow-xl transition duration-300"
+                  className="w-20 h-20 object-cover rounded-2xl border-2 border-purple-300 cursor-pointer hover:border-purple-600 hover:scale-105 transition duration-300 bg-white p-1"
                 />
 
               )

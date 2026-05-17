@@ -181,62 +181,6 @@ export default function ProduitPage() {
 
           </div>
 
-         {/* MODELES */}
-         {relatedModels.length > 0 && (
-
-  <div className="mt-8">
-
-    <h3 className="text-xl font-bold mb-4">
-      Choisir un modèle
-    </h3>
-
-    <div className="flex gap-4 flex-wrap">
-
-      {relatedModels.map(
-        (model) => (
-
-          <button
-            key={model.id}
-            onClick={() => {
-
-              setSelectedModel(model);
-
-              setSelectedImage(
-                model.model_image
-              );
-
-              window.scrollTo({
-                top: 0,
-                behavior: "smooth",
-              });
-
-            }}
-            className={`border-2 rounded-2xl p-2 transition hover:scale-105 ${
-              selectedModel?.id === model.id
-                ? "border-purple-600"
-                : "border-gray-200"
-            }`}
-          >
-
-            <img
-              src={model.model_image}
-              className="w-24 h-24 object-cover rounded-xl"
-            />
-
-            <p className="text-sm font-medium mt-2">
-              {model.model_name}
-            </p>
-
-          </button>
-
-        )
-      )}
-
-    </div>
-
-  </div>
-
-)}
 
         {/* IMAGE */}
          <div className="order-2 md:order-1">
@@ -293,7 +237,63 @@ export default function ProduitPage() {
           </div>
 
         </div>
-        
+
+                 {/* MODELES */}
+         {relatedModels.length > 0 && (
+
+  <div className="mt-8">
+
+    <h3 className="text-xl font-bold mb-4">
+      Choisir un modèle
+    </h3>
+
+    <div className="flex gap-4 flex-wrap">
+
+      {relatedModels.map(
+        (model) => (
+
+          <button
+            key={model.id}
+            onClick={() => {
+
+              setSelectedModel(model);
+
+              setSelectedImage(
+                model.model_image
+              );
+
+              window.scrollTo({
+                top: 0,
+                behavior: "smooth",
+              });
+
+            }}
+            className={`border-2 rounded-2xl p-2 transition hover:scale-105 ${
+              selectedModel?.id === model.id
+                ? "border-purple-600"
+                : "border-gray-200"
+            }`}
+          >
+
+            <img
+              src={model.model_image}
+              className="w-24 h-24 object-cover rounded-xl"
+            />
+
+            <p className="text-sm font-medium mt-2">
+              {model.model_name}
+            </p>
+
+          </button>
+
+        )
+      )}
+
+    </div>
+
+  </div>
+  )}
+
 {/* DESCRIPTION */}
 <p className="text-gray-600 text-lg mb-8">
   {activeDescription}

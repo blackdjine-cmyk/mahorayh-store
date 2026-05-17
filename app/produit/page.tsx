@@ -136,12 +136,12 @@ export default function ProduitPage() {
 
     <div className="bg-[#f8f5ef] rounded-3xl p-4 shadow-lg w-full">
 
-      <div className="flex gap-4 items-start overflow-hidden">
+      <div className="grid grid-cols-[90px_1fr] gap-4 items-start">
 
         {selectedProduct.images &&
           selectedProduct.images.length > 0 && (
 
-          <div className="flex flex-col gap-3 shrink-0">
+          <div className="flex flex-col gap-3">
 
             {selectedProduct.images.map(
               (

@@ -132,11 +132,11 @@ export default function ProduitPage() {
 <div className="grid md:grid-cols-2 gap-12 items-start">
 
   {/* IMAGE PC */}
-  <div className="hidden md:block order-1">
+  <div className="hidden md:block order-1 min-w-0">
 
     <div className="bg-[#f8f5ef] rounded-3xl p-4 shadow-lg">
 
-      <div className="flex gap-4 items-center">
+      <div className="flex gap-4 items-start overflow-hidden">
 
         {selectedProduct.images &&
           selectedProduct.images.length > 0 && (
@@ -175,7 +175,7 @@ export default function ProduitPage() {
       
         <img
           src={activeImage}
-          className="w-full rounded-3xl shadow-xl"
+          className="w-full max-w-full rounded-3xl shadow-xl"
         />
       </div>
 

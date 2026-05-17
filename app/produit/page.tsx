@@ -131,64 +131,6 @@ export default function ProduitPage() {
 
       <div className="grid md:grid-cols-2 gap-12 items-start">
 
-                        {/* IMAGE */}
-          {/* IMAGE */}
-         <div className="order-2 md:order-1">
-
-          <div className="bg-[#f8f5ef] rounded-3xl p-4 shadow-lg">
-
-            <div className="space-y-4">
-
-              {/* IMAGE PRINCIPALE */}
-
-              <img
-                src={activeImage}
-                className="w-full rounded-3xl shadow-xl"
-              />
-
-              {/* MINIATURES */}
-
-              {selectedProduct.images &&
-                selectedProduct.images.length > 0 && (
-
-                <div className="flex gap-3 flex-wrap">
-
-                  {selectedProduct.images.map(
-                    (
-                      img: string,
-                      index: number
-                    ) => (
-
-                      <img
-                        key={index}
-                        src={img}
-                        onClick={() => {
-
-                          setSelectedModel({
-                            ...selectedModel,
-                            model_image: img,
-                          });
-
-                          setSelectedImage(img);
-
-                        }}
-                        className="w-24 h-24 object-cover rounded-2xl border-2 border-purple-500 cursor-pointer hover:scale-105 transition"
-                      />
-
-                    )
-                  )}
-
-                </div>
-
-              )}
-
-            </div>
-
-          </div>
-
-        </div>
-
-            
 
          {/* INFOS */}
          <div className="order-1 md:order-2">
@@ -240,7 +182,7 @@ export default function ProduitPage() {
           </div>
 
          {/* MODELES */}
-{relatedModels.length > 0 && (
+         {relatedModels.length > 0 && (
 
   <div className="mt-8">
 
@@ -296,6 +238,62 @@ export default function ProduitPage() {
 
 )}
 
+        {/* IMAGE */}
+         <div className="order-2 md:order-1">
+
+          <div className="bg-[#f8f5ef] rounded-3xl p-4 shadow-lg">
+
+            <div className="space-y-4">
+
+              {/* IMAGE PRINCIPALE */}
+
+              <img
+                src={activeImage}
+                className="w-full rounded-3xl shadow-xl"
+              />
+
+              {/* MINIATURES */}
+
+              {selectedProduct.images &&
+                selectedProduct.images.length > 0 && (
+
+                <div className="flex gap-3 flex-wrap">
+
+                  {selectedProduct.images.map(
+                    (
+                      img: string,
+                      index: number
+                    ) => (
+
+                      <img
+                        key={index}
+                        src={img}
+                        onClick={() => {
+
+                          setSelectedModel({
+                            ...selectedModel,
+                            model_image: img,
+                          });
+
+                          setSelectedImage(img);
+
+                        }}
+                        className="w-24 h-24 object-cover rounded-2xl border-2 border-purple-500 cursor-pointer hover:scale-105 transition"
+                      />
+
+                    )
+                  )}
+
+                </div>
+
+              )}
+
+            </div>
+
+          </div>
+
+        </div>
+        
 {/* DESCRIPTION */}
 <p className="text-gray-600 text-lg mb-8">
   {activeDescription}

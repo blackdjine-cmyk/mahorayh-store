@@ -172,12 +172,12 @@ export default function ProduitPage() {
 
         )}
 
-      </div>
+      
         <img
           src={activeImage}
           className="w-full rounded-3xl shadow-xl"
         />
-
+      </div>
 
 
     </div>

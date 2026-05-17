@@ -127,200 +127,247 @@ export default function ProduitPage() {
 
     <div className="max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-10">
 
-      {/* PRODUIT PRINCIPAL */}
+    {/* PRODUIT PRINCIPAL */}
 
-      <div className="grid md:grid-cols-2 gap-12 items-start">
+<div className="grid md:grid-cols-2 gap-12 items-start">
 
+  {/* IMAGE PC */}
+  <div className="hidden md:block order-1">
 
-         {/* INFOS */}
-         <div className="order-1 md:order-2">
-        
-          <span className="bg-purple-100 text-purple-700 px-4 py-1 rounded-full text-sm font-medium">
-            ⭐ Produit populaire
-          </span>
+    <div className="bg-[#f8f5ef] rounded-3xl p-4 shadow-lg">
 
-          <h1 className="text-4xl font-bold mt-5 mb-3">
+      <div className="space-y-4">
 
-            {selectedModel
-              ? `${selectedProduct.name} — ${selectedModel.model_name}`
-              : selectedProduct.name}
+        <img
+          src={activeImage}
+          className="w-full rounded-3xl shadow-xl"
+        />
 
-          </h1>
+        {selectedProduct.images &&
+          selectedProduct.images.length > 0 && (
 
-          <p className="text-gray-500 mb-5">
-            {selectedProduct.category}
-          </p>
+          <div className="flex gap-3 flex-wrap">
 
-          {/* MODELE ACTIF */}
-          {selectedModel && (
+            {selectedProduct.images.map(
+              (
+                img: string,
+                index: number
+              ) => (
 
-            <div className="mb-5">
+                <img
+                  key={index}
+                  src={img}
+                  onClick={() => {
 
-              <span className="bg-black text-white px-4 py-2 rounded-full text-sm">
-                Modèle :
-                {" "}
-                {selectedModel.model_name}
-              </span>
+                    setSelectedModel({
+                      ...selectedModel,
+                      model_image: img,
+                    });
 
-            </div>
+                    setSelectedImage(img);
+
+                  }}
+                  className="w-24 h-24 object-cover rounded-2xl border-2 border-purple-500 cursor-pointer hover:scale-105 transition"
+                />
+
+              )
             )}
 
-   
-          {/* PRIX */}
-          <div className="flex items-center gap-4 mb-10">
-
-            <span className="text-5xl font-bold text-purple-700">
-              {Number(activePrice).toFixed(2)}€
-            </span>
-
-            <span className="text-3xl text-gray-400 line-through">
-              {Number(
-                selectedProduct.old_price
-              ).toFixed(2)}€
-            </span>
-
           </div>
 
+        )}
 
-        {/* IMAGE */}
-         <div className="order-2 md:order-1">
-
-          <div className="bg-[#f8f5ef] rounded-3xl p-4 shadow-lg">
-
-            <div className="space-y-4">
-
-              {/* IMAGE PRINCIPALE */}
-
-              <img
-                src={activeImage}
-                className="w-full rounded-3xl shadow-xl"
-              />
-
-              {/* MINIATURES */}
-
-              {selectedProduct.images &&
-                selectedProduct.images.length > 0 && (
-
-                <div className="flex gap-3 flex-wrap">
-
-                  {selectedProduct.images.map(
-                    (
-                      img: string,
-                      index: number
-                    ) => (
-
-                      <img
-                        key={index}
-                        src={img}
-                        onClick={() => {
-
-                          setSelectedModel({
-                            ...selectedModel,
-                            model_image: img,
-                          });
-
-                          setSelectedImage(img);
-
-                        }}
-                        className="w-24 h-24 object-cover rounded-2xl border-2 border-purple-500 cursor-pointer hover:scale-105 transition"
-                      />
-
-                    )
-                  )}
-
-                </div>
-
-              )}
-
-            </div>
-
-          </div>
-
-        </div>
-
-                 {/* MODELES */}
-         {relatedModels.length > 0 && (
-
-  <div className="mt-8">
-
-    <h3 className="text-xl font-bold mb-4">
-      Choisir un modèle
-    </h3>
-
-    <div className="flex gap-4 flex-wrap">
-
-      {relatedModels.map(
-        (model) => (
-
-          <button
-            key={model.id}
-            onClick={() => {
-
-              setSelectedModel(model);
-
-              setSelectedImage(
-                model.model_image
-              );
-
-              window.scrollTo({
-                top: 0,
-                behavior: "smooth",
-              });
-
-            }}
-            className={`border-2 rounded-2xl p-2 transition hover:scale-105 ${
-              selectedModel?.id === model.id
-                ? "border-purple-600"
-                : "border-gray-200"
-            }`}
-          >
-
-            <img
-              src={model.model_image}
-              className="w-24 h-24 object-cover rounded-xl"
-            />
-
-            <p className="text-sm font-medium mt-2">
-              {model.model_name}
-            </p>
-
-          </button>
-
-        )
-      )}
+      </div>
 
     </div>
 
   </div>
-  )}
 
-{/* DESCRIPTION */}
-<p className="text-gray-600 text-lg mb-8">
-  {activeDescription}
-</p>
+  {/* INFOS */}
+  <div className="order-1 md:order-2">
 
-          {/* PANIER */}
-          <button
-            onClick={() =>
-              addToCart({
-                name:
-                  selectedModel
-                    ? `${selectedProduct.name} - ${selectedModel.model_name}`
-                    : selectedProduct.name,
+    <span className="bg-purple-100 text-purple-700 px-4 py-1 rounded-full text-sm font-medium">
+      ⭐ Produit populaire
+    </span>
 
-                price: activePrice,
+    <h1 className="text-4xl font-bold mt-5 mb-3">
 
-                image: activeImage,
-              })
-            }
-            className="w-full bg-gradient-to-r from-fuchsia-600 to-purple-700 text-white py-5 rounded-2xl font-bold text-xl shadow-xl hover:scale-[1.02] transition"
-          >
-            🛒 Ajouter au panier
-          </button>
+      {selectedModel
+        ? `${selectedProduct.name} — ${selectedModel.model_name}`
+        : selectedProduct.name}
+
+    </h1>
+
+    <p className="text-gray-500 mb-5">
+      {selectedProduct.category}
+    </p>
+
+    {/* MODELE ACTIF */}
+    {selectedModel && (
+
+      <div className="mb-5">
+
+        <span className="bg-black text-white px-4 py-2 rounded-full text-sm">
+          Modèle :
+          {" "}
+          {selectedModel.model_name}
+        </span>
+
+      </div>
+
+    )}
+
+    {/* PRIX */}
+    <div className="flex items-center gap-4 mb-10">
+
+      <span className="text-5xl font-bold text-purple-700">
+        {Number(activePrice).toFixed(2)}€
+      </span>
+
+      <span className="text-3xl text-gray-400 line-through">
+        {Number(
+          selectedProduct.old_price
+        ).toFixed(2)}€
+      </span>
+
+    </div>
+
+    {/* IMAGE MOBILE */}
+    <div className="md:hidden">
+
+      <div className="bg-[#f8f5ef] rounded-3xl p-4 shadow-lg mb-8">
+
+        <div className="space-y-4">
+
+          <img
+            src={activeImage}
+            className="w-full rounded-3xl shadow-xl"
+          />
+
+          {selectedProduct.images &&
+            selectedProduct.images.length > 0 && (
+
+              <div className="flex gap-3 flex-wrap">
+
+                {selectedProduct.images.map(
+                  (
+                    img: string,
+                    index: number
+                  ) => (
+
+                    <img
+                      key={index}
+                      src={img}
+                      onClick={() => {
+
+                        setSelectedModel({
+                          ...selectedModel,
+                          model_image: img,
+                        });
+
+                        setSelectedImage(img);
+
+                      }}
+                      className="w-24 h-24 object-cover rounded-2xl border-2 border-purple-500 cursor-pointer hover:scale-105 transition"
+                    />
+
+                  )
+                )}
+
+              </div>
+
+            )}
 
         </div>
 
       </div>
+
+    </div>
+
+    {/* MODELES */}
+    {relatedModels.length > 0 && (
+
+      <div className="mt-8">
+
+        <h3 className="text-xl font-bold mb-4">
+          Choisir un modèle
+        </h3>
+
+        <div className="flex gap-4 flex-wrap">
+
+          {relatedModels.map(
+            (model) => (
+
+              <button
+                key={model.id}
+                onClick={() => {
+
+                  setSelectedModel(model);
+
+                  setSelectedImage(
+                    model.model_image
+                  );
+
+                  window.scrollTo({
+                    top: 0,
+                    behavior: "smooth",
+                  });
+
+                }}
+                className={`border-2 rounded-2xl p-2 transition hover:scale-105 ${
+                  selectedModel?.id === model.id
+                    ? "border-purple-600"
+                    : "border-gray-200"
+                }`}
+              >
+
+                <img
+                  src={model.model_image}
+                  className="w-24 h-24 object-cover rounded-xl"
+                />
+
+                <p className="text-sm font-medium mt-2">
+                  {model.model_name}
+                </p>
+
+              </button>
+
+            )
+          )}
+
+        </div>
+
+      </div>
+
+    )}
+
+    {/* DESCRIPTION */}
+    <p className="text-gray-600 text-lg mb-8">
+      {activeDescription}
+    </p>
+
+    {/* PANIER */}
+    <button
+      onClick={() =>
+        addToCart({
+          name:
+            selectedModel
+              ? `${selectedProduct.name} - ${selectedModel.model_name}`
+              : selectedProduct.name,
+
+          price: activePrice,
+
+          image: activeImage,
+        })
+      }
+      className="w-full bg-gradient-to-r from-fuchsia-600 to-purple-700 text-white py-5 rounded-2xl font-bold text-xl shadow-xl hover:scale-[1.02] transition"
+    >
+      🛒 Ajouter au panier
+    </button>
+
+  </div>
+
+</div>
 
       {/* AUTRES PRODUITS */}
 

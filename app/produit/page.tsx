@@ -136,7 +136,7 @@ export default function ProduitPage() {
 
     <div className="bg-[#f8f5ef] rounded-3xl p-4 shadow-lg w-full">
 
-      <div className="grid grid-cols-[90px_1fr] gap-4 items-start">
+      <div className="grid grid-cols-[80px_1fr] gap-6 items-start">
 
         {selectedProduct.images &&
           selectedProduct.images.length > 0 && (
@@ -175,7 +175,7 @@ export default function ProduitPage() {
       
        <img
        src={activeImage}
-       className="w-full h-auto rounded-3xl shadow-xl object-cover"
+       className="w-full max-w-[520px] h-auto rounded-3xl shadow-xl object-cover"
     />
       </div>
 

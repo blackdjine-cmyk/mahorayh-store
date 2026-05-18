@@ -315,7 +315,7 @@ export default function ProduitPage() {
                   });
 
                 }}
-                className={`border-2 rounded-2xl p-2 transition hover:scale-105 ${
+                 className={`border rounded-xl px-3 py-2 transition-all duration-300 hover:border-purple-600 hover:shadow-md ${
                   selectedModel?.id === model.id
                     ? "border-purple-600"
                     : "border-gray-200"
@@ -324,10 +324,10 @@ export default function ProduitPage() {
 
                 <img
                   src={model.model_image}
-                  className="w-24 h-24 object-cover rounded-xl"
+                  className="w-16 h-16 object-cover rounded-lg"
                 />
 
-                <p className="text-sm font-medium mt-2">
+                <p> className="text-xs font-medium mt-2 text-gray-700"
                   {model.model_name}
                 </p>
 

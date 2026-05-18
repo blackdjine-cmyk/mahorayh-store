@@ -125,7 +125,7 @@ export default function ProduitPage() {
 
   return (
 
-    <div className="max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-10">
+    <div className="max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-10 overflow-x-hidden">
 
     {/* PRODUIT PRINCIPAL */}
 
@@ -330,7 +330,7 @@ export default function ProduitPage() {
       Choisir un modèle
     </h3>
 
-     <div className="flex gap-4 overflow-x-auto overflow-y-visible pt-2 pb-2">
+     <div className="flex gap-4 overflow-x-auto overflow-y-visible pt-2 pb-2 w-full">
 
       {relatedModels.map((model) => (
 

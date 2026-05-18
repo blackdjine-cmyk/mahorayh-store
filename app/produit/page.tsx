@@ -218,6 +218,61 @@ export default function ProduitPage() {
 
 </div>
 
+      {/* MODELES */}
+{relatedModels.length > 0 && (
+
+   <div className="hidden md:block mt-8">
+
+    <h3 className="text-2xl font-bold mb-5">
+      Choisir un modèle
+    </h3>
+
+    <div className="flex gap-4 flex-wrap">
+
+      {relatedModels.map((model) => (
+
+        <button
+          key={model.id}
+          onClick={() => {
+
+            setSelectedModel(model);
+
+            setSelectedImage(
+              model.model_image
+            );
+
+            window.scrollTo({
+              top: 0,
+              behavior: "smooth",
+            });
+
+          }}
+          className={`bg-white border rounded-2xl p-3 transition-all duration-300 hover:border-purple-600 hover:shadow-lg hover:-translate-y-1 ${
+            selectedModel?.id === model.id
+              ? "border-purple-600 shadow-md"
+              : "border-gray-200"
+          }`}
+        >
+
+          <img
+            src={model.model_image}
+            className="w-20 h-20 object-cover rounded-xl"
+          />
+
+          <p className="text-sm font-semibold mt-3 text-gray-800 text-center">
+            {model.model_name}
+          </p>
+
+        </button>
+
+      ))}
+
+    </div>
+
+  </div>
+
+)}
+
   {/* INFOS */}
   <div className="order-1 md:order-2">
 
@@ -235,12 +290,8 @@ export default function ProduitPage() {
 
 </h1>
 
-    <p className="text-gray-500 mb-5">
-      {selectedProduct.category}
-    </p>
-
-    {/* MODELE ACTIF */}
-    {selectedModel && (
+{/* MODELE ACTIF */}
+       {selectedModel && (
 
       <div className="mb-5">
 
@@ -323,60 +374,6 @@ export default function ProduitPage() {
 
     </div>
 
-   {/* MODELES */}
-{relatedModels.length > 0 && (
-
-  <div className="mt-10">
-
-    <h3 className="text-2xl font-bold mb-5">
-      Choisir un modèle
-    </h3>
-
-    <div className="flex gap-4 flex-wrap">
-
-      {relatedModels.map((model) => (
-
-        <button
-          key={model.id}
-          onClick={() => {
-
-            setSelectedModel(model);
-
-            setSelectedImage(
-              model.model_image
-            );
-
-            window.scrollTo({
-              top: 0,
-              behavior: "smooth",
-            });
-
-          }}
-          className={`bg-white border rounded-2xl p-3 transition-all duration-300 hover:border-purple-600 hover:shadow-lg hover:-translate-y-1 ${
-            selectedModel?.id === model.id
-              ? "border-purple-600 shadow-md"
-              : "border-gray-200"
-          }`}
-        >
-
-          <img
-            src={model.model_image}
-            className="w-20 h-20 object-cover rounded-xl"
-          />
-
-          <p className="text-sm font-semibold mt-3 text-gray-800 text-center">
-            {model.model_name}
-          </p>
-
-        </button>
-
-      ))}
-
-    </div>
-
-  </div>
-
-)}
 
     {/* DESCRIPTION */}
     <p className="text-gray-600 text-lg mb-8">

@@ -209,16 +209,7 @@ export default function ProduitPage() {
             cursor-zoom-in
           "
         />
-
-      </div>
-
-    </div>
-
-  </div>
-
-</div>
-
-      {/* MODELES */}
+              {/* MODELES */}
 {relatedModels.length > 0 && (
 
    <div className="hidden md:block mt-8">
@@ -272,6 +263,15 @@ export default function ProduitPage() {
   </div>
 
 )}
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
 
   {/* INFOS */}
   <div className="order-1 md:order-2">

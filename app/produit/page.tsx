@@ -330,7 +330,7 @@ export default function ProduitPage() {
       Choisir un modèle
     </h3>
 
-     <div className="flex gap-3 overflow-x-auto overflow-y-visible pb-4 md:flex-wrap">
+     <div className="flex gap-4 overflow-x-auto overflow-y-visible pt-2 pb-2">
 
       {relatedModels.map((model) => (
 

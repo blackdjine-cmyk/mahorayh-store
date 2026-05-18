@@ -330,7 +330,7 @@ export default function ProduitPage() {
       Choisir un modèle
     </h3>
 
-     <div className="flex gap-4 overflow-x-auto overflow-y-visible pt-2 pb-2 w-full px-1">
+     <div className="flex gap-3 overflow-x-auto overflow-y-visible pt-2 pb-2 w-full px-4 snap-x snap-mandatory">
 
       {relatedModels.map((model) => (
 
@@ -345,7 +345,7 @@ export default function ProduitPage() {
             );
 
           }}
-           className={`min-w-[110px] bg-white border rounded-2xl p-3 transition-all duration-300 hover:border-purple-600 hover:shadow-lg hover:-translate-y-1 ${
+           className={`min-w-[110px] snap-center bg-white border rounded-2xl p-3 transition-all duration-300 hover:border-purple-600 hover:shadow-lg hover:-translate-y-1 ${
             selectedModel?.id === model.id
               ? "border-purple-600 shadow-md"
               : "border-gray-200"

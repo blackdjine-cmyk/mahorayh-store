@@ -225,13 +225,15 @@ export default function ProduitPage() {
       ⭐ Produit populaire
     </span>
 
-    <h1 className="text-4xl font-bold mt-5 mb-3">
+    <h1 className="text-4xl font-bold leading-tight mt-5 mb-3">
 
-      {selectedModel
-        ? `${selectedProduct.name} — ${selectedModel.model_name}`
-        : selectedProduct.name}
+  <>
+    {selectedProduct.name}
+    <br />
+    {selectedModel?.model_name}
+  </>
 
-    </h1>
+</h1>
 
     <p className="text-gray-500 mb-5">
       {selectedProduct.category}

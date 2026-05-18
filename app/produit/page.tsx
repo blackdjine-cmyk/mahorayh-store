@@ -225,7 +225,7 @@ export default function ProduitPage() {
       ⭐ Produit populaire
     </span>
 
-    <h1 className="text-4xl font-bold leading-tight mt-5 mb-3">
+    <h1 className="text-4xl font-bold leading-[1.1] mt-5 mb-3">
 
   <>
     {selectedProduct.name}

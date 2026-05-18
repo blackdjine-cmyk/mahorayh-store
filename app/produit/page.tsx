@@ -131,58 +131,92 @@ export default function ProduitPage() {
 
 <div className="grid md:grid-cols-2 gap-12 items-start">
 
-  {/* IMAGE PC */}
-  <div className="hidden md:flex order-1 min-w-0">
+{/* IMAGE PC */}
+<div className="hidden md:flex order-1 min-w-0">
 
-    <div className="bg-[#f8f5ef] rounded-3xl p-4 shadow-lg w-full">
+  <div className="bg-[#f8f5ef] rounded-3xl p-4 shadow-lg w-full">
 
-      <div className="grid grid-cols-[80px_1fr] gap-6 items-start">
+    <div className="grid grid-cols-[80px_1fr] gap-6 items-start">
 
-        {selectedProduct.images &&
-          selectedProduct.images.length > 0 && (
+      {selectedProduct.images &&
+        selectedProduct.images.length > 0 && (
 
-          <div className="flex flex-col gap-5 shrink-0 pt-4">
+        <div className="flex flex-col gap-5 shrink-0 pt-4">
 
-            {selectedProduct.images.map(
-              (
-                img: string,
-                index: number
-              ) => (
+          {selectedProduct.images.map(
+            (
+              img: string,
+              index: number
+            ) => (
 
-                <img
-                  key={index}
-                  src={img}
-                  onClick={() => {
+              <img
+                key={index}
+                src={img}
+                onClick={() => {
 
-                    setSelectedModel({
-                      ...selectedModel,
-                      model_image: img,
-                    });
+                  setSelectedModel({
+                    ...selectedModel,
+                    model_image: img,
+                  });
 
-                    setSelectedImage(img);
+                  setSelectedImage(img);
 
-                  }}
-                  className="w-20 h-20 object-cover rounded-2xl border-2 border-purple-300 cursor-pointer hover:border-purple-600 hover:scale-105 transition duration-300 bg-white p-1"
-                />
+                }}
+                className="w-20 h-20 object-cover rounded-2xl border-2 border-purple-300 cursor-pointer hover:border-purple-600 hover:scale-105 transition duration-300 bg-white p-1"
+              />
 
-              )
-            )}
+            )
+          )}
 
-          </div>
+        </div>
 
-        )}
+      )}
 
-      
-       <img
-       src={activeImage}
-       className="w-full max-w-[520px] h-auto rounded-3xl shadow-xl object-cover"
-    />
+      <div
+        className="overflow-hidden rounded-3xl shadow-xl"
+        onMouseMove={(e) => {
+
+          const target = e.currentTarget;
+          const rect = target.getBoundingClientRect();
+
+          const x =
+            ((e.clientX - rect.left) / rect.width) * 100;
+
+          const y =
+            ((e.clientY - rect.top) / rect.height) * 100;
+
+          const img = target.querySelector("img");
+
+          if (img) {
+            (img as HTMLImageElement).style.transformOrigin =
+              `${x}% ${y}%`;
+          }
+
+        }}
+      >
+
+        <img
+          src={activeImage}
+          className="
+            w-full
+            max-w-[520px]
+            h-auto
+            rounded-3xl
+            object-cover
+            transition-transform
+            duration-300
+            hover:scale-150
+            cursor-zoom-in
+          "
+        />
+
       </div>
-
 
     </div>
 
   </div>
+
+</div>
 
   {/* INFOS */}
   <div className="order-1 md:order-2">
@@ -239,40 +273,6 @@ export default function ProduitPage() {
       <div className="bg-[#f8f5ef] rounded-3xl p-4 shadow-lg mb-8">
 
         <div className="space-y-4">
-
-          <div
-  className="flex-1 overflow-hidden rounded-3xl shadow-xl hidden md:block"
-  onMouseMove={(e) => {
-    const target = e.currentTarget;
-    const rect = target.getBoundingClientRect();
-
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-
-    const img = target.querySelector("img");
-
-    if (img) {
-      img.style.transformOrigin = `${x}% ${y}%`;
-    }
-  }}
->
-  <img
-    src={activeImage}
-    className="
-      w-full
-      rounded-3xl
-      transition-transform
-      duration-300
-      hover:scale-150
-      cursor-zoom-in
-    "
-  />
-</div>
-
-<img
-  src={activeImage}
-  className="w-full rounded-3xl shadow-xl md:hidden"
-/>
 
           {selectedProduct.images &&
             selectedProduct.images.length > 0 && (

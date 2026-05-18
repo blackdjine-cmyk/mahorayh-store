@@ -269,7 +269,7 @@ export default function ProduitPage() {
     {/* IMAGE MOBILE */}
     <div className="md:hidden">
 
-      <div className="bg-[#f8f5ef] rounded-3xl p-4 shadow-lg mb-8">
+      <div className="bg-[#f8f5ef] rounded-3xl p-4 shadow-lg mb-8 overflow-visible">
 
      <div className="space-y-4">
 
@@ -321,15 +321,16 @@ export default function ProduitPage() {
     </div>
 
     {/* MODELES */}
+
 {relatedModels.length > 0 && (
 
-  <div className="mt-10">
+  <div className="mt-10 relative z-20">
 
     <h3 className="text-2xl font-bold mb-5">
       Choisir un modèle
     </h3>
 
-     <div className="flex gap-3 overflow-x-auto pb-2 md:flex-wrap">
+     <div className="flex gap-3 overflow-x-auto overflow-y-visible pb-4 md:flex-wrap">
 
       {relatedModels.map((model) => (
 

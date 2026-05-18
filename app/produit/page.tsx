@@ -129,7 +129,7 @@ export default function ProduitPage() {
 
     {/* PRODUIT PRINCIPAL */}
 
-<div className="grid md:grid-cols-2 gap-12 items-start">
+ <div className="grid md:grid-cols-2 gap-12 items-start w-full overflow-x-hidden">
 
 {/* IMAGE PC */}
 <div className="hidden md:flex order-1 min-w-0">
@@ -269,7 +269,7 @@ export default function ProduitPage() {
     {/* IMAGE MOBILE */}
     <div className="md:hidden">
 
-      <div className="bg-[#f8f5ef] rounded-3xl p-4 shadow-lg mb-8 overflow-visible">
+      <div className="bg-[#f8f5ef] rounded-3xl p-4 shadow-lg mb-8 overflow-hidden w-full">
 
      <div className="space-y-4">
 
@@ -345,7 +345,7 @@ export default function ProduitPage() {
             );
 
           }}
-           className={`min-w-[110px] snap-center bg-white border rounded-2xl p-3 transition-all duration-300 hover:border-purple-600 hover:shadow-lg hover:-translate-y-1 ${
+           className={`w-[110px] flex-shrink-0 snap-center bg-white border rounded-2xl p-3 transition-all duration-300 hover:border-purple-600 hover:shadow-lg hover:-translate-y-1 ${
             selectedModel?.id === model.id
               ? "border-purple-600 shadow-md"
               : "border-gray-200"

@@ -329,7 +329,7 @@ export default function ProduitPage() {
       Choisir un modèle
     </h3>
 
-    <div className="flex gap-4 flex-wrap">
+     <div className="flex gap-3 overflow-x-auto pb-2 md:flex-wrap">
 
       {relatedModels.map((model) => (
 
@@ -344,7 +344,7 @@ export default function ProduitPage() {
             );
 
           }}
-          className={`bg-white border rounded-2xl p-3 transition-all duration-300 hover:border-purple-600 hover:shadow-lg hover:-translate-y-1 ${
+           className={`min-w-[120px] bg-white border rounded-2xl p-3 transition-all duration-300 hover:border-purple-600 hover:shadow-lg hover:-translate-y-1 ${
             selectedModel?.id === model.id
               ? "border-purple-600 shadow-md"
               : "border-gray-200"

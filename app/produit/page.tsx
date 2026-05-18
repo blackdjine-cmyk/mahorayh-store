@@ -272,43 +272,50 @@ export default function ProduitPage() {
 
       <div className="bg-[#f8f5ef] rounded-3xl p-4 shadow-lg mb-8">
 
-        <div className="space-y-4">
+     <div className="space-y-4">
 
-          {selectedProduct.images &&
-            selectedProduct.images.length > 0 && (
+  {/* IMAGE PRINCIPALE MOBILE */}
+  <img
+    src={activeImage}
+    className="w-full rounded-3xl shadow-xl"
+  />
 
-              <div className="flex gap-3 overflow-x-auto">
+  {/* MINIATURES MOBILE */}
+  {selectedProduct.images &&
+    selectedProduct.images.length > 0 && (
 
-                {selectedProduct.images.map(
-                  (
-                    img: string,
-                    index: number
-                  ) => (
+    <div className="flex gap-3 overflow-x-auto">
 
-                    <img
-                      key={index}
-                      src={img}
-                      onClick={() => {
+      {selectedProduct.images.map(
+        (
+          img: string,
+          index: number
+        ) => (
 
-                        setSelectedModel({
-                          ...selectedModel,
-                          model_image: img,
-                        });
+          <img
+            key={index}
+            src={img}
+            onClick={() => {
 
-                        setSelectedImage(img);
+              setSelectedModel({
+                ...selectedModel,
+                model_image: img,
+              });
 
-                      }}
-                      className="w-24 h-24 object-cover rounded-2xl border-2 border-purple-500 cursor-pointer hover:scale-105 transition"
-                    />
+              setSelectedImage(img);
 
-                  )
-                )}
+            }}
+            className="w-24 h-24 object-cover rounded-2xl border-2 border-purple-300 cursor-pointer"
+          />
 
-              </div>
+        )
+      )}
 
-            )}
+    </div>
 
-        </div>
+  )}
+
+</div>
 
       </div>
 

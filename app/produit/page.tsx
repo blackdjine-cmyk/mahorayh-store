@@ -240,10 +240,39 @@ export default function ProduitPage() {
 
         <div className="space-y-4">
 
-          <img
-          src={activeImage}
-          className="flex-1 w-full rounded-3xl shadow-xl"
-         />
+          <div
+  className="flex-1 overflow-hidden rounded-3xl shadow-xl hidden md:block"
+  onMouseMove={(e) => {
+    const target = e.currentTarget;
+    const rect = target.getBoundingClientRect();
+
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+    const img = target.querySelector("img");
+
+    if (img) {
+      img.style.transformOrigin = `${x}% ${y}%`;
+    }
+  }}
+>
+  <img
+    src={activeImage}
+    className="
+      w-full
+      rounded-3xl
+      transition-transform
+      duration-300
+      hover:scale-150
+      cursor-zoom-in
+    "
+  />
+</div>
+
+<img
+  src={activeImage}
+  className="w-full rounded-3xl shadow-xl md:hidden"
+/>
 
           {selectedProduct.images &&
             selectedProduct.images.length > 0 && (

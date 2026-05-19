@@ -313,62 +313,90 @@ export default function ProduitPage() {
 
           </div>
 
-          {/* MODÈLES PRODUITS */}
-<div className="mt-8">
+           {/* MODÈLES PRODUITS */}
+<div className="mt-8 overflow-hidden">
   <h3 className="text-2xl font-bold mb-5">
     Choisir un modèle
   </h3>
 
-  <div
-    className="
-  flex
-  gap-4
-  overflow-x-auto
-  md:overflow-x-visible
-  md:flex-wrap
-  md:justify-start
-  w-full
-  pb-2
-"
-  >
-    {relatedModels.map((model) => (
-      <button
-        key={model.id}
-        onClick={() => {
-          setSelectedModel(model);
-          setSelectedImage(model.model_image);
-        }}
-        className={`
-          flex-shrink-0
-          w-[150px]
-          md:w-[180px]
-          
-          bg-white
-          border
-          rounded-2xl
-          p-3
-          transition-all
-          duration-300
-          hover:border-purple-600
-          hover:shadow-md
-          ${
-            selectedModel?.id === model.id
-              ? "border-purple-600 shadow-md"
-              : "border-gray-200"
-          }
-        `}
-      >
-        <img
-          src={model.model_image}
-          alt={model.model_name}
-          className="w-24 h-24 object-cover rounded-xl mx-auto"
-        />
+  <div className="md:grid md:grid-cols-3 md:gap-4">
 
-        <p className="text-sm font-semibold mt-3 text-center text-gray-800">
-          {model.model_name}
-        </p>
-      </button>
-    ))}
+    {/* MOBILE */}
+    <div className="flex gap-4 overflow-x-auto pb-2 md:hidden">
+      {relatedModels.map((model) => (
+        <button
+          key={model.id}
+          onClick={() => {
+            setSelectedModel(model);
+            setSelectedImage(model.model_image);
+          }}
+          className={`
+            min-w-[140px]
+            bg-white
+            border
+            rounded-2xl
+            p-3
+            flex-shrink-0
+            transition-all
+            duration-300
+            ${
+              selectedModel?.id === model.id
+                ? "border-purple-600 shadow-md"
+                : "border-gray-200"
+            }
+          `}
+        >
+          <img
+            src={model.model_image}
+            alt={model.model_name}
+            className="w-24 h-24 object-cover rounded-xl mx-auto"
+          />
+
+          <p className="text-sm font-semibold mt-3 text-center text-gray-800">
+            {model.model_name}
+          </p>
+        </button>
+      ))}
+    </div>
+
+    {/* DESKTOP */}
+    <div className="hidden md:grid md:grid-cols-3 gap-4">
+      {relatedModels.map((model) => (
+        <button
+          key={model.id}
+          onClick={() => {
+            setSelectedModel(model);
+            setSelectedImage(model.model_image);
+          }}
+          className={`
+            bg-white
+            border
+            rounded-2xl
+            p-3
+            transition-all
+            duration-300
+            hover:border-purple-600
+            hover:shadow-md
+            ${
+              selectedModel?.id === model.id
+                ? "border-purple-600 shadow-md"
+                : "border-gray-200"
+            }
+          `}
+        >
+          <img
+            src={model.model_image}
+            alt={model.model_name}
+            className="w-24 h-24 object-cover rounded-xl mx-auto"
+          />
+
+          <p className="text-sm font-semibold mt-3 text-center text-gray-800">
+            {model.model_name}
+          </p>
+        </button>
+      ))}
+    </div>
+
   </div>
 </div>
 

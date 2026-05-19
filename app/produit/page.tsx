@@ -20,7 +20,6 @@ export default function ProduitPage() {
   const [selectedImage, setSelectedImage] =
     useState("");
 
-  // 📦 FETCH DATA
   useEffect(() => {
     fetchData();
   }, []);
@@ -64,7 +63,6 @@ export default function ProduitPage() {
     }
   };
 
-  // 🔄 CHANGER PRODUIT
   const changeProduct = (
     product: any
   ) => {
@@ -99,7 +97,6 @@ export default function ProduitPage() {
     );
   }
 
-  // 🎨 MODELES LIES
   const relatedModels =
     models.filter(
       (model) =>
@@ -107,18 +104,15 @@ export default function ProduitPage() {
         selectedProduct.id
     );
 
-  // 🖼️ IMAGE ACTIVE
   const activeImage =
     selectedImage ||
     selectedModel?.model_image ||
     selectedProduct.image;
 
-  // 💰 PRIX ACTIF
   const activePrice =
     selectedModel?.model_price ||
     selectedProduct.price;
 
-  // 📝 DESCRIPTION ACTIVE
   const activeDescription =
     selectedModel?.model_description ||
     selectedProduct.description;
@@ -127,276 +121,275 @@ export default function ProduitPage() {
 
     <div className="max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-10 overflow-x-hidden">
 
-    {/* PRODUIT PRINCIPAL */}
+      {/* PRODUIT PRINCIPAL */}
 
- <div className="grid md:grid-cols-2 gap-12 items-start w-full overflow-x-hidden">
+      <div className="grid md:grid-cols-2 gap-12 items-start w-full overflow-x-hidden">
 
-{/* IMAGE PC */}
-<div className="hidden md:flex order-1 min-w-0">
+        {/* IMAGE PC */}
+        <div className="hidden md:flex order-1 min-w-0">
 
-  <div className="bg-[#f8f5ef] rounded-3xl p-4 shadow-lg w-full">
+          <div className="bg-[#f8f5ef] rounded-3xl p-4 shadow-lg w-full">
 
-    <div className="grid grid-cols-[80px_1fr] gap-6 items-start">
+            <div className="grid grid-cols-[80px_1fr] gap-6 items-start">
 
-      {selectedProduct.images &&
-        selectedProduct.images.length > 0 && (
+              {selectedProduct.images &&
+                selectedProduct.images.length > 0 && (
 
-        <div className="flex flex-col gap-5 shrink-0 pt-4">
+                <div className="flex flex-col gap-5 shrink-0 pt-4">
 
-          {selectedProduct.images.map(
-            (
-              img: string,
-              index: number
-            ) => (
+                  {selectedProduct.images.map(
+                    (
+                      img: string,
+                      index: number
+                    ) => (
 
-              <img
-                key={index}
-                src={img}
-                onClick={() => {
+                      <img
+                        key={index}
+                        src={img}
+                        onClick={() => {
 
-                  setSelectedModel({
-                    ...selectedModel,
-                    model_image: img,
-                  });
+                          setSelectedModel({
+                            ...selectedModel,
+                            model_image: img,
+                          });
 
-                  setSelectedImage(img);
+                          setSelectedImage(img);
+
+                        }}
+                        className="w-20 h-20 object-cover rounded-2xl border-2 border-purple-300 cursor-pointer hover:border-purple-600 hover:scale-105 transition duration-300 bg-white p-1"
+                      />
+
+                    )
+                  )}
+
+                </div>
+
+              )}
+
+              <div
+                className="overflow-hidden rounded-3xl shadow-xl"
+                onMouseMove={(e) => {
+
+                  const target = e.currentTarget;
+                  const rect = target.getBoundingClientRect();
+
+                  const x =
+                    ((e.clientX - rect.left) / rect.width) * 100;
+
+                  const y =
+                    ((e.clientY - rect.top) / rect.height) * 100;
+
+                  const img = target.querySelector("img");
+
+                  if (img) {
+                    (img as HTMLImageElement).style.transformOrigin =
+                      `${x}% ${y}%`;
+                  }
 
                 }}
-                className="w-20 h-20 object-cover rounded-2xl border-2 border-purple-300 cursor-pointer hover:border-purple-600 hover:scale-105 transition duration-300 bg-white p-1"
-              />
+              >
 
-            )
-          )}
+                <img
+                  src={activeImage}
+                  className="
+                    w-full
+                    max-w-[520px]
+                    h-auto
+                    rounded-3xl
+                    object-cover
+                    transition-transform
+                    duration-300
+                    hover:scale-150
+                    cursor-zoom-in
+                  "
+                />
+
+              </div>
+
+            </div>
+
+          </div>
 
         </div>
 
-      )}
+        {/* INFOS */}
+        <div className="order-1 md:order-2">
 
-      <div
-        className="overflow-hidden rounded-3xl shadow-xl"
-        onMouseMove={(e) => {
+          <span className="bg-purple-100 text-purple-700 px-4 py-1 rounded-full text-sm font-medium">
+            ⭐ Produit populaire
+          </span>
 
-          const target = e.currentTarget;
-          const rect = target.getBoundingClientRect();
+          <h1 className="text-4xl font-bold leading-[1.1] mt-5 mb-3">
 
-          const x =
-            ((e.clientX - rect.left) / rect.width) * 100;
+            <>
+              {selectedProduct.name}
+              <br />
+              {selectedModel?.model_name}
+            </>
 
-          const y =
-            ((e.clientY - rect.top) / rect.height) * 100;
+          </h1>
 
-          const img = target.querySelector("img");
+          {/* MODELE ACTIF */}
+          {selectedModel && (
 
-          if (img) {
-            (img as HTMLImageElement).style.transformOrigin =
-              `${x}% ${y}%`;
-          }
+            <div className="mb-5">
 
-        }}
-      >
+              <span className="bg-black text-white px-4 py-2 rounded-full text-sm">
+                Modèle :
+                {" "}
+                {selectedModel.model_name}
+              </span>
 
-        <img
-          src={activeImage}
-          className="
-            w-full
-            max-w-[520px]
-            h-auto
-            rounded-3xl
-            object-cover
-            transition-transform
-            duration-300
-            hover:scale-150
-            cursor-zoom-in
-          "
-        />
+            </div>
 
-      </div>
+          )}
 
-    </div>
+          {/* PRIX */}
+          <div className="flex items-center gap-4 mb-10">
 
-  </div>
+            <span className="text-5xl font-bold text-purple-700">
+              {Number(activePrice).toFixed(2)}€
+            </span>
 
-</div>
+            <span className="text-3xl text-gray-400 line-through">
+              {Number(
+                selectedProduct.old_price
+              ).toFixed(2)}€
+            </span>
 
+          </div>
 
-  {/* INFOS */}
-  <div className="order-1 md:order-2">
+          {/* IMAGE MOBILE */}
+          <div className="md:hidden">
 
-    <span className="bg-purple-100 text-purple-700 px-4 py-1 rounded-full text-sm font-medium">
-      ⭐ Produit populaire
-    </span>
+            <div className="bg-[#f8f5ef] rounded-3xl p-4 shadow-lg mb-8 overflow-hidden w-full">
 
-    <h1 className="text-4xl font-bold leading-[1.1] mt-5 mb-3">
+              <div className="space-y-4">
 
-  <>
-    {selectedProduct.name}
-    <br />
-    {selectedModel?.model_name}
-  </>
+                {/* IMAGE PRINCIPALE MOBILE */}
+                <img
+                  src={activeImage}
+                  className="w-full rounded-3xl shadow-xl"
+                />
 
-</h1>
+                {/* MINIATURES MOBILE */}
+                {selectedProduct.images &&
+                  selectedProduct.images.length > 0 && (
 
-{/* MODELE ACTIF */}
-       {selectedModel && (
+                  <div className="flex gap-3 overflow-x-auto">
 
-      <div className="mb-5">
+                    {selectedProduct.images.map(
+                      (
+                        img: string,
+                        index: number
+                      ) => (
 
-        <span className="bg-black text-white px-4 py-2 rounded-full text-sm">
-          Modèle :
-          {" "}
-          {selectedModel.model_name}
-        </span>
+                        <img
+                          key={index}
+                          src={img}
+                          onClick={() => {
 
-      </div>
+                            setSelectedModel({
+                              ...selectedModel,
+                              model_image: img,
+                            });
 
-    )}
+                            setSelectedImage(img);
 
-    {/* PRIX */}
-    <div className="flex items-center gap-4 mb-10">
+                          }}
+                          className="w-24 h-24 object-cover rounded-2xl border-2 border-purple-300 cursor-pointer flex-shrink-0"
+                        />
 
-      <span className="text-5xl font-bold text-purple-700">
-        {Number(activePrice).toFixed(2)}€
-      </span>
+                      )
+                    )}
 
-      <span className="text-3xl text-gray-400 line-through">
-        {Number(
-          selectedProduct.old_price
-        ).toFixed(2)}€
-      </span>
+                  </div>
 
-    </div>
+                )}
 
-    {/* IMAGE MOBILE */}
-    <div className="md:hidden">
+              </div>
 
-      <div className="bg-[#f8f5ef] rounded-3xl p-4 shadow-lg mb-8 overflow-hidden w-full">
+            </div>
 
-     <div className="space-y-4">
+          </div>
 
-  {/* IMAGE PRINCIPALE MOBILE */}
-  <img
-    src={activeImage}
-    className="w-full rounded-3xl shadow-xl"
-  />
+          {/* MODELES */}
+          {relatedModels.length > 0 && (
 
-  {/* MINIATURES MOBILE */}
-  {selectedProduct.images &&
-    selectedProduct.images.length > 0 && (
+            <div className="mt-10 relative z-20 overflow-hidden">
 
-    <div className="flex gap-3 overflow-x-auto">
+              <h3 className="text-2xl font-bold mb-5">
+                Choisir un modèle
+              </h3>
 
-      {selectedProduct.images.map(
-        (
-          img: string,
-          index: number
-        ) => (
+              <div className="flex md:grid md:grid-cols-3 gap-4 overflow-x-auto md:overflow-visible overflow-y-hidden md:overflow-y-visible pb-2 w-full scrollbar-hide">
 
-          <img
-            key={index}
-            src={img}
-            onClick={() => {
+                {relatedModels.map((model) => (
 
-              setSelectedModel({
-                ...selectedModel,
-                model_image: img,
-              });
+                  <button
+                    key={model.id}
+                    onClick={() => {
 
-              setSelectedImage(img);
+                      setSelectedModel(model);
 
-            }}
-            className="w-24 h-24 object-cover rounded-2xl border-2 border-purple-300 cursor-pointer"
-          />
+                      setSelectedImage(
+                        model.model_image
+                      );
 
-        )
-      )}
+                    }}
+                    className={`min-w-[120px] max-w-[120px] md:min-w-0 md:max-w-none md:w-full flex-shrink-0 bg-white border rounded-2xl p-3 transition-all duration-300 hover:border-purple-600 hover:shadow-lg ${
+                      selectedModel?.id === model.id
+                        ? "border-purple-600 shadow-md"
+                        : "border-gray-200"
+                    }`}
+                  >
 
-    </div>
+                    <img
+                      src={model.model_image}
+                      className="w-20 h-20 object-cover rounded-xl mx-auto"
+                    />
 
-  )}
+                    <p className="text-sm font-semibold mt-3 text-gray-800 text-center">
+                      {model.model_name}
+                    </p>
 
-</div>
+                  </button>
 
-      </div>
+                ))}
 
-    </div>
+              </div>
 
-    {/* MODELES */}
+            </div>
 
-{relatedModels.length > 0 && (
+          )}
 
-  <div className="mt-10 relative z-20">
-
-    <h3 className="text-2xl font-bold mb-5">
-      Choisir un modèle
-    </h3>
-
-     <div className="flex md:grid md:grid-cols-3 gap-3 overflow-x-auto md:overflow-visible overflow-y-visible pt-2 pb-2 w-full max-w-full snap-x snap-mandatory">
-
-      {relatedModels.map((model) => (
-
-        <button
-          key={model.id}
-          onClick={() => {
-
-            setSelectedModel(model);
-
-            setSelectedImage(
-              model.model_image
-            );
-
-          }}
-           className={`w-[150px] md:w-full flex-shrink-0 snap-center bg-white border rounded-2xl p-3 transition-all duration-300 hover:border-purple-600 hover:shadow-lg hover:-translate-y-1 ${
-            selectedModel?.id === model.id
-              ? "border-purple-600 shadow-md"
-              : "border-gray-200"
-          }`}
-        >
-
-          <img
-            src={model.model_image}
-            className="w-20 h-20 object-cover rounded-xl"
-          />
-
-          <p className="text-sm font-semibold mt-3 text-gray-800 text-center">
-            {model.model_name}
+          {/* DESCRIPTION */}
+          <p className="text-gray-600 text-lg mb-8 mt-6">
+            {activeDescription}
           </p>
 
-        </button>
+          {/* PANIER */}
+          <button
+            onClick={() =>
+              addToCart({
+                name:
+                  selectedModel
+                    ? `${selectedProduct.name} - ${selectedModel.model_name}`
+                    : selectedProduct.name,
 
-      ))}
+                price: activePrice,
 
-    </div>
+                image: activeImage,
+              })
+            }
+            className="w-full bg-gradient-to-r from-fuchsia-600 to-purple-700 text-white py-5 rounded-2xl font-bold text-xl shadow-xl hover:scale-[1.02] transition"
+          >
+            🛒 Ajouter au panier
+          </button>
 
-  </div>
+        </div>
 
-)}
-    {/* DESCRIPTION */}
-    <p className="text-gray-600 text-lg mb-8">
-      {activeDescription}
-    </p>
-
-    {/* PANIER */}
-    <button
-      onClick={() =>
-        addToCart({
-          name:
-            selectedModel
-              ? `${selectedProduct.name} - ${selectedModel.model_name}`
-              : selectedProduct.name,
-
-          price: activePrice,
-
-          image: activeImage,
-        })
-      }
-      className="w-full bg-gradient-to-r from-fuchsia-600 to-purple-700 text-white py-5 rounded-2xl font-bold text-xl shadow-xl hover:scale-[1.02] transition"
-    >
-      🛒 Ajouter au panier
-    </button>
-
-  </div>
-
-</div>
+      </div>
 
       {/* AUTRES PRODUITS */}
 

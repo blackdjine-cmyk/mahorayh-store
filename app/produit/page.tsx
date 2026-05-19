@@ -330,7 +330,7 @@ export default function ProduitPage() {
       Choisir un modèle
     </h3>
 
-     <div className="flex md:grid md:grid-cols-3 gap-3 overflow-x-auto md:overflow-visible overflow-y-visible pt-2 pb-2 w-full md:px-0 snap-x snap-mandatory">
+     <div className="flex md:grid md:grid-cols-3 gap-3 overflow-x-auto md:overflow-visible overflow-y-visible pt-2 pb-2 w-full max-w-full snap-x snap-mandatory">
 
       {relatedModels.map((model) => (
 
@@ -345,7 +345,7 @@ export default function ProduitPage() {
             );
 
           }}
-           className={`min-w-[110px] md:min-w-0 md:w-auto flex-shrink-0 snap-center bg-white border rounded-2xl p-3 transition-all duration-300 hover:border-purple-600 hover:shadow-lg hover:-translate-y-1 ${
+           className={`w-[150px] md:w-full flex-shrink-0 snap-center bg-white border rounded-2xl p-3 transition-all duration-300 hover:border-purple-600 hover:shadow-lg hover:-translate-y-1 ${
             selectedModel?.id === model.id
               ? "border-purple-600 shadow-md"
               : "border-gray-200"

@@ -319,43 +319,44 @@ export default function ProduitPage() {
     Choisir un modèle
   </h3>
 
-  {/* MOBILE */}
-   <div className="flex md:hidden gap-4 overflow-x-auto pb-3 px-4 snap-x snap-mandatory scroll-smooth">
-    {relatedModels.map((model) => (
-      <button
-        key={model.id}
-        onClick={() => {
-          setSelectedModel(model);
-          setSelectedImage(model.model_image);
-        }}
-        className={`
-         w-[120px]
-          bg-white
-          border
-          rounded-2xl
-          p-4
-          flex-shrink-0
-          transition-all
-          duration-300
-          ${
-            selectedModel?.id === model.id
-              ? "border-purple-600 shadow-md"
-              : "border-gray-200"
-          }
-        `}
-      >
-        <img
-          src={model.model_image}
-          alt={model.model_name}
-          className="w-24 h-24 object-cover rounded-xl mx-auto"
-        />
+{/* MOBILE */}
+<div className="flex md:hidden gap-4 overflow-x-auto pb-3 pr-6 snap-x snap-mandatory scroll-smooth">
+  {relatedModels.map((model) => (
+    <button
+      key={model.id}
+      onClick={() => {
+        setSelectedModel(model);
+        setSelectedImage(model.model_image);
+      }}
+      className={`
+        w-[42vw]
+        min-w-[42vw]
+        bg-white
+        border
+        rounded-2xl
+        p-4
+        flex-shrink-0
+        snap-start
+        transition-all
+        duration-300
+        ${
+          selectedModel?.id === model.id
+            ? "border-purple-600 shadow-md"
+            : "border-gray-200"
+        }
+      `}
+    >
+      <img
+        src={model.model_image}
+        className="w-full h-28 object-cover rounded-xl"
+      />
 
-        <p className="text-sm font-semibold mt-3 text-center text-gray-800">
-          {model.model_name}
-        </p>
-      </button>
-    ))}
-  </div>
+      <p className="text-sm font-semibold mt-3 text-gray-800 text-center">
+        {model.model_name}
+      </p>
+    </button>
+  ))}
+</div>
 
   {/* DESKTOP */}
   <div className="hidden md:grid md:grid-cols-3 gap-6">

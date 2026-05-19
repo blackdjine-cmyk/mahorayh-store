@@ -313,55 +313,62 @@ export default function ProduitPage() {
 
           </div>
 
-          {/* MODELES */}
-          {relatedModels.length > 0 && (
+          {/* MODÈLES PRODUITS */}
+<div className="mt-8">
+  <h3 className="text-2xl font-bold mb-5">
+    Choisir un modèle
+  </h3>
 
-            <div className="mt-10 relative z-20 overflow-hidden">
+  <div
+    className="
+      flex md:grid
+      md:grid-cols-3
+      gap-4
+      overflow-x-auto
+      md:overflow-visible
+      w-full
+      pb-2
+    "
+  >
+    {relatedModels.map((model) => (
+      <button
+        key={model.id}
+        onClick={() => {
+          setSelectedModel(model);
+          setSelectedImage(model.model_image);
+        }}
+        className={`
+          flex-shrink-0
+          w-[150px]
+          md:w-full
+          bg-white
+          border
+          rounded-2xl
+          p-3
+          transition-all
+          duration-300
+          hover:border-purple-600
+          hover:shadow-md
+          ${
+            selectedModel?.id === model.id
+              ? "border-purple-600 shadow-md"
+              : "border-gray-200"
+          }
+        `}
+      >
+        <img
+          src={model.model_image}
+          alt={model.model_name}
+          className="w-24 h-24 object-cover rounded-xl mx-auto"
+        />
 
-              <h3 className="text-2xl font-bold mb-5">
-                Choisir un modèle
-              </h3>
-
-              <div className="flex md:grid md:grid-cols-3 gap-4 overflow-x-auto md:overflow-visible overflow-y-hidden md:overflow-y-visible pb-2 w-full scrollbar-hide">
-
-                {relatedModels.map((model) => (
-
-                  <button
-                    key={model.id}
-                    onClick={() => {
-
-                      setSelectedModel(model);
-
-                      setSelectedImage(
-                        model.model_image
-                      );
-
-                    }}
-                    className={`min-w-[120px] max-w-[120px] md:min-w-0 md:max-w-none md:w-full flex-shrink-0 bg-white border rounded-2xl p-3 transition-all duration-300 hover:border-purple-600 hover:shadow-lg ${
-                      selectedModel?.id === model.id
-                        ? "border-purple-600 shadow-md"
-                        : "border-gray-200"
-                    }`}
-                  >
-
-                    <img
-                      src={model.model_image}
-                      className="w-20 h-20 object-cover rounded-xl mx-auto"
-                    />
-
-                    <p className="text-sm font-semibold mt-3 text-gray-800 text-center">
-                      {model.model_name}
-                    </p>
-
-                  </button>
-
-                ))}
-
-              </div>
-
-            </div>
-
-          )}
+        <p className="text-sm font-semibold mt-3 text-center text-gray-800">
+          {model.model_name}
+        </p>
+      </button>
+    ))}
+  </div>
+</div>
 
           {/* DESCRIPTION */}
           <p className="text-gray-600 text-lg mb-8 mt-6">

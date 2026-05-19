@@ -320,7 +320,7 @@ export default function ProduitPage() {
   </h3>
 
   {/* MOBILE */}
-  <div className="flex md:hidden gap-4 overflow-x-auto pb-3 pr-4">
+  <div className="flex md:hidden gap-4 overflow-x-auto pb-3 px-4 justify-center snap-x snap-mandatory scroll-smooth">
     {relatedModels.map((model) => (
       <button
         key={model.id}

@@ -329,7 +329,7 @@ export default function ProduitPage() {
           setSelectedImage(model.model_image);
         }}
         className={`
-          min-w-[150px]
+         w-[120px]
           bg-white
           border
           rounded-2xl

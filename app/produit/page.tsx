@@ -321,14 +321,15 @@ export default function ProduitPage() {
 
   <div
     className="
-      flex md:grid
-      md:grid-cols-3
-      gap-4
-      overflow-x-auto
-      md:overflow-visible
-      w-full
-      pb-2
-    "
+  flex
+  gap-4
+  overflow-x-auto
+  md:overflow-x-visible
+  md:flex-wrap
+  md:justify-start
+  w-full
+  pb-2
+"
   >
     {relatedModels.map((model) => (
       <button
@@ -340,7 +341,8 @@ export default function ProduitPage() {
         className={`
           flex-shrink-0
           w-[150px]
-          md:w-full
+          md:w-[180px]
+          
           bg-white
           border
           rounded-2xl

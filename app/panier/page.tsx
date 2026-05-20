@@ -26,19 +26,33 @@ export default function PanierPage() {
 
   // 💳 CHECKOUT
   const handleCheckout = async () => {
+  // panier vide
+  if (cart.length === 0) {
+    alert("Votre panier est vide");
+    return;
+  }
 
-    // ✅ VALIDATION
-    if (
-      !nom ||
-      !email ||
-      !telephone ||
-      !codePostal ||
-      !adresse
-    ) {
-      alert("Veuillez remplir tous les champs");
-      return;
-    }
+  // validation champs
+  if (
+    !nom ||
+    !email ||
+    !telephone ||
+    !codePostal ||
+    !adresse
+  ) {
+    alert("Veuillez remplir tous les champs");
+    return;
+  }
 
+  // validation email
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (!emailRegex.test(email)) {
+    alert("Veuillez entrer une adresse e-mail valide");
+    return;
+  }
+
+  try {
     const res = await fetch("/api/checkout", {
       method: "POST",
       headers: {
@@ -61,7 +75,11 @@ export default function PanierPage() {
     } else {
       alert("Erreur lors du paiement");
     }
-  };
+  } catch (error) {
+    console.error(error);
+    alert("Impossible de lancer le paiement");
+  }
+};
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">

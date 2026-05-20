@@ -10,6 +10,7 @@ export default function PanierPage() {
   const [codePostal, setCodePostal] = useState("");
   const [adresse, setAdresse] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const {
     cart,
@@ -29,7 +30,7 @@ export default function PanierPage() {
   const handleCheckout = async () => {
   // panier vide
   if (cart.length === 0) {
-    alert("Votre panier est vide");
+    setErrorMessage("Votre panier est vide");
     return;
   }
 
@@ -41,7 +42,7 @@ export default function PanierPage() {
     !codePostal ||
     !adresse
   ) {
-    alert("Veuillez remplir tous les champs");
+    setErrorMessage("Veuillez remplir tous les champs");
     return;
   }
 
@@ -49,9 +50,10 @@ export default function PanierPage() {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   if (!emailRegex.test(email)) {
-    alert("Veuillez entrer une adresse e-mail valide");
+    setErrorMessage("Veuillez entrer une adresse e-mail valide");
     return;
   }
+ setErrorMessage("");
  setIsLoading(true);
   try {
     const res = await fetch("/api/checkout", {
@@ -75,12 +77,12 @@ export default function PanierPage() {
       window.location.href = data.url;
     } else {
   setIsLoading(false);
-  alert("Erreur lors du paiement");
+  setErrorMessage("Erreur lors du paiement");
 }
   } catch (error) {
   setIsLoading(false);
   console.error(error);
-  alert("Impossible de lancer le paiement");
+  setErrorMessage("Impossible de lancer le paiement");
 }
 };
 
@@ -224,7 +226,11 @@ export default function PanierPage() {
       onChange={(e) => setAdresse(e.target.value)}
       className="w-full border p-4 rounded-xl min-h-[120px] text-black placeholder-gray-400"
     />
-
+  {errorMessage && (
+  <p className="text-red-500 text-sm font-medium text-center">
+    {errorMessage}
+  </p>
+)}
     {/* ACTIONS */}
    <button
   onClick={handleCheckout}

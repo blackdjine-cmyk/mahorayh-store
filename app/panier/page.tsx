@@ -9,6 +9,7 @@ export default function PanierPage() {
   const [telephone, setTelephone] = useState("");
   const [codePostal, setCodePostal] = useState("");
   const [adresse, setAdresse] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     cart,
@@ -51,7 +52,7 @@ export default function PanierPage() {
     alert("Veuillez entrer une adresse e-mail valide");
     return;
   }
-
+ setIsLoading(true);
   try {
     const res = await fetch("/api/checkout", {
       method: "POST",
@@ -73,12 +74,14 @@ export default function PanierPage() {
     if (data.url) {
       window.location.href = data.url;
     } else {
-      alert("Erreur lors du paiement");
-    }
+  setIsLoading(false);
+  alert("Erreur lors du paiement");
+}
   } catch (error) {
-    console.error(error);
-    alert("Impossible de lancer le paiement");
-  }
+  setIsLoading(false);
+  console.error(error);
+  alert("Impossible de lancer le paiement");
+}
 };
 
   return (
@@ -223,12 +226,17 @@ export default function PanierPage() {
     />
 
     {/* ACTIONS */}
-    <button
-      onClick={handleCheckout}
-      className="w-full bg-purple-600 text-white px-6 py-4 rounded-xl hover:bg-purple-700 transition font-semibold"
-    >
-      💳 Passer au paiement
-    </button>
+   <button
+  onClick={handleCheckout}
+  disabled={isLoading}
+  className={`w-full px-6 py-4 rounded-xl transition font-semibold text-white ${
+    isLoading
+      ? "bg-gray-400 cursor-not-allowed"
+      : "bg-purple-600 hover:bg-purple-700"
+  }`}
+>
+  {isLoading ? "⏳ Traitement..." : "💳 Passer au paiement"}
+</button>
 
     <button
       onClick={clearCart}

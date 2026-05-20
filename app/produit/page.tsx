@@ -213,7 +213,7 @@ export default function ProduitPage() {
         </div>
 
         {/* INFOS */}
-        <div className="order-1 md:order-2">
+         <div className="order-1 md:order-2 w-full min-w-0 overflow-x-hidden">
 
           <span className="bg-purple-100 text-purple-700 px-4 py-1 rounded-full text-sm font-medium">
             ⭐ Produit populaire

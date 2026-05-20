@@ -282,12 +282,17 @@ export default function ProduitPage() {
                   key={index}
                   src={img}
                   onClick={() => {
-                    setSelectedModel({
-                      ...selectedModel,
-                      model_image: img,
-                    });
-                    setSelectedImage(img);
-                  }}
+                  setSelectedModel({
+                  ...selectedModel,
+                  model_image: img,
+                  });
+                  setSelectedImage(img);
+
+                  window.scrollTo({
+                  top: 250,
+                  behavior: "smooth",
+             });
+           }}
                   className="w-24 h-24 object-cover rounded-2xl border-2 border-purple-300 cursor-pointer flex-shrink-0"
                 />
               )

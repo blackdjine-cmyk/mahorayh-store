@@ -75,11 +75,11 @@ export default function PanierPage() {
         </p>
       ) : (
         <>
-          {/* LAYOUT PREMIUM */}
-<div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+  {/* LAYOUT PREMIUM */}
+<div className="mt-8 grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
 
   {/* ================= LEFT : PRODUITS ================= */}
-  <div className="lg:col-span-2 space-y-5">
+  <div className="lg:col-span-3 space-y-5">
     {cart.map((item: any, index: number) => (
       <div
         key={index}
@@ -136,15 +136,15 @@ export default function PanierPage() {
   </div>
 
   {/* ================= RIGHT : CHECKOUT ================= */}
-  <div className="lg:sticky lg:top-24 bg-white rounded-3xl shadow-sm border p-5 md:p-7 space-y-5">
+  <div className="lg:col-span-2 lg:sticky lg:top-24 bg-white rounded-3xl shadow-sm border p-6 md:p-8 space-y-6">
 
     {/* TOTAL */}
     <div className="border-b pb-5">
-      <h2 className="text-2xl font-bold mb-3">
+      <h2 className="text-2xl font-bold mb-4">
         Résumé commande
       </h2>
 
-      <div className="space-y-2 text-gray-700">
+      <div className="space-y-3 text-gray-700">
         <div className="flex justify-between">
           <span>Sous-total</span>
           <span>{total.toFixed(2)}€</span>
@@ -157,7 +157,7 @@ export default function PanierPage() {
           </span>
         </div>
 
-        <div className="flex justify-between text-2xl font-bold text-black pt-3 border-t mt-3">
+        <div className="flex justify-between text-2xl font-bold text-black pt-4 border-t mt-4">
           <span>Total</span>
           <span>{total.toFixed(2)}€</span>
         </div>

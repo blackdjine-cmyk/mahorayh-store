@@ -504,10 +504,17 @@ export default function ProduitPage() {
                     {product.category}
                   </p>
 
-                  <p className="text-gray-600 mb-5">
-                    {product.description}
-                  </p>
-
+                  <p
+                 className="
+                 text-gray-600
+                 mb-5
+                 min-h-[80px]
+                 line-clamp-3
+                 overflow-hidden
+                 "
+              >
+                {product.description}
+              </p>
                   <div className="flex items-center justify-between">
 
                     <span className="text-4xl font-bold text-purple-700">

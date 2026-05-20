@@ -316,7 +316,22 @@ export default function ProduitPage() {
                   behavior: "smooth",
              });
            }}
-                  className="w-24 h-24 object-cover rounded-2xl border-2 border-purple-300 cursor-pointer flex-shrink-0"
+                  className="
+                 w-24
+                 h-24
+                 object-contain
+                 rounded-2xl
+                 border-2
+                 border-purple-300
+                 cursor-pointer
+                 hover:border-purple-600
+                 hover:scale-105
+                 transition
+                 duration-300
+                 bg-white
+                 p-1
+                 flex-shrink-0
+                 "
                 />
               )
             )}

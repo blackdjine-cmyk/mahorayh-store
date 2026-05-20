@@ -315,9 +315,14 @@ export default function ProduitPage() {
     <button
       key={model.id}
       onClick={() => {
-        setSelectedModel(model);
-        setSelectedImage(model.model_image);
-      }}
+      setSelectedModel(model);
+      setSelectedImage(model.model_image);
+
+     window.scrollTo({
+     top: 180,
+     behavior: "smooth",
+     });
+    }}
       className={`
         w-[46%]
         min-w-[46%]

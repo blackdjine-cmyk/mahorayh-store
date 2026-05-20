@@ -125,7 +125,7 @@ export default function ProduitPage() {
 
       <div className="grid md:grid-cols-2 gap-12 items-start w-full overflow-x-hidden">
 
-        {/* IMAGE PC */}
+               {/* IMAGE PC */}
         <div className="hidden md:flex order-1 min-w-0">
 
           <div className="bg-[#f8f5ef] rounded-3xl p-4 shadow-lg w-full">
@@ -135,8 +135,16 @@ export default function ProduitPage() {
               {selectedProduct.images &&
                 selectedProduct.images.length > 0 && (
 
-                <div className="flex flex-col gap-5 shrink-0 pt-4">
-
+                <div className="
+                  flex
+                  flex-col
+                  gap-4
+                  shrink-0
+                  pt-2
+                  max-h-[520px]
+                  overflow-y-auto
+                  pr-2
+                ">
                   {selectedProduct.images.map(
                     (
                       img: string,
@@ -156,7 +164,22 @@ export default function ProduitPage() {
                           setSelectedImage(img);
 
                         }}
-                        className="w-20 h-20 object-cover rounded-2xl border-2 border-purple-300 cursor-pointer hover:border-purple-600 hover:scale-105 transition duration-300 bg-white p-1"
+                        className="
+                          w-20
+                          h-20
+                          object-cover
+                          rounded-2xl
+                          border-2
+                          border-purple-300
+                          cursor-pointer
+                          hover:border-purple-600
+                          hover:scale-105
+                          transition
+                          duration-300
+                          bg-white
+                          p-1
+                          flex-shrink-0
+                        "
                       />
 
                     )

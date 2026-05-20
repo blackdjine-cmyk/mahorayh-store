@@ -260,58 +260,43 @@ export default function ProduitPage() {
           </div>
 
           {/* IMAGE MOBILE */}
-          <div className="md:hidden">
+           <div className="md:hidden w-full overflow-hidden">
+         <div className="bg-[#f8f5ef] rounded-3xl p-4 shadow-lg mb-8 w-full">
+         <div className="space-y-4">
 
-            <div className="bg-[#f8f5ef] rounded-3xl p-4 shadow-lg mb-8 overflow-hidden w-full">
+         {/* IMAGE PRINCIPALE MOBILE */}
+         <div className="w-full flex justify-center overflow-hidden">
+         <img
+          src={activeImage}
+          className="w-full max-w-full rounded-3xl shadow-xl object-cover"
+        />
+       </div>
 
-              <div className="space-y-4">
-
-                {/* IMAGE PRINCIPALE MOBILE */}
+       {/* MINIATURES MOBILE */}
+       {selectedProduct.images &&
+        selectedProduct.images.length > 0 && (
+          <div className="flex gap-3 overflow-x-auto pb-2">
+            {selectedProduct.images.map(
+              (img: string, index: number) => (
                 <img
-                  src={activeImage}
-                  className="w-full rounded-3xl shadow-xl"
+                  key={index}
+                  src={img}
+                  onClick={() => {
+                    setSelectedModel({
+                      ...selectedModel,
+                      model_image: img,
+                    });
+                    setSelectedImage(img);
+                  }}
+                  className="w-24 h-24 object-cover rounded-2xl border-2 border-purple-300 cursor-pointer flex-shrink-0"
                 />
-
-                {/* MINIATURES MOBILE */}
-                {selectedProduct.images &&
-                  selectedProduct.images.length > 0 && (
-
-                  <div className="flex gap-3 overflow-x-auto">
-
-                    {selectedProduct.images.map(
-                      (
-                        img: string,
-                        index: number
-                      ) => (
-
-                        <img
-                          key={index}
-                          src={img}
-                          onClick={() => {
-
-                            setSelectedModel({
-                              ...selectedModel,
-                              model_image: img,
-                            });
-
-                            setSelectedImage(img);
-
-                          }}
-                          className="w-24 h-24 object-cover rounded-2xl border-2 border-purple-300 cursor-pointer flex-shrink-0"
-                        />
-
-                      )
-                    )}
-
-                  </div>
-
-                )}
-
-              </div>
-
-            </div>
-
+              )
+            )}
           </div>
+        )}
+    </div>
+  </div>
+</div>
 
              {/* MODÈLES PRODUITS */}
 <div className="mt-8 w-full">
@@ -320,7 +305,7 @@ export default function ProduitPage() {
   </h3>
 
 {/* MOBILE */}
-<div className="flex md:hidden gap-4 overflow-x-auto pb-3 pr-6 snap-x snap-mandatory scroll-smooth">
+<div className="flex md:hidden gap-4 overflow-x-auto pb-3 pr-10 snap-x snap-mandatory scroll-smooth w-full">
   {relatedModels.map((model) => (
     <button
       key={model.id}
@@ -329,8 +314,8 @@ export default function ProduitPage() {
         setSelectedImage(model.model_image);
       }}
       className={`
-        w-[42vw]
-        min-w-[42vw]
+        w-[46%]
+        min-w-[46%]
         bg-white
         border
         rounded-2xl

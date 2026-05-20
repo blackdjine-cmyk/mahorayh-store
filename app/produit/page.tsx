@@ -260,7 +260,7 @@ export default function ProduitPage() {
           </div>
 
           {/* IMAGE MOBILE */}
-           <div className="md:hidden w-full overflow-hidden">
+           <div className="md:hidden w-full overflow-x-hidden">
          <div className="bg-[#f8f5ef] rounded-3xl p-4 shadow-lg mb-8 w-full">
          <div className="space-y-4">
 
@@ -305,7 +305,7 @@ export default function ProduitPage() {
   </h3>
 
 {/* MOBILE */}
-<div className="flex md:hidden gap-4 overflow-x-auto pb-3 pr-10 snap-x snap-mandatory scroll-smooth w-full">
+ <div className="flex md:hidden gap-4 overflow-x-auto pb-3 snap-x snap-mandatory scroll-smooth w-full px-1">
   {relatedModels.map((model) => (
     <button
       key={model.id}
@@ -402,7 +402,7 @@ export default function ProduitPage() {
                 image: activeImage,
               })
             }
-            className="w-full bg-gradient-to-r from-fuchsia-600 to-purple-700 text-white py-5 rounded-2xl font-bold text-xl shadow-xl hover:scale-[1.02] transition"
+           className="w-full max-w-full mx-auto block bg-gradient-to-r from-fuchsia-600 to-purple-700 text-white py-5 rounded-2xl font-bold text-xl shadow-xl hover:scale-[1.02] transition"
           >
             🛒 Ajouter au panier
           </button>

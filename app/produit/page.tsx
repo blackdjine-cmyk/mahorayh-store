@@ -443,9 +443,7 @@ export default function ProduitPage() {
         </div>
 
       </div>
-
-      {/* AUTRES PRODUITS */}
-
+               {/* AUTRES PRODUITS */}
       <div className="mt-28">
 
         <h2 className="text-5xl font-bold text-center mb-16">
@@ -464,13 +462,32 @@ export default function ProduitPage() {
 
               <div
                 key={product.id}
-                className="bg-white rounded-3xl overflow-hidden shadow-lg border hover:shadow-2xl transition duration-300"
+                className="
+                  bg-white
+                  rounded-3xl
+                  overflow-hidden
+                  shadow-lg
+                  border
+                  hover:shadow-2xl
+                  transition
+                  duration-300
+                "
               >
 
-                <img
-                  src={product.image}
-                  className="w-full h-80 object-cover"
-                />
+                {/* IMAGE CARTE */}
+                <div className="w-full h-80 bg-[#f8f5ef] flex items-center justify-center overflow-hidden">
+                  <img
+                    src={product.image}
+                    className="
+                      max-w-full
+                      max-h-full
+                      object-contain
+                      transition-transform
+                      duration-300
+                      hover:scale-105
+                    "
+                  />
+                </div>
 
                 <div className="p-6">
 
@@ -512,7 +529,19 @@ export default function ProduitPage() {
                         });
 
                       }}
-                      className="bg-gradient-to-r from-fuchsia-600 to-purple-700 text-white px-6 py-3 rounded-2xl font-semibold shadow-lg hover:scale-105 transition"
+                      className="
+                        bg-gradient-to-r
+                        from-fuchsia-600
+                        to-purple-700
+                        text-white
+                        px-6
+                        py-3
+                        rounded-2xl
+                        font-semibold
+                        shadow-lg
+                        hover:scale-105
+                        transition
+                      "
                     >
                       Voir
                     </button>

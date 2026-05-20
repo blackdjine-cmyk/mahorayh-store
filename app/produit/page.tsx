@@ -475,7 +475,7 @@ export default function ProduitPage() {
               >
 
                 {/* IMAGE CARTE */}
-                <div className="w-full h-80 bg-[#f8f5ef] flex items-center justify-center overflow-hidden">
+                 <div className="w-full h-72 bg-[#f8f5ef] flex items-center justify-center overflow-hidden">
                   <img
                     src={product.image}
                     className="

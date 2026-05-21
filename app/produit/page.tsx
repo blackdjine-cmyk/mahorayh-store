@@ -224,22 +224,25 @@ const handleTouchEnd = (
                           setSelectedImage(img);
 
                         }}
-                        className="
-                          w-20
-                          h-20
-                          object-cover
-                          rounded-2xl
-                          border-2
-                          border-purple-300
-                          cursor-pointer
-                          hover:border-purple-600
-                          hover:scale-105
-                          transition
-                          duration-300
-                          bg-white
-                          p-1
-                          flex-shrink-0
-                        "
+                       className={`
+                       w-20
+                       h-20
+                       object-cover
+                       rounded-2xl
+                       border-2
+                       cursor-pointer
+                       transition-all
+                       duration-300
+                       bg-white
+                       p-1
+                       flex-shrink-0
+                       hover:scale-105
+                     ${
+                       activeImage === img
+                       ? "border-purple-600 shadow-lg scale-105"
+                        : "border-purple-300 hover:border-purple-500"
+                      }
+                    `}
                       />
 
                     )
@@ -380,23 +383,25 @@ const handleTouchEnd = (
                   behavior: "smooth",
              });
            }}
-                  className="
+                  className={`
                  w-24
                  h-24
                  object-contain
                  rounded-2xl
                  border-2
-                 border-purple-300
                  cursor-pointer
-                 hover:border-purple-600
-                 hover:scale-[1.03]
                  transition-all
                  duration-300
                  bg-white
                  p-1
                  flex-shrink-0
                  box-border
-                 "
+               ${
+                  activeImage === img
+                 ? "border-purple-600 shadow-lg scale-[1.03]"
+                 : "border-purple-300 hover:border-purple-500"
+                 }
+              `}
                 />
               )
             )}
@@ -439,8 +444,8 @@ const handleTouchEnd = (
         duration-300
         ${
           selectedModel?.id === model.id
-            ? "border-purple-600 shadow-md"
-            : "border-gray-200"
+         ? "border-purple-600 shadow-xl ring-2 ring-purple-200 -translate-y-1"
+         : "border-gray-200 hover:border-purple-300"
         }
       `}
     >
@@ -477,8 +482,8 @@ const handleTouchEnd = (
           hover:shadow-md
           ${
             selectedModel?.id === model.id
-              ? "border-purple-600 shadow-md"
-              : "border-gray-200"
+           ? "border-purple-600 shadow-xl ring-2 ring-purple-200 -translate-y-1"
+           : "border-gray-200 hover:border-purple-300"
           }
         `}
       >

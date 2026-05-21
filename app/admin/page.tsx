@@ -35,6 +35,8 @@ export default function AdminPage() {
     useState<number | null>(null);
 
   const [uploading, setUploading] = useState(false);
+  const [orders, setOrders] = useState<any[]>([]);
+  const [ordersLoading, setOrdersLoading] = useState(false);
 
   // 🔐 LOGIN
   const handleLogin = () => {
@@ -56,6 +58,7 @@ export default function AdminPage() {
 
     fetchProducts();
     fetchModels();
+    fetchOrders();
 
   }, [isAuth]);
 
@@ -93,6 +96,25 @@ export default function AdminPage() {
       setModels(data || []);
     }
   };
+
+  const fetchOrders = async () => {
+  setOrdersLoading(true);
+
+  const { data, error } = await supabase
+    .from("commandes")
+    .select("*")
+    .order("created_at", {
+      ascending: false,
+    });
+
+  if (error) {
+    console.log(error);
+  } else {
+    setOrders(data || []);
+  }
+
+  setOrdersLoading(false);
+};
 
   // 📸 UPLOAD IMAGE
   const uploadImage = async (
@@ -284,6 +306,24 @@ export default function AdminPage() {
     fetchModels();
   };
 
+  const deleteOrder = async (
+  id: number
+) => {
+
+  const confirmDelete = confirm(
+    "Supprimer cette commande ?"
+  );
+
+  if (!confirmDelete) return;
+
+  await supabase
+    .from("commandes")
+    .delete()
+    .eq("id", id);
+
+  fetchOrders();
+};
+
   // ✏️ MODIFIER PRODUIT
   function editProduct(product: any) {
 
@@ -356,6 +396,18 @@ export default function AdminPage() {
       </div>
     );
   }
+
+  const totalSales = orders.reduce(
+  (acc, order) =>
+    acc + Number(order.total),
+  0
+);
+
+const totalClients = new Set(
+  orders.map(
+    (order) => order.email
+  )
+).size;
 
   return (
 
@@ -715,6 +767,111 @@ export default function AdminPage() {
         })}
 
       </div>
+
+{/* COMMANDES */}
+<div className="mt-16">
+
+  <h1 className="text-3xl font-bold mb-8">
+    📦 Commandes
+  </h1>
+
+  {/* STATS */}
+  <div className="grid md:grid-cols-3 gap-6 mb-8">
+
+    <div className="bg-white p-6 rounded-2xl shadow">
+      <p className="text-gray-500">
+        Nombre commandes
+      </p>
+      <h2 className="text-4xl font-bold mt-2">
+        {orders.length}
+      </h2>
+    </div>
+
+    <div className="bg-white p-6 rounded-2xl shadow">
+      <p className="text-gray-500">
+        Total ventes
+      </p>
+      <h2 className="text-4xl font-bold text-purple-700 mt-2">
+        {totalSales.toFixed(2)} €
+      </h2>
+    </div>
+
+    <div className="bg-white p-6 rounded-2xl shadow">
+      <p className="text-gray-500">
+        Clients
+      </p>
+      <h2 className="text-4xl font-bold mt-2">
+        {totalClients}
+      </h2>
+    </div>
+
+  </div>
+
+  {/* LISTE COMMANDES */}
+  <div className="space-y-5">
+
+    {ordersLoading ? (
+      <p>Chargement...</p>
+    ) : orders.length === 0 ? (
+      <p>Aucune commande</p>
+    ) : (
+      orders.map((order) => (
+        <div
+          key={order.id}
+          className="bg-white p-6 rounded-2xl shadow border"
+        >
+          <div className="flex flex-col md:flex-row md:justify-between gap-4">
+
+            <div className="space-y-2">
+              <h2 className="text-xl font-bold">
+                {order.client}
+              </h2>
+
+              <p>
+                📧 {order.email}
+              </p>
+
+              <p>
+                📞 {order.telephone}
+              </p>
+
+              <p>
+                📍 {order.code_postal}
+              </p>
+
+              <p>
+                🏠 {order.adresse}
+              </p>
+
+              <p className="font-bold text-purple-700 text-xl">
+                {Number(order.total).toFixed(2)} €
+              </p>
+
+              <p className="text-sm text-gray-500">
+                {new Date(
+                  order.created_at
+                ).toLocaleDateString("fr-FR")}
+              </p>
+            </div>
+
+            <div className="flex items-start">
+              <button
+                onClick={() =>
+                  deleteOrder(order.id)
+                }
+                className="bg-red-600 text-white px-4 py-2 rounded-xl hover:bg-red-700"
+              >
+                Supprimer
+              </button>
+            </div>
+
+          </div>
+        </div>
+      ))
+    )}
+
+  </div>
+</div>
 
     </div>
   );

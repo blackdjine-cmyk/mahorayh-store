@@ -239,7 +239,7 @@ const handleTouchEnd = (
                        hover:scale-105
                      ${
                        activeImage === img
-                       ? "border-purple-600 shadow-lg scale-105"
+                       ? "border-purple-600 shadow-lg ring-2 ring-purple-200"
                         : "border-purple-300 hover:border-purple-500"
                       }
                     `}
@@ -398,7 +398,7 @@ const handleTouchEnd = (
                  box-border
                ${
                   activeImage === img
-                 ? "border-purple-600 shadow-lg scale-[1.03]"
+                 ? "border-purple-600 shadow-lg ring-2 ring-purple-200"
                  : "border-purple-300 hover:border-purple-500"
                  }
               `}

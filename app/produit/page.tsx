@@ -298,7 +298,7 @@ export default function ProduitPage() {
        {/* MINIATURES MOBILE */}
        {selectedProduct.images &&
         selectedProduct.images.length > 0 && (
-          <div className="flex gap-3 overflow-x-auto pb-2">
+          <div className="flex items-center gap-3 overflow-x-auto py-1 pb-2">
             {selectedProduct.images.map(
               (img: string, index: number) => (
                 <img
@@ -325,12 +325,13 @@ export default function ProduitPage() {
                  border-purple-300
                  cursor-pointer
                  hover:border-purple-600
-                 hover:scale-105
-                 transition
+                 hover:scale-[1.03]
+                 transition-all
                  duration-300
                  bg-white
                  p-1
                  flex-shrink-0
+                 box-border
                  "
                 />
               )

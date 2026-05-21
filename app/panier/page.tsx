@@ -159,7 +159,7 @@ export default function PanierPage() {
   </div>
 
   {/* ================= RIGHT : CHECKOUT ================= */}
-   <div className="lg:col-span-2 lg:sticky lg:top-24 w-full min-w-[420px] bg-white rounded-3xl shadow-sm border p-6 md:p-8 space-y-6">
+   <div className="w-full lg:col-span-2 lg:sticky lg:top-24 lg:min-w-[420px] bg-white rounded-3xl shadow-sm border p-6 md:p-8 space-y-6">
 
     {/* TOTAL */}
     <div className="border-b pb-5">

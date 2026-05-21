@@ -196,15 +196,16 @@ const handleTouchEnd = (
                 selectedProduct.images.length > 0 && (
 
                 <div className="
-                  flex
-                  flex-col
-                  gap-4
-                  shrink-0
-                  pt-2
-                  max-h-[520px]
-                  overflow-y-auto
-                  pr-2
-                ">
+               flex
+               flex-col
+               gap-4
+               shrink-0
+               pt-2
+               h-[520px]
+               overflow-y-auto
+               pr-3
+               items-center
+              ">
                   {selectedProduct.images.map(
                     (
                       img: string,
@@ -432,16 +433,17 @@ const handleTouchEnd = (
      });
     }}
       className={`
-        w-[46%]
-        min-w-[46%]
-        bg-white
-        border
-        rounded-2xl
-        p-4
-        flex-shrink-0
-        snap-start
-        transition-all
-        duration-300
+        w-[44%]
+       min-w-[44%]
+       bg-white
+       border
+       rounded-2xl
+       p-3
+       overflow-hidden
+       flex-shrink-0
+       snap-start
+       transition-all
+       duration-300
         ${
           selectedModel?.id === model.id
          ? "border-purple-600 shadow-xl ring-2 ring-purple-200 -translate-y-1"
@@ -451,10 +453,10 @@ const handleTouchEnd = (
     >
       <img
         src={model.model_image}
-        className="w-full h-28 object-cover rounded-xl"
+       className="w-full h-24 object-cover rounded-xl"
       />
 
-      <p className="text-sm font-semibold mt-3 text-gray-800 text-center">
+      <p className="text-sm font-semibold mt-2 text-gray-800 text-center truncate">
         {model.model_name}
       </p>
     </button>
@@ -561,19 +563,19 @@ const handleTouchEnd = (
 
                 {/* IMAGE CARTE */}
                  <div className="w-full h-72 bg-[#f8f5ef] flex items-center justify-center overflow-hidden p-4">
-  <img
-    src={product.image}
-    className="
-      max-w-full
-      max-h-full
-      object-contain
-      rounded-2xl
-      transition-transform
-      duration-300
-      hover:scale-105
-    "
-  />
-</div>
+             <img
+                 src={product.image}
+                 className="
+                 max-w-full
+                 max-h-full
+                 object-contain
+                 rounded-2xl
+                 transition-transform
+                 duration-300
+                 hover:scale-105
+                 "
+              />
+              </div>
 
                 <div className="p-6">
 

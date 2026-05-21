@@ -19,6 +19,8 @@ export default function ProduitPage() {
 
   const [selectedImage, setSelectedImage] =
     useState("");
+  const [touchStart, setTouchStart] =
+  useState<number | null>(null);
 
   useEffect(() => {
     fetchData();

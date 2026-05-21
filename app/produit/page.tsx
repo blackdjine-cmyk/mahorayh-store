@@ -25,7 +25,65 @@ export default function ProduitPage() {
   useEffect(() => {
     fetchData();
   }, []);
+const handleTouchStart = (
+  e: React.TouchEvent
+) => {
+  setTouchStart(
+    e.touches[0].clientX
+  );
+};
 
+const handleTouchEnd = (
+  e: React.TouchEvent
+) => {
+  if (!touchStart) return;
+
+  const touchEnd =
+    e.changedTouches[0].clientX;
+
+  const diff =
+    touchStart - touchEnd;
+
+  if (
+    Math.abs(diff) < 50
+  )
+    return;
+
+  const images =
+    selectedProduct.images || [];
+
+  if (
+    images.length === 0
+  )
+    return;
+
+  const currentIndex =
+    images.indexOf(activeImage);
+
+  if (diff > 0) {
+    // swipe gauche → image suivante
+    const nextIndex =
+      (currentIndex + 1) %
+      images.length;
+
+    setSelectedImage(
+      images[nextIndex]
+    );
+  } else {
+    // swipe droite → image précédente
+    const prevIndex =
+      (currentIndex -
+        1 +
+        images.length) %
+      images.length;
+
+    setSelectedImage(
+      images[prevIndex]
+    );
+  }
+
+  setTouchStart(null);
+};
   const fetchData = async () => {
 
     const { data: productsData } =
@@ -290,7 +348,11 @@ export default function ProduitPage() {
          <div className="space-y-4">
 
          {/* IMAGE PRINCIPALE MOBILE */}
-         <div className="w-full flex justify-center overflow-hidden">
+         <div
+         className="w-full flex justify-center overflow-hidden"
+         onTouchStart={handleTouchStart}
+         onTouchEnd={handleTouchEnd}
+>
          <img
           src={activeImage}
           className="w-full max-w-full rounded-3xl shadow-xl object-cover"

@@ -23,6 +23,10 @@ export default function ProduitPage() {
  const [isZoomOpen, setIsZoomOpen] =
   useState(false);
 
+const [isImageLoading, setIsImageLoading] =
+  useState(false);
+
+
   const [touchStart, setTouchStart] =
   useState<number | null>(null);
 
@@ -227,6 +231,7 @@ const handleTouchEnd = (
                             model_image: img,
                           });
 
+                          setIsImageLoading(true);
                           setSelectedImage(img);
 
                         }}
@@ -284,17 +289,23 @@ const handleTouchEnd = (
                 <img
                   src={activeImage}
                   onClick={() => setIsZoomOpen(true)}
-                  className="
-                    w-full
-                    max-w-[520px]
-                    h-auto
-                    rounded-3xl
-                    object-cover
-                    transition-transform
-                    duration-300
-                    hover:scale-150
-                    cursor-zoom-in
-                  "
+                  className={`
+                 w-full
+                 max-w-[520px]
+                 h-auto
+                 rounded-3xl
+                 object-cover
+                 transition-all
+                 duration-500
+                 hover:scale-150
+                 cursor-zoom-in
+               ${
+                  isImageLoading
+                 ? "opacity-0 scale-95"
+                 : "opacity-100 scale-100"
+               }
+            `}
+               onLoad={() => setIsImageLoading(false)}
                 />
 
               </div>
@@ -363,11 +374,26 @@ const handleTouchEnd = (
          onTouchStart={handleTouchStart}
          onTouchEnd={handleTouchEnd}
 >
-         <img
-          src={activeImage}
-          onClick={() => setIsZoomOpen(true)}
-          className="w-full max-w-full rounded-3xl shadow-xl object-cover"
-        />
+
+<img
+  src={activeImage}
+  onClick={() => setIsZoomOpen(true)}
+  onLoad={() => setIsImageLoading(false)}
+  className={`
+    w-full
+    max-w-full
+    rounded-3xl
+    shadow-xl
+    object-cover
+    transition-all
+    duration-500
+    ${
+      isImageLoading
+        ? "opacity-0 scale-95"
+        : "opacity-100 scale-100"
+    }
+  `}
+/>
        </div>
 
        {/* MINIATURES MOBILE */}
@@ -384,6 +410,8 @@ const handleTouchEnd = (
                   ...selectedModel,
                   model_image: img,
                   });
+
+                  setIsImageLoading(true);
                   setSelectedImage(img);
 
                   window.scrollTo({
@@ -432,6 +460,7 @@ const handleTouchEnd = (
       key={model.id}
       onClick={() => {
       setSelectedModel(model);
+      setIsImageLoading(true);
       setSelectedImage(model.model_image);
 
      window.scrollTo({
@@ -476,9 +505,10 @@ const handleTouchEnd = (
       <button
         key={model.id}
         onClick={() => {
-          setSelectedModel(model);
-          setSelectedImage(model.model_image);
-        }}
+       setSelectedModel(model);
+       setIsImageLoading(true);
+       setSelectedImage(model.model_image);
+      }}
         className={`
           bg-white
           border

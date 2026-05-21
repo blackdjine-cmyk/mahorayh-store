@@ -420,7 +420,7 @@ const handleTouchEnd = (
   </h3>
 
 {/* MOBILE */}
- <div className="flex md:hidden gap-4 overflow-x-auto pb-3 snap-x snap-mandatory scroll-smooth w-full px-1">
+ <div className="flex md:hidden gap-4 overflow-x-auto pt-2 pb-3 snap-x snap-mandatory scroll-smooth w-full px-1">
   {relatedModels.map((model) => (
     <button
       key={model.id}
@@ -447,7 +447,7 @@ const handleTouchEnd = (
        duration-300
         ${
           selectedModel?.id === model.id
-         ? "border-purple-600 shadow-xl ring-2 ring-purple-200 -translate-y-1"
+         ? "border-purple-600 shadow-xl ring-2 ring-purple-200"
          : "border-gray-200 hover:border-purple-300"
         }
       `}

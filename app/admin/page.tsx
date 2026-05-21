@@ -847,6 +847,29 @@ const totalClients = new Set(
                 {Number(order.total).toFixed(2)} €
               </p>
 
+<div className="mt-4 border-t pt-4">
+  <p className="font-semibold mb-2 text-gray-700">
+    📦 Produits commandés
+  </p>
+
+  {order.produits?.map(
+    (item: any, index: number) => (
+      <div
+        key={index}
+        className="flex justify-between py-1 text-sm"
+      >
+        <span>
+          {item.name} × {item.quantity}
+        </span>
+
+        <span className="font-medium text-purple-700">
+          {item.price} €
+        </span>
+      </div>
+    )
+  )}
+</div>
+
               <p className="text-sm text-gray-500">
                 {new Date(
                   order.created_at

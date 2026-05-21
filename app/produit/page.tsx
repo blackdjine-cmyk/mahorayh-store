@@ -190,7 +190,7 @@ const handleTouchEnd = (
 
           <div className="bg-[#f8f5ef] rounded-3xl p-4 shadow-lg w-full">
 
-            <div className="grid grid-cols-[80px_1fr] gap-6 items-start">
+            <div className="grid grid-cols-[90px_1fr] gap-8 items-start">
 
               {selectedProduct.images &&
                 selectedProduct.images.length > 0 && (

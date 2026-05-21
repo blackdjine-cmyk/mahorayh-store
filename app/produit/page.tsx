@@ -190,12 +190,12 @@ const handleTouchEnd = (
 
           <div className="bg-[#f8f5ef] rounded-3xl p-4 shadow-lg w-full">
 
-            <div className="grid grid-cols-[90px_1fr] gap-8 items-start">
+          <div className="grid grid-cols-[110px_1fr] gap-8 items-start">
 
               {selectedProduct.images &&
                 selectedProduct.images.length > 0 && (
 
-                <div className="
+               <div className="
                flex
                flex-col
                gap-4
@@ -204,7 +204,8 @@ const handleTouchEnd = (
                h-[520px]
                overflow-y-auto
                pr-3
-               items-center
+               pl-2
+               items-start
               ">
                   {selectedProduct.images.map(
                     (
@@ -433,12 +434,12 @@ const handleTouchEnd = (
      });
     }}
       className={`
-        w-[44%]
-       min-w-[44%]
+        w-[48%]
+       min-w-[48%]
        bg-white
        border
        rounded-2xl
-       p-3
+       p-4
        overflow-hidden
        flex-shrink-0
        snap-start
@@ -453,10 +454,10 @@ const handleTouchEnd = (
     >
       <img
         src={model.model_image}
-       className="w-full h-24 object-cover rounded-xl"
+      className="w-full h-32 object-cover rounded-xl"
       />
 
-      <p className="text-sm font-semibold mt-2 text-gray-800 text-center truncate">
+      <p className="text-sm font-semibold mt-3 text-gray-800 text-center truncate">
         {model.model_name}
       </p>
     </button>

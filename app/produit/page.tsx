@@ -19,6 +19,10 @@ export default function ProduitPage() {
 
   const [selectedImage, setSelectedImage] =
     useState("");
+
+ const [isZoomOpen, setIsZoomOpen] =
+  useState(false);
+
   const [touchStart, setTouchStart] =
   useState<number | null>(null);
 
@@ -279,6 +283,7 @@ const handleTouchEnd = (
 
                 <img
                   src={activeImage}
+                  onClick={() => setIsZoomOpen(true)}
                   className="
                     w-full
                     max-w-[520px]
@@ -360,6 +365,7 @@ const handleTouchEnd = (
 >
          <img
           src={activeImage}
+          onClick={() => setIsZoomOpen(true)}
           className="w-full max-w-full rounded-3xl shadow-xl object-cover"
         />
        </div>
@@ -653,7 +659,49 @@ const handleTouchEnd = (
         </div>
 
       </div>
+{isZoomOpen && (
+  <div
+    onClick={() => setIsZoomOpen(false)}
+    className="
+      fixed
+      inset-0
+      bg-black/85
+      z-50
+      flex
+      items-center
+      justify-center
+      p-4
+      cursor-zoom-out
+    "
+  >
+    <button
+      onClick={() => setIsZoomOpen(false)}
+      className="
+        absolute
+        top-6
+        right-6
+        text-white
+        text-4xl
+        font-bold
+        z-50
+      "
+    >
+      ✕
+    </button>
 
+    <img
+      src={activeImage}
+      onClick={(e) => e.stopPropagation()}
+      className="
+        max-w-full
+        max-h-[90vh]
+        object-contain
+        rounded-3xl
+        shadow-2xl
+      "
+    />
+  </div>
+)}
     </div>
   );
 }

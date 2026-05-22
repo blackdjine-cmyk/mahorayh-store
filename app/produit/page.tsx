@@ -49,7 +49,7 @@ const handleTouchEnd = (
     touchStart - touchEnd;
 
   if (
-    Math.abs(diff) < 50
+    Math.abs(diff) < 35
   )
     return;
 
@@ -73,6 +73,10 @@ const handleTouchEnd = (
     setSelectedImage(
       images[nextIndex]
     );
+    window.scrollTo({
+  top: 180,
+  behavior: "smooth",
+});
   } else {
     // swipe droite → image précédente
     const prevIndex =
@@ -84,6 +88,10 @@ const handleTouchEnd = (
     setSelectedImage(
       images[prevIndex]
     );
+    window.scrollTo({
+  top: 180,
+  behavior: "smooth",
+});
   }
 
   setTouchStart(null);

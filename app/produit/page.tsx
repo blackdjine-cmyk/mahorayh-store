@@ -587,20 +587,42 @@ const handleTouchEnd = (
               >
 
                 {/* IMAGE CARTE */}
-                 <div className="w-full h-72 bg-[#f8f5ef] flex items-center justify-center overflow-hidden p-4">
-             <img
-                 src={product.image}
-                 className="
-                 max-w-full
-                 max-h-full
-                 object-contain
-                 rounded-2xl
-                 transition-transform
-                 duration-300
-                 hover:scale-105
-                 "
-              />
-              </div>
+<div
+  onClick={() => {
+    changeProduct(product);
+    setSelectedImage("");
+    setSelectedModel(null);
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }}
+  className="
+    w-full
+    h-72
+    bg-[#f8f5ef]
+    flex
+    items-center
+    justify-center
+    overflow-hidden
+    p-4
+    cursor-pointer
+  "
+>
+  <img
+    src={product.image}
+    className="
+      max-w-full
+      max-h-full
+      object-contain
+      rounded-2xl
+      transition-transform
+      duration-300
+      hover:scale-105
+    "
+  />
+</div>
 
                 <div className="p-6">
 

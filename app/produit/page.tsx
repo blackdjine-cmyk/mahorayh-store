@@ -659,36 +659,37 @@ const handleTouchEnd = (
                       ).toFixed(2)}€
                     </span>
 
-                    <button
-                      onClick={() => {
+          <button
+  onClick={() => {
+    changeProduct(product);
 
-                        changeProduct(product);
+    setSelectedImage("");
+    setSelectedModel(null);
 
-                        setSelectedImage("");
-                        setSelectedModel(null);
-
-                        window.scrollTo({
-                          top: 0,
-                          behavior: "smooth",
-                        });
-
-                      }}
-                      className="
-                        bg-gradient-to-r
-                        from-fuchsia-600
-                        to-purple-700
-                        text-white
-                        px-6
-                        py-3
-                        rounded-2xl
-                        font-semibold
-                        shadow-lg
-                        hover:scale-105
-                        transition
-                      "
-                    >
-                      Voir
-                    </button>
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }}
+  className="
+    bg-gradient-to-r
+    from-fuchsia-600
+    to-purple-700
+    text-white
+    px-6
+    py-3
+    rounded-2xl
+    font-semibold
+    shadow-lg
+    hover:shadow-xl
+    hover:scale-105
+    active:scale-95
+    transition-all
+    duration-300
+  "
+>
+  Voir
+</button>
 
                   </div>
 

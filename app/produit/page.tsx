@@ -23,10 +23,6 @@ export default function ProduitPage() {
  const [isZoomOpen, setIsZoomOpen] =
   useState(false);
 
-const [isImageLoading, setIsImageLoading] =
-  useState(false);
-
-
   const [touchStart, setTouchStart] =
   useState<number | null>(null);
 
@@ -230,8 +226,6 @@ const handleTouchEnd = (
                             ...selectedModel,
                             model_image: img,
                           });
-
-                          setIsImageLoading(true);
                           setSelectedImage(img);
 
                         }}
@@ -299,13 +293,7 @@ const handleTouchEnd = (
                  duration-500
                  hover:scale-150
                  cursor-zoom-in
-               ${
-                  isImageLoading
-                 ? "opacity-0 scale-95"
-                 : "opacity-100 scale-100"
-               }
             `}
-               onLoad={() => setIsImageLoading(false)}
                 />
 
               </div>
@@ -378,7 +366,6 @@ const handleTouchEnd = (
 <img
   src={activeImage}
   onClick={() => setIsZoomOpen(true)}
-  onLoad={() => setIsImageLoading(false)}
   className={`
     w-full
     max-w-full
@@ -387,11 +374,6 @@ const handleTouchEnd = (
     object-cover
     transition-all
     duration-500
-    ${
-      isImageLoading
-        ? "opacity-0 scale-95"
-        : "opacity-100 scale-100"
-    }
   `}
 />
        </div>
@@ -411,7 +393,6 @@ const handleTouchEnd = (
                   model_image: img,
                   });
 
-                  setIsImageLoading(true);
                   setSelectedImage(img);
 
                   window.scrollTo({
@@ -460,7 +441,6 @@ const handleTouchEnd = (
       key={model.id}
       onClick={() => {
       setSelectedModel(model);
-      setIsImageLoading(true);
       setSelectedImage(model.model_image);
 
      window.scrollTo({
@@ -506,7 +486,6 @@ const handleTouchEnd = (
         key={model.id}
         onClick={() => {
        setSelectedModel(model);
-       setIsImageLoading(true);
        setSelectedImage(model.model_image);
       }}
         className={`

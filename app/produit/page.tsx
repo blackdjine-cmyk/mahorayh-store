@@ -572,21 +572,23 @@ const handleTouchEnd = (
             )
             .map((product) => (
 
-              <div
-                key={product.id}
-                className="
-                  bg-white
-                  rounded-3xl
-                  overflow-hidden
-                  shadow-lg
-                  border
-                  hover:shadow-2xl
-                  transition
-                  duration-300
-                "
-              >
+        <div
+             key={product.id}
+             className="
+             bg-white
+             rounded-3xl
+             overflow-hidden
+             shadow-lg
+             border
+             hover:shadow-2xl
+             hover:-translate-y-2
+             hover:scale-[1.01]
+             transition-all
+             duration-300
+             "
+        >
 
-                {/* IMAGE CARTE */}
+        {/* IMAGE CARTE */}
 <div
   onClick={() => {
     changeProduct(product);
@@ -610,9 +612,9 @@ const handleTouchEnd = (
     cursor-pointer
   "
 >
-  <img
-    src={product.image}
-    className="
+     <img
+     src={product.image}
+     className="
       max-w-full
       max-h-full
       object-contain

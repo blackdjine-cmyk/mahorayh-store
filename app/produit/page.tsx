@@ -444,7 +444,7 @@ const handleTouchEnd = (
   </h3>
 
 {/* MOBILE */}
- <div className="flex md:hidden gap-4 overflow-x-auto pt-2 pb-3 snap-x snap-mandatory scroll-smooth w-full px-1">
+ <div className="flex md:hidden gap-4 overflow-x-auto pt-2 pb-3 snap-x snap-mandatory scroll-smooth w-full px-4">
   {relatedModels.map((model) => (
     <button
       key={model.id}
@@ -490,7 +490,7 @@ const handleTouchEnd = (
 </div>
 
 {/* DESKTOP */}
-<div className="hidden md:grid grid-cols-3 gap-5 mt-3 max-w-[560px]">
+<div className="hidden md:grid grid-cols-3 gap-5 mt-3 max-w-[560px] mx-auto">
   {relatedModels.map((model) => (
     <button
       key={model.id}

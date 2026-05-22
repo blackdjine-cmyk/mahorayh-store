@@ -289,21 +289,21 @@ const handleTouchEnd = (
               >
 
                 <img
-                  src={activeImage}
-                  onClick={() => setIsZoomOpen(true)}
-                  className={`
-                 w-full
-                 max-w-[520px]
-                 h-auto
-                 rounded-3xl
-                 object-cover
-                 transition-all
-                 duration-500
-                 hover:scale-150
-                 cursor-zoom-in
-            `}
-                />
-
+               src={activeImage}
+               onClick={() => setIsZoomOpen(true)}
+               className={`
+                w-full
+               max-w-[520px]
+               h-auto
+               rounded-3xl
+               object-cover
+               transition-transform
+               duration-500
+                ease-in-out
+               hover:scale-150
+               cursor-zoom-in
+             `}
+            />
               </div>
 
             </div>
@@ -371,19 +371,20 @@ const handleTouchEnd = (
          onTouchEnd={handleTouchEnd}
 >
 
-<img
-  src={activeImage}
-  onClick={() => setIsZoomOpen(true)}
-  className={`
-    w-full
-    max-w-full
-    rounded-3xl
-    shadow-xl
-    object-cover
-    transition-all
-    duration-500
-  `}
-/>
+       <img
+       src={activeImage}
+       onClick={() => setIsZoomOpen(true)}
+       className={`
+       w-full
+       max-w-full
+       rounded-3xl
+       shadow-xl
+       object-cover
+       transition-transform
+       duration-500
+       ease-in-out
+     `}
+    />
        </div>
 
        {/* MINIATURES MOBILE */}

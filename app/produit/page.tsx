@@ -489,8 +489,8 @@ const handleTouchEnd = (
   ))}
 </div>
 
- {/* DESKTOP */}
-<div className="hidden md:flex gap-4 mt-2 flex-wrap max-w-[520px]">
+{/* DESKTOP */}
+<div className="hidden md:grid grid-cols-3 gap-5 mt-3 max-w-[560px]">
   {relatedModels.map((model) => (
     <button
       key={model.id}
@@ -499,18 +499,17 @@ const handleTouchEnd = (
         setSelectedImage(model.model_image);
       }}
       className={`
-        w-[150px]
         bg-white
         border
         rounded-2xl
         p-3
+        overflow-hidden
         transition-all
         duration-300
         hover:-translate-y-1
-        hover:scale-[1.02]
         ${
           selectedModel?.id === model.id
-            ? "border-purple-600 shadow-2xl ring-2 ring-purple-200"
+            ? "border-purple-600 shadow-2xl ring-2 ring-purple-200 scale-[1.02]"
             : "border-gray-200 hover:border-purple-300 hover:shadow-md"
         }
       `}
@@ -518,7 +517,7 @@ const handleTouchEnd = (
       <img
         src={model.model_image}
         alt={model.model_name}
-        className="w-full h-32 object-cover rounded-xl"
+        className="w-full aspect-square object-cover rounded-xl"
       />
 
       <p className="text-sm font-semibold mt-3 text-center text-gray-800 leading-tight">
@@ -526,7 +525,7 @@ const handleTouchEnd = (
       </p>
     </button>
   ))}
- </div>
+</div>
 </div>
 
           {/* DESCRIPTION */}

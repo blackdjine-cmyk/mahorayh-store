@@ -457,24 +457,25 @@ const handleTouchEnd = (
      behavior: "smooth",
      });
     }}
-      className={`
-        w-[48%]
-       min-w-[48%]
-       bg-white
-       border
-       rounded-2xl
-       p-4
-       overflow-hidden
-       flex-shrink-0
-       snap-start
-       transition-all
-       duration-300
-        ${
-          selectedModel?.id === model.id
-         ? "border-purple-600 shadow-xl ring-2 ring-purple-200"
-         : "border-gray-200 hover:border-purple-300"
-        }
-      `}
+     className={`
+     w-[48%]
+     min-w-[48%]
+     bg-white
+     border
+     rounded-2xl
+     p-4
+     overflow-hidden
+     flex-shrink-0
+     snap-start
+     transition-all
+     duration-300
+     hover:-translate-y-1
+  ${
+    selectedModel?.id === model.id
+      ? "border-purple-600 shadow-2xl ring-2 ring-purple-200 scale-[1.02]"
+      : "border-gray-200 hover:border-purple-300 hover:shadow-md"
+  }
+`}
     >
       <img
         src={model.model_image}
@@ -497,22 +498,21 @@ const handleTouchEnd = (
        setSelectedModel(model);
        setSelectedImage(model.model_image);
       }}
-        className={`
-          bg-white
-          border
-          rounded-2xl
-          p-4
-          w-full
-          transition-all
-          duration-300
-          hover:border-purple-600
-          hover:shadow-md
-          ${
-            selectedModel?.id === model.id
-           ? "border-purple-600 shadow-xl ring-2 ring-purple-200 -translate-y-1"
-           : "border-gray-200 hover:border-purple-300"
-          }
-        `}
+       className={`
+       bg-white
+       border
+       rounded-2xl
+       p-4
+       w-full
+       transition-all
+       duration-300
+       hover:-translate-y-1
+      ${
+       selectedModel?.id === model.id
+       ? "border-purple-600 shadow-2xl ring-2 ring-purple-200 scale-[1.02]"
+       : "border-gray-200 hover:border-purple-300 hover:shadow-md"
+      }
+    `}
       >
         <img
           src={model.model_image}

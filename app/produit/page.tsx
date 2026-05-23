@@ -547,7 +547,7 @@ const handleTouchEnd = (
                 image: activeImage,
               })
             }
-           className="w-full max-w-full mx-auto block bg-gradient-to-r from-fuchsia-600 to-purple-700 text-white py-5 rounded-2xl font-bold text-xl shadow-xl hover:scale-[1.02] transition"
+          className="w-full mt-2 bg-gradient-to-r from-fuchsia-600 to-purple-700 text-white py-5 rounded-2xl font-bold text-xl shadow-xl hover:scale-[1.02] transition-all duration-300"
           >
             🛒 Ajouter au panier
           </button>

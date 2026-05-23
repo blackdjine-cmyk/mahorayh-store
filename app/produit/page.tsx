@@ -316,7 +316,7 @@ const handleTouchEnd = (
 
         {/* INFOS */}
 
-        <div className="order-1 md:order-2 w-full min-w-0 flex flex-col justify-start">
+      <div className="order-1 md:order-2 w-full min-w-0 flex flex-col justify-start self-start overflow-visible">
 
           <span className="bg-purple-100 text-purple-700 px-4 py-1 rounded-full text-sm font-medium">
             ⭐ Produit populaire

@@ -207,18 +207,20 @@ const handleTouchEnd = (
               {selectedProduct.images &&
                 selectedProduct.images.length > 0 && (
 
-               <div className="
-               flex
-               flex-col
-               gap-4
-               shrink-0
-               pt-2
-               h-[520px]
-               overflow-y-auto
-               pr-3
-               pl-2
-               items-start
-              ">
+        <div
+         className="
+         flex
+         flex-col
+         gap-4
+         shrink-0
+         pt-2
+         max-h-[520px]
+         overflow-y-auto
+         pr-3
+         pl-2
+         items-start
+        "
+      >
                   {selectedProduct.images.map(
                     (
                       img: string,
@@ -313,7 +315,7 @@ const handleTouchEnd = (
         </div>
 
         {/* INFOS */}
-        
+
         <div className="order-1 md:order-2 w-full min-w-0 flex flex-col justify-start">
 
           <span className="bg-purple-100 text-purple-700 px-4 py-1 rounded-full text-sm font-medium">

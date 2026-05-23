@@ -195,7 +195,7 @@ const handleTouchEnd = (
 
       {/* PRODUIT PRINCIPAL */}
 
-      <div className="grid md:grid-cols-2 gap-12 items-start w-full overflow-x-hidden">
+       <div className="grid md:grid-cols-2 gap-12 items-start content-start w-full overflow-visible">
 
                {/* IMAGE PC */}
         <div className="hidden md:flex order-1 min-w-0">

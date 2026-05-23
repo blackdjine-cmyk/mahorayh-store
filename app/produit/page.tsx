@@ -565,7 +565,7 @@ const handleTouchEnd = (
           Découvrez aussi
         </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 max-w-7xl mx-auto justify-items-center">
+         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 max-w-fit">
 
           {products
             .filter(
@@ -575,21 +575,23 @@ const handleTouchEnd = (
             )
             .map((product) => (
 
-        <div
-             key={product.id}
-             className="
-             bg-white
-             rounded-3xl
-             overflow-hidden
-             shadow-lg
-             border
-             hover:shadow-2xl
-             hover:-translate-y-2
-             hover:scale-[1.01]
-             transition-all
-             duration-300
-             "
-        >
+      <div
+        key={product.id}
+       className="
+       w-full
+       max-w-[390px]
+       bg-white
+       rounded-3xl
+       overflow-hidden
+       shadow-lg
+       border
+       hover:shadow-2xl
+       hover:-translate-y-2
+       hover:scale-[1.01]
+       transition-all
+       duration-300
+      "
+     >
 
         {/* IMAGE CARTE */}
 <div

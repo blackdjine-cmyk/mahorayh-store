@@ -5,7 +5,7 @@ import { supabase } from "../../lib/supabase";
 import { useRouter } from "next/navigation";
 
 export default function ComptePage() {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<{ email?: string; id?: string } | null>(null);
   const router = useRouter();
 
   useEffect(() => {

@@ -106,7 +106,7 @@ export default function PanierPage() {
     {cart.map((item: any, index: number) => (
       <div
         key={index}
-        className="bg-white rounded-3xl shadow-sm border p-5 flex flex-col md:flex-row md:items-center md:justify-between gap-5"
+       className="bg-white rounded-3xl shadow-md border p-6 hover:shadow-2xl hover:-translate-y-1 hover:scale-[1.01] transition-all duration-300 ease-in-out flex flex-col md:flex-row md:items-center md:justify-between gap-6"
       >
         {/* INFOS PRODUIT */}
         <div className="flex gap-4">

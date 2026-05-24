@@ -18,7 +18,7 @@ export default function Header() {
     (acc: number, item: any) => acc + item.quantity,
     0
   );
-  useEffect(() => {
+ useEffect(() => {
   const getUser = async () => {
     const {
       data: { user },
@@ -28,6 +28,16 @@ export default function Header() {
   };
 
   getUser();
+
+  const {
+    data: { subscription },
+  } = supabase.auth.onAuthStateChange((_event, session) => {
+    setUser(session?.user ?? null);
+  });
+
+  return () => {
+    subscription.unsubscribe();
+  };
 }, []);
 const handleLogout = async () => {
   await supabase.auth.signOut();

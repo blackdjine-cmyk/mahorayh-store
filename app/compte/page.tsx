@@ -4,8 +4,15 @@ import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabase";
 import { useRouter } from "next/navigation";
 
+type Commande = {
+  id: string;
+  created_at: string;
+  total: number;
+};
+
 export default function ComptePage() {
   const [user, setUser] = useState<{ email?: string; id?: string } | null>(null);
+  const [commandes, setCommandes] = useState<Commande[]>([]);
   const router = useRouter();
 
   useEffect(() => {
@@ -21,7 +28,18 @@ export default function ComptePage() {
       }
     };
 
+    const getCommandes = async () => {
+      try {
+        const res = await fetch("/api/historique");
+        const data = await res.json();
+        setCommandes(data);
+      } catch (error) {
+        console.error("Erreur chargement commandes :", error);
+      }
+    };
+
     getUser();
+    getCommandes();
   }, [router]);
 
   const handleLogout = async () => {
@@ -49,7 +67,6 @@ export default function ComptePage() {
 
         {/* INFOS CLIENT */}
         <div className="bg-gray-50 rounded-2xl p-6 text-left shadow-sm space-y-4 mb-8">
-
           <div>
             <p className="text-sm text-gray-500">Nom</p>
             <p className="font-semibold text-gray-900">
@@ -70,17 +87,40 @@ export default function ComptePage() {
               {user?.id || "Chargement..."}
             </p>
           </div>
-
         </div>
 
-        {/* FUTUR COMMANDES */}
-        <div className="bg-purple-50 rounded-2xl p-5 mb-8">
-          <p className="font-semibold text-purple-800">
+        {/* HISTORIQUE COMMANDES */}
+        <div className="bg-purple-50 rounded-2xl p-5 mb-8 text-left">
+          <p className="font-semibold text-purple-800 mb-4">
             📦 Historique des commandes
           </p>
-          <p className="text-sm text-gray-600 mt-2">
-            Aucune commande pour le moment.
-          </p>
+
+          {commandes.length === 0 ? (
+            <p className="text-sm text-gray-600">
+              Aucune commande pour le moment.
+            </p>
+          ) : (
+            <div className="space-y-3">
+              {commandes.map((commande) => (
+                <div
+                  key={commande.id}
+                  className="bg-white rounded-xl p-4 shadow-sm"
+                >
+                  <p className="font-semibold text-gray-900">
+                    Commande #{commande.id}
+                  </p>
+
+                  <p className="text-sm text-gray-500">
+                    {new Date(commande.created_at).toLocaleDateString("fr-FR")}
+                  </p>
+
+                  <p className="text-purple-700 font-semibold">
+                    {commande.total} €
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* LOGOUT */}

@@ -1,12 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, X, ShoppingCart } from "lucide-react";
 import { useCart } from "../context/CartContext";
+import { supabase } from "../../lib/supabase";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [user, setUser] = useState<any>(null);
 
   const { cart } = useCart();
 
@@ -14,6 +16,21 @@ export default function Header() {
     (acc: number, item: any) => acc + item.quantity,
     0
   );
+  useEffect(() => {
+  const getUser = async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    setUser(user);
+  };
+
+  getUser();
+}, []);
+const handleLogout = async () => {
+  await supabase.auth.signOut();
+  setUser(null);
+};
 
   return (
     <header className="sticky top-0 z-50 bg-white shadow-sm">
@@ -51,6 +68,30 @@ export default function Header() {
           >
             Résultats
           </Link>
+          {user ? (
+     <>
+    <Link href="/compte" className="hover:text-purple-700 transition">
+      Mon compte
+    </Link>
+
+    <button
+      onClick={handleLogout}
+      className="hover:text-red-500 transition"
+    >
+      Déconnexion
+    </button>
+  </>
+) : (
+  <>
+    <Link href="/login" className="hover:text-purple-700 transition">
+      Connexion
+    </Link>
+
+    <Link href="/register" className="hover:text-purple-700 transition">
+      Inscription
+    </Link>
+  </>
+)}
 
           <Link
             href="/panier"

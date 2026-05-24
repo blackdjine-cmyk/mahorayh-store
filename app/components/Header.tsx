@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Menu, X, ShoppingCart } from "lucide-react";
 import { useCart } from "../context/CartContext";
 import { supabase } from "../../lib/supabase";
@@ -9,6 +10,7 @@ import { supabase } from "../../lib/supabase";
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
+  const router = useRouter();
 
   const { cart } = useCart();
 
@@ -169,42 +171,84 @@ const handleLogout = async () => {
 
             </div>
 
-            {/* LIENS */}
-            <nav className="flex flex-col text-2xl font-semibold text-gray-900">
+          {/* LIENS */}
+<nav className="flex flex-col text-2xl font-semibold text-gray-900">
 
-              <Link
-                href="/"
-                onClick={() => setMenuOpen(false)}
-                className="py-5 border-b"
-              >
-                Accueil
-              </Link>
+  <Link
+    href="/"
+    onClick={() => setMenuOpen(false)}
+    className="py-5 border-b"
+  >
+    Accueil
+  </Link>
 
-              <Link
-                href="/produit"
-                onClick={() => setMenuOpen(false)}
-                className="py-5 border-b"
-              >
-                Produits
-              </Link>
+  <Link
+    href="/produit"
+    onClick={() => setMenuOpen(false)}
+    className="py-5 border-b"
+  >
+    Produits
+  </Link>
 
-              <Link
-                href="/resultats"
-                onClick={() => setMenuOpen(false)}
-                className="py-5 border-b"
-              >
-                Résultats
-              </Link>
+  <Link
+    href="/resultats"
+    onClick={() => setMenuOpen(false)}
+    className="py-5 border-b"
+  >
+    Résultats
+  </Link>
 
-              <Link
-                href="/panier"
-                onClick={() => setMenuOpen(false)}
-                className="py-5 border-b"
-              >
-                Panier
-              </Link>
+  <Link
+    href="/panier"
+    onClick={() => setMenuOpen(false)}
+    className="py-5 border-b"
+  >
+    Panier
+  </Link>
 
-            </nav>
+  {user ? (
+    <>
+      <Link
+        href="/compte"
+        onClick={() => setMenuOpen(false)}
+        className="py-5 border-b"
+      >
+        Mon compte
+      </Link>
+
+      <button
+        onClick={async () => {
+          await supabase.auth.signOut();
+          setUser(null);
+          setMenuOpen(false);
+          router.push("/");
+        }}
+        className="py-5 border-b text-left"
+      >
+        Déconnexion
+      </button>
+    </>
+  ) : (
+    <>
+      <Link
+        href="/login"
+        onClick={() => setMenuOpen(false)}
+        className="py-5 border-b"
+      >
+        Connexion
+      </Link>
+
+      <Link
+        href="/register"
+        onClick={() => setMenuOpen(false)}
+        className="py-5 border-b"
+      >
+        Inscription
+      </Link>
+    </>
+  )}
+
+</nav>
 
           </div>
 

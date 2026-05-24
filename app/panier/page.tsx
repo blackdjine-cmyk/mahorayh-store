@@ -180,12 +180,21 @@ export default function PanierPage() {
         </div>
 
         {/* SUPPRIMER */}
-        <button
-          onClick={() => removeFromCart(index)}
-          className="text-red-500 hover:text-red-700 font-medium"
-        >
-          Supprimer
-        </button>
+     <button
+      onClick={() => removeFromCart(index)}
+      className="
+     text-red-500
+     font-medium
+     transition-all
+     duration-300
+     hover:text-red-700
+     hover:scale-105
+     hover:underline
+     active:scale-95
+   "
+ >
+  Supprimer
+</button>
       </div>
     ))}
   </div>
@@ -194,7 +203,7 @@ export default function PanierPage() {
    <div className="w-full lg:col-span-2 lg:sticky lg:top-24 lg:min-w-[420px] bg-white rounded-3xl shadow-sm border p-6 md:p-8 space-y-6">
 
     {/* TOTAL */}
-    <div className="border-b pb-5">
+    <div className="bg-[#faf7ff] rounded-2xl border border-purple-100 p-5 shadow-sm" >
       <h2 className="text-2xl font-bold mb-4">
         Résumé commande
       </h2>
@@ -207,12 +216,12 @@ export default function PanierPage() {
 
         <div className="flex justify-between">
           <span>Livraison</span>
-          <span className="text-green-600 font-medium">
+          <span className="text-purple-500 font-semibold">
             Offerte
-          </span>
+        </span>
         </div>
 
-        <div className="flex justify-between text-2xl font-bold text-black pt-4 border-t mt-4">
+       <div className="flex justify-between text-3xl font-bold text-purple-700 pt-5 border-t border-purple-200 mt-5">
           <span>Total</span>
           <span>{total.toFixed(2)}€</span>
         </div>
@@ -225,22 +234,24 @@ export default function PanierPage() {
       placeholder="Nom complet"
       value={nom}
       onChange={(e) => setNom(e.target.value)}
-      className="
-      w-full
-      border
-      border-gray-300
-      p-4
-      rounded-2xl
-      text-black
-      placeholder-gray-400
-      outline-none
-      transition-all
-      duration-300
-      focus:border-purple-600
-      focus:ring-4
-      focus:ring-purple-100
-      focus:shadow-lg
-     "
+     className="
+     w-full
+     border
+     border-gray-200
+     bg-white
+     p-4
+     rounded-2xl
+     text-black
+     placeholder-gray-400
+     outline-none
+     shadow-sm
+     transition-all
+     duration-300
+     focus:border-purple-500
+     focus:ring-2
+     focus:ring-purple-200
+     focus:shadow-md
+    "
     />
 
     <input
@@ -248,22 +259,24 @@ export default function PanierPage() {
       placeholder="Adresse e-mail"
       value={email}
       onChange={(e) => setEmail(e.target.value)}
-      className="
-      w-full
-      border
-      border-gray-300
-      p-4
-      rounded-2xl
-      text-black
+     className="
+     w-full
+     border
+     border-gray-200
+     bg-white
+     p-4
+     rounded-2xl
+     text-black
      placeholder-gray-400
      outline-none
+     shadow-sm
      transition-all
      duration-300
-     focus:border-purple-600
-     focus:ring-4
-     focus:ring-purple-100
-     focus:shadow-lg
-    "
+     focus:border-purple-500
+     focus:ring-2
+     focus:ring-purple-200
+     focus:shadow-md
+     "
     />
 
     <input
@@ -271,21 +284,23 @@ export default function PanierPage() {
       placeholder="Téléphone"
       value={telephone}
       onChange={(e) => setTelephone(e.target.value)}
-      className="
+     className="
      w-full
      border
-     border-gray-300
+     border-gray-200
+     bg-white
      p-4
      rounded-2xl
      text-black
      placeholder-gray-400
      outline-none
+     shadow-sm
      transition-all
      duration-300
-     focus:border-purple-600
-     focus:ring-4
-     focus:ring-purple-100
-     focus:shadow-lg
+     focus:border-purple-500
+     focus:ring-2
+     focus:ring-purple-200
+     focus:shadow-md
     "
     />
 
@@ -297,18 +312,20 @@ export default function PanierPage() {
       className="
       w-full
       border
-      border-gray-300
-      p-4
-      rounded-2xl
-      text-black
-      placeholder-gray-400
-      outline-none
-      transition-all
+     border-gray-200
+     bg-white
+     p-4
+     rounded-2xl
+     text-black
+     placeholder-gray-400
+     outline-none
+     shadow-sm
+     transition-all
      duration-300
-     focus:border-purple-600
-     focus:ring-4
-     focus:ring-purple-100
-     focus:shadow-lg
+     focus:border-purple-500
+     focus:ring-2
+     focus:ring-purple-200
+     focus:shadow-md
     "
     />
 
@@ -316,23 +333,25 @@ export default function PanierPage() {
       placeholder="Adresse de livraison"
       value={adresse}
       onChange={(e) => setAdresse(e.target.value)}
-      className="
+     className="
      w-full
      border
-     border-gray-300
+     border-gray-200
+     bg-white
      p-4
      rounded-2xl
-     min-h-[120px]
      text-black
      placeholder-gray-400
      outline-none
-     resize-none
+     shadow-sm
      transition-all
      duration-300
-     focus:border-purple-600
-     focus:ring-4
-     focus:ring-purple-100
-     focus:shadow-lg
+     min-h-[120px]
+     resize-none
+     focus:border-purple-500
+     focus:ring-2
+     focus:ring-purple-200
+     focus:shadow-md
     "
     />
   {errorMessage && (
@@ -344,11 +363,11 @@ export default function PanierPage() {
    <button
   onClick={handleCheckout}
   disabled={isLoading}
-  className={`w-full px-6 py-4 rounded-xl transition font-semibold text-white ${
-    isLoading
-      ? "bg-gray-400 cursor-not-allowed"
-      : "bg-purple-600 hover:bg-purple-700"
-  }`}
+  className={`w-full px-6 py-4 rounded-2xl font-semibold text-white transition-all duration-300 ${
+  isLoading
+    ? "bg-gray-400 cursor-not-allowed"
+    : "bg-gradient-to-r from-fuchsia-500 to-purple-600 shadow-lg shadow-purple-300/40 hover:scale-[1.02] hover:shadow-xl hover:shadow-purple-400/50 active:scale-95"
+}`}
 >
   {isLoading ? "⏳ Traitement..." : "💳 Passer au paiement"}
 </button>

@@ -579,8 +579,8 @@ const handleTouchEnd = (
         key={product.id}
        className="
        w-full
-       max-w-[390px]
-       min-h-[620px]
+       max-w-[340px]
+       min-h-[540px]
        bg-white
        rounded-3xl
        overflow-hidden
@@ -608,7 +608,7 @@ const handleTouchEnd = (
   }}
   className="
     w-full
-    h-64
+    h-56
     bg-[#f8f5ef]
     flex
     items-center

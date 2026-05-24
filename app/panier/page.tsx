@@ -225,7 +225,22 @@ export default function PanierPage() {
       placeholder="Nom complet"
       value={nom}
       onChange={(e) => setNom(e.target.value)}
-      className="w-full border p-4 rounded-xl text-black placeholder-gray-400"
+      className="
+      w-full
+      border
+      border-gray-300
+      p-4
+      rounded-2xl
+      text-black
+      placeholder-gray-400
+      outline-none
+      transition-all
+      duration-300
+      focus:border-purple-600
+      focus:ring-4
+      focus:ring-purple-100
+      focus:shadow-lg
+     "
     />
 
     <input
@@ -233,7 +248,22 @@ export default function PanierPage() {
       placeholder="Adresse e-mail"
       value={email}
       onChange={(e) => setEmail(e.target.value)}
-      className="w-full border p-4 rounded-xl text-black placeholder-gray-400"
+      className="
+      w-full
+      border
+      border-gray-300
+      p-4
+      rounded-2xl
+      text-black
+     placeholder-gray-400
+     outline-none
+     transition-all
+     duration-300
+     focus:border-purple-600
+     focus:ring-4
+     focus:ring-purple-100
+     focus:shadow-lg
+    "
     />
 
     <input
@@ -241,7 +271,22 @@ export default function PanierPage() {
       placeholder="Téléphone"
       value={telephone}
       onChange={(e) => setTelephone(e.target.value)}
-      className="w-full border p-4 rounded-xl text-black placeholder-gray-400"
+      className="
+     w-full
+     border
+     border-gray-300
+     p-4
+     rounded-2xl
+     text-black
+     placeholder-gray-400
+     outline-none
+     transition-all
+     duration-300
+     focus:border-purple-600
+     focus:ring-4
+     focus:ring-purple-100
+     focus:shadow-lg
+    "
     />
 
     <input
@@ -249,14 +294,46 @@ export default function PanierPage() {
       placeholder="Code postal"
       value={codePostal}
       onChange={(e) => setCodePostal(e.target.value)}
-      className="w-full border p-4 rounded-xl text-black placeholder-gray-400"
+      className="
+      w-full
+      border
+      border-gray-300
+      p-4
+      rounded-2xl
+      text-black
+      placeholder-gray-400
+      outline-none
+      transition-all
+     duration-300
+     focus:border-purple-600
+     focus:ring-4
+     focus:ring-purple-100
+     focus:shadow-lg
+    "
     />
 
     <textarea
       placeholder="Adresse de livraison"
       value={adresse}
       onChange={(e) => setAdresse(e.target.value)}
-      className="w-full border p-4 rounded-xl min-h-[120px] text-black placeholder-gray-400"
+      className="
+     w-full
+     border
+     border-gray-300
+     p-4
+     rounded-2xl
+     min-h-[120px]
+     text-black
+     placeholder-gray-400
+     outline-none
+     resize-none
+     transition-all
+     duration-300
+     focus:border-purple-600
+     focus:ring-4
+     focus:ring-purple-100
+     focus:shadow-lg
+    "
     />
   {errorMessage && (
   <p className="text-red-500 text-sm font-medium text-center">

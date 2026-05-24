@@ -1,23 +1,23 @@
 export default function sitemap() {
   return [
     {
-      url: "https://mahorayh-store.vercel.app",
+      url: "https://mahorayhbeaute.net",
       lastModified: new Date(),
     },
     {
-      url: "https://mahorayh-store.vercel.app/produit",
+      url: "https://mahorayhbeaute.net/produit",
       lastModified: new Date(),
     },
     {
-      url: "https://mahorayh-store.vercel.app/panier",
+      url: "https://mahorayhbeaute.net/panier",
       lastModified: new Date(),
     },
     {
-      url: "https://mahorayh-store.vercel.app/resultats",
+      url: "https://mahorayhbeaute.net/resultats",
       lastModified: new Date(),
     },
     {
-      url: "https://mahorayh-store.vercel.app/success",
+      url: "https://mahorayhbeaute.net/success",
       lastModified: new Date(),
     },
   ];

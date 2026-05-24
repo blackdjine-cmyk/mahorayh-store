@@ -565,7 +565,7 @@ const handleTouchEnd = (
           Découvrez aussi
         </h2>
 
-         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 max-w-fit">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 w-full max-w-7xl mx-auto">
 
           {products
             .filter(
@@ -580,6 +580,7 @@ const handleTouchEnd = (
        className="
        w-full
        max-w-[390px]
+       min-h-[620px]
        bg-white
        rounded-3xl
        overflow-hidden
@@ -590,7 +591,7 @@ const handleTouchEnd = (
        hover:scale-[1.01]
        transition-all
        duration-300
-      "
+       "
      >
 
         {/* IMAGE CARTE */}
@@ -607,7 +608,7 @@ const handleTouchEnd = (
   }}
   className="
     w-full
-    h-72
+    h-64
     bg-[#f8f5ef]
     flex
     items-center

@@ -128,7 +128,23 @@ export default function PanierPage() {
             <div className="flex items-center gap-3 mt-4">
               <button
                 onClick={() => decreaseQuantity(index)}
-                className="w-10 h-10 bg-gray-200 rounded-xl hover:bg-gray-300 transition"
+                className="
+               w-11
+               h-11
+               bg-gradient-to-r
+               from-fuchsia-600
+               to-purple-700
+               text-white
+               rounded-2xl
+               font-bold
+               text-lg
+               shadow-md
+               hover:shadow-xl
+               hover:scale-105
+               active:scale-95
+               transition-all
+               duration-300
+              "
               >
                 -
               </button>
@@ -139,7 +155,23 @@ export default function PanierPage() {
 
               <button
                 onClick={() => increaseQuantity(index)}
-                className="w-10 h-10 bg-gray-200 rounded-xl hover:bg-gray-300 transition"
+                className="
+               w-11
+               h-11
+               bg-gradient-to-r
+               from-fuchsia-600
+               to-purple-700
+               text-white
+               rounded-2xl
+               font-bold
+               text-lg
+               shadow-md
+               hover:shadow-xl
+               hover:scale-105
+               active:scale-95
+               transition-all
+               duration-300
+               "
               >
                 +
               </button>

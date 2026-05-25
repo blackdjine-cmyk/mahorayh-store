@@ -8,6 +8,7 @@ type Commande = {
   id: string;
   created_at: string;
   total: number;
+  statut: string;
 };
 
 export default function ComptePage() {
@@ -102,23 +103,45 @@ export default function ComptePage() {
           ) : (
             <div className="space-y-3">
               {commandes.map((commande) => (
-                <div
-                  key={commande.id}
-                  className="bg-white rounded-xl p-4 shadow-sm"
-                >
-                  <p className="font-semibold text-gray-900">
-                    Commande #{commande.id}
-                  </p>
+  <div
+    key={commande.id}
+    className="bg-white rounded-xl p-4 shadow-sm"
+  >
+    <p className="font-semibold text-gray-900">
+      Commande #{commande.id}
+    </p>
 
-                  <p className="text-sm text-gray-500">
-                    {new Date(commande.created_at).toLocaleDateString("fr-FR")}
-                  </p>
+    <p className="text-sm text-gray-500">
+      {new Date(commande.created_at).toLocaleDateString("fr-FR")}
+    </p>
 
-                  <p className="text-purple-700 font-semibold">
-                    {commande.total} €
-                  </p>
-                </div>
-              ))}
+    <p className="text-purple-700 font-semibold">
+      {Number(commande.total).toFixed(2)} €
+    </p>
+
+    {/* STATUT */}
+   <p
+  className={`mt-3 inline-flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-full shadow-sm
+    ${
+      commande.statut === "payee"
+        ? "bg-green-100 text-green-800"
+        : commande.statut === "expediee"
+        ? "bg-blue-100 text-blue-800"
+        : commande.statut === "livree"
+        ? "bg-emerald-100 text-emerald-800"
+        : "bg-yellow-100 text-yellow-800"
+    }`}
+>
+  {commande.statut === "payee"
+    ? "🟢 Payée"
+    : commande.statut === "expediee"
+    ? "🚚 Expédiée"
+    : commande.statut === "livree"
+    ? "✅ Livrée"
+    : "🟡 En attente"}
+</p>
+  </div>
+))}
             </div>
           )}
         </div>

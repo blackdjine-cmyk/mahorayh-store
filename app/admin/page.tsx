@@ -40,16 +40,16 @@ export default function AdminPage() {
 
   // 🔐 LOGIN
   const handleLogin = () => {
+  const trimmedPassword = password.trim();
 
-    if (password === "admin123") {
+  if (trimmedPassword === "admin123") {
+    setIsAuth(true);
+    setPassword("");
+    return;
+  }
 
-      setIsAuth(true);
-
-    } else {
-
-      alert("Mot de passe incorrect");
-    }
-  };
+  alert("Mot de passe incorrect");
+};
 
   // 📦 FETCH DATA
   useEffect(() => {
@@ -162,166 +162,230 @@ export default function AdminPage() {
   };
 
   // ➕ AJOUT PRODUIT
-  const addProduct = async () => {
+const addProduct = async () => {
+  if (
+    !name.trim() ||
+    !description.trim() ||
+    !price ||
+    !image ||
+    !category
+  ) {
+    alert("Remplis tous les champs obligatoires");
+    return;
+  }
 
-    const { error } = await supabase
-      .from("products")
-      .insert([
-        {
-          name,
-          description,
-          price: Number(price),
-          old_price: Number(oldPrice),
-          image,
-          badge,
-          category,
-        },
-      ]);
+  const { error } = await supabase
+    .from("products")
+    .insert([
+      {
+        name: name.trim(),
+        description: description.trim(),
+        price: Number(price),
+        old_price: oldPrice
+          ? Number(oldPrice)
+          : null,
+        image,
+        badge: badge.trim(),
+        category,
+      },
+    ]);
 
-    if (error) {
+  if (error) {
+    console.log(error);
+    alert("Erreur ajout produit");
+    return;
+  }
 
-      console.log(error);
-      alert("Erreur ajout produit");
+  alert("Produit ajouté");
 
-    } else {
+  setName("");
+  setDescription("");
+  setPrice("");
+  setOldPrice("");
+  setImage("");
+  setBadge("");
+  setCategory("");
 
-      alert("Produit ajouté");
-
-      setName("");
-      setDescription("");
-      setPrice("");
-      setOldPrice("");
-      setImage("");
-      setBadge("");
-      setCategory("");
-
-      fetchProducts();
-    }
-  };
+  fetchProducts();
+};
 
   // ➕ / ✏️ AJOUT OU MODIFICATION MODELE
-  const addModel = async () => {
+const addModel = async () => {
+  if (
+    !selectedProductId ||
+    !modelName.trim() ||
+    !modelPrice ||
+    !modelImage
+  ) {
+    alert("Remplis tous les champs obligatoires");
+    return;
+  }
 
-    if (editingModelId) {
+  if (editingModelId) {
+    const { error } = await supabase
+      .from("product_models")
+      .update({
+        model_name: modelName.trim(),
+        model_price: Number(modelPrice),
+        model_image: modelImage,
+        model_description:
+          modelDescription.trim(),
+      })
+      .eq("id", editingModelId);
 
-      const { error } = await supabase
-        .from("product_models")
-        .update({
-          model_name: modelName,
-          model_price: Number(modelPrice),
-          model_image: modelImage,
-          model_description:
-            modelDescription,
-        })
-        .eq("id", editingModelId);
-
-      if (error) {
-
-        console.log(error);
-        alert(error.message);
-
-      } else {
-
-        alert("Modèle modifié");
-
-        setEditingModelId(null);
-
-        setModelName("");
-        setModelPrice("");
-        setModelImage("");
-        setModelDescription("");
-
-        fetchModels();
-      }
-
-    } else {
-
-      const { error } = await supabase
-        .from("product_models")
-        .insert([
-          {
-            product_id: Number(selectedProductId),
-            model_name: modelName,
-            model_price: Number(modelPrice),
-            model_image: modelImage,
-            model_description:
-              modelDescription,
-          },
-        ]);
-
-      if (error) {
-
-        console.log(error);
-        alert(error.message);
-
-      } else {
-
-        alert("Modèle ajouté");
-
-        setModelName("");
-        setModelPrice("");
-        setModelImage("");
-        setModelDescription("");
-
-        fetchModels();
-      }
+    if (error) {
+      console.log(error);
+      alert(error.message);
+      return;
     }
-  };
+
+    alert("Modèle modifié");
+
+    setEditingModelId(null);
+    setSelectedProductId("");
+    setModelName("");
+    setModelPrice("");
+    setModelImage("");
+    setModelDescription("");
+
+    fetchModels();
+    return;
+  }
+
+  const { error } = await supabase
+    .from("product_models")
+    .insert([
+      {
+        product_id: Number(
+          selectedProductId
+        ),
+        model_name: modelName.trim(),
+        model_price: Number(modelPrice),
+        model_image: modelImage,
+        model_description:
+          modelDescription.trim(),
+      },
+    ]);
+
+  if (error) {
+    console.log(error);
+    alert(error.message);
+    return;
+  }
+
+  alert("Modèle ajouté");
+
+  setSelectedProductId("");
+  setModelName("");
+  setModelPrice("");
+  setModelImage("");
+  setModelDescription("");
+
+  fetchModels();
+};
 
   // 🗑 DELETE PRODUIT
-  const deleteProduct = async (
-    id: number
-  ) => {
+ const deleteProduct = async (
+  id: number
+) => {
+  const confirmDelete = confirm(
+    "Supprimer ce produit ?"
+  );
 
-    const confirmDelete = confirm(
-      "Supprimer ce produit ?"
-    );
+  if (!confirmDelete) return;
 
-    if (!confirmDelete) return;
+  const { error } = await supabase
+    .from("products")
+    .delete()
+    .eq("id", id);
 
-    await supabase
-      .from("products")
-      .delete()
-      .eq("id", id);
+  if (error) {
+    console.log(error);
+    alert("Erreur suppression produit");
+    return;
+  }
 
-    fetchProducts();
-  };
+  fetchProducts();
+};
 
   // 🗑 DELETE MODELE
   const deleteModel = async (
-    id: number
-  ) => {
+  id: number
+) => {
+  const confirmDelete = confirm(
+    "Supprimer ce modèle ?"
+  );
 
-    const confirmDelete = confirm(
-      "Supprimer ce modèle ?"
-    );
+  if (!confirmDelete) return;
 
-    if (!confirmDelete) return;
+  const { error } = await supabase
+    .from("product_models")
+    .delete()
+    .eq("id", id);
 
-    await supabase
-      .from("product_models")
-      .delete()
-      .eq("id", id);
+  if (error) {
+    console.log(error);
+    alert("Erreur suppression modèle");
+    return;
+  }
 
-    fetchModels();
-  };
+  fetchModels();
+};
 
   const deleteOrder = async (
   id: number
 ) => {
-
   const confirmDelete = confirm(
     "Supprimer cette commande ?"
   );
 
   if (!confirmDelete) return;
 
-  await supabase
+  const { error } = await supabase
     .from("commandes")
     .delete()
     .eq("id", id);
 
+  if (error) {
+    console.log(error);
+    alert("Erreur suppression commande");
+    return;
+  }
+
   fetchOrders();
+};
+
+  // 🔄 UPDATE STATUT COMMANDE
+ const updateCommandeStatut = async (
+  id: number,
+  statut: string
+) => {
+  const cleanStatut =
+    statut.trim().toLowerCase();
+
+  const { error } = await supabase
+    .from("commandes")
+    .update({
+      statut: cleanStatut,
+    })
+    .eq("id", id);
+
+  if (error) {
+    console.log(error);
+    alert("Erreur mise à jour statut");
+    return;
+  }
+
+  setOrders((prev: any[]) =>
+    prev.map((order) =>
+      order.id === id
+        ? {
+            ...order,
+            statut: cleanStatut,
+          }
+        : order
+    )
+  );
 };
 
   // ✏️ MODIFIER PRODUIT
@@ -366,13 +430,11 @@ export default function AdminPage() {
   };
 
   // 🔒 LOGIN PAGE
-  if (!isAuth) {
-
-    return (
-
-      <div className="flex flex-col items-center justify-center h-screen gap-4">
-
-        <h1 className="text-3xl font-bold">
+ if (!isAuth) {
+  return (
+    <div className="min-h-screen flex items-center justify-center p-6 bg-gray-50">
+      <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md space-y-6">
+        <h1 className="text-3xl font-bold text-center">
           🔐 Accès Admin
         </h1>
 
@@ -383,30 +445,35 @@ export default function AdminPage() {
           onChange={(e) =>
             setPassword(e.target.value)
           }
-          className="border p-3 rounded-lg w-72"
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleLogin();
+            }
+          }}
+          className="w-full border p-4 rounded-xl outline-none focus:ring-2 focus:ring-purple-600"
         />
 
         <button
           onClick={handleLogin}
-          className="bg-purple-600 text-white px-6 py-3 rounded-lg"
+          className="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-xl font-bold transition"
         >
           Connexion
         </button>
-
       </div>
-    );
-  }
+    </div>
+  );
+}
 
-  const totalSales = orders.reduce(
+ const totalSales = orders.reduce(
   (acc, order) =>
-    acc + Number(order.total),
+    acc + Number(order.total || 0),
   0
 );
 
 const totalClients = new Set(
-  orders.map(
-    (order) => order.email
-  )
+  orders
+    .map((order) => order.email)
+    .filter(Boolean)
 ).size;
 
   return (
@@ -815,14 +882,21 @@ const totalClients = new Set(
     ) : orders.length === 0 ? (
       <p>Aucune commande</p>
     ) : (
-      orders.map((order) => (
+     orders.map((order) => {
+  const statut = order.statut
+  ?.trim()
+  .toLowerCase()
+  .normalize("NFD")
+  .replace(/[\u0300-\u036f]/g, "");
+
+  return (
         <div
           key={order.id}
           className="bg-white p-6 rounded-2xl shadow border"
         >
-          <div className="flex flex-col md:flex-row md:justify-between gap-4">
+          <div className="flex justify-between gap-8">
 
-            <div className="space-y-2">
+            <div className="space-y-2 flex-1">
               <h2 className="text-xl font-bold">
                 {order.client}
               </h2>
@@ -852,8 +926,12 @@ const totalClients = new Set(
     📦 Produits commandés
   </p>
 
-  {order.produits?.map(
-    (item: any, index: number) => (
+  {Array.isArray(order.produits) &&
+  order.produits.map(
+    (
+      item: any,
+      index: number
+    ) => (
       <div
         key={index}
         className="flex justify-between py-1 text-sm"
@@ -877,20 +955,58 @@ const totalClients = new Set(
               </p>
             </div>
 
-            <div className="flex items-start">
-              <button
-                onClick={() =>
-                  deleteOrder(order.id)
-                }
-                className="bg-red-600 text-white px-4 py-2 rounded-xl hover:bg-red-700"
-              >
-                Supprimer
-              </button>
-            </div>
+           {/* ACTIONS COMMANDE */}
+<div className="flex flex-col gap-3 min-w-[140px]">
 
+{["en_attente", "payee", "expediee"].includes(
+  statut || ""
+) && (
+  <button
+    onClick={() => {
+      if (statut === "en_attente") {
+        updateCommandeStatut(
+          order.id,
+          "payee"
+        );
+      } else if (
+        statut === "payee"
+      ) {
+        updateCommandeStatut(
+          order.id,
+          "expediee"
+        );
+      } else if (
+        statut === "expediee"
+      ) {
+        updateCommandeStatut(
+          order.id,
+          "livree"
+        );
+      }
+    }}
+    className="w-full bg-green-600 text-white px-4 py-2 rounded-xl"
+  >
+    {statut === "en_attente"
+      ? "Payée"
+      : statut === "payee"
+      ? "Expédiée"
+      : "Livrée"}
+  </button>
+)}
+
+  <button
+    onClick={() => deleteOrder(order.id)}
+    className="w-full bg-red-600 text-white px-4 py-2 rounded-xl"
+  >
+    Supprimer
+  </button>
+
+</div>
+   
           </div>
-        </div>
-      ))
+               </div>
+      );
+    })
     )}
 
   </div>

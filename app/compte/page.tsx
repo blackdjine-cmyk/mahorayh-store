@@ -118,6 +118,17 @@ export default function ComptePage() {
     <p className="text-purple-700 font-semibold">
       {Number(commande.total).toFixed(2)} €
     </p>
+    
+    <button
+  onClick={() =>
+    router.push(
+      `/compte/commandes/${commande.id}`
+    )
+  }
+  className="mt-4 w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-xl transition"
+>
+  Voir les détails
+</button>
 
     {/* STATUT */}
    <p

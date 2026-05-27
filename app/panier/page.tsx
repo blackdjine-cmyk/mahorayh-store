@@ -379,9 +379,37 @@ export default function PanierPage() {
       Vider le panier
     </button>
 
-    <p className="text-sm text-gray-500 text-center">
-      🔒 Paiement sécurisé • Livraison rapide
+    <div className="grid grid-cols-2 gap-3 pt-2">
+
+  <div className="bg-[#faf7ff] border border-purple-100 rounded-2xl p-3 text-center">
+    <p className="text-xl">🔒</p>
+    <p className="text-xs font-semibold mt-1">
+      Paiement sécurisé
     </p>
+  </div>
+
+  <div className="bg-[#faf7ff] border border-purple-100 rounded-2xl p-3 text-center">
+    <p className="text-xl">🚚</p>
+    <p className="text-xs font-semibold mt-1">
+      Livraison rapide
+    </p>
+  </div>
+
+  <div className="bg-[#faf7ff] border border-purple-100 rounded-2xl p-3 text-center">
+    <p className="text-xl">💜</p>
+    <p className="text-xs font-semibold mt-1">
+      Produits authentiques
+    </p>
+  </div>
+
+  <div className="bg-[#faf7ff] border border-purple-100 rounded-2xl p-3 text-center">
+    <p className="text-xl">⭐</p>
+    <p className="text-xs font-semibold mt-1">
+      Qualité premium
+    </p>
+  </div>
+
+</div>
   </div>
 </div>
 

@@ -90,6 +90,85 @@ const emailResend = await resend.emails.send({
 });
 
 console.log("EMAIL RESEND :", emailResend);
+
+// 📩 EMAIL CLIENT
+const clientEmail = await resend.emails.send({
+  from: "onboarding@resend.dev",
+  to: email,
+
+  subject: "Confirmation de votre commande Mahorayh Beauté 💜",
+
+  html: `
+    <div style="font-family: Arial, sans-serif; padding: 20px;">
+
+      <h1 style="color:#7e22ce;">
+        Merci pour votre commande 💜
+      </h1>
+
+      <p>
+        Bonjour <strong>${nom}</strong>,
+      </p>
+
+      <p>
+        Votre commande a bien été reçue par Mahorayh Beauté.
+      </p>
+
+      <hr />
+
+      <h2>📦 Résumé de votre commande</h2>
+
+      ${cart
+        .map(
+          (item: any) => `
+            <div style="margin-bottom:15px;">
+
+              <p>
+                <strong>${item.name}</strong>
+              </p>
+
+              <p>
+                Quantité : ${item.quantity}
+              </p>
+
+              <p>
+                Prix : ${item.price} €
+              </p>
+
+            </div>
+          `
+        )
+        .join("")}
+
+      <hr />
+
+      <p>
+        <strong>Total :</strong>
+        ${cart.reduce(
+          (acc: number, item: any) =>
+            acc + item.price * item.quantity,
+          0
+        )} €
+      </p>
+
+      <br />
+
+      <p>
+        🚚 Votre commande sera préparée rapidement.
+      </p>
+
+      <p>
+        Merci pour votre confiance 💜
+      </p>
+
+      <h3 style="color:#7e22ce;">
+        Mahorayh Beauté
+      </h3>
+
+    </div>
+  `,
+});
+
+console.log("CLIENT EMAIL :", clientEmail);
     return Response.json({ url: session.url });
 
   } catch (error) {
@@ -97,3 +176,4 @@ console.log("EMAIL RESEND :", emailResend);
     return new Response("Erreur serveur", { status: 500 });
   }
 }
+

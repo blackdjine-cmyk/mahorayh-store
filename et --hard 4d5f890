@@ -1,0 +1,127 @@
+[33m3628078[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m ajout commandes supabase et systeme email resend
+[33m6b77c23[m commande envoyee apres paiement
+[33md82caad[m commande envoyee apres paiement
+[33m87d97d6[m sauvegarde checkout apres paiement
+[33m2ee3e96[m Securisation avis uniquement clients ayant achete le produit
+[33mfc40e9c[m Ajout systeme avis clients securise
+[33m4d5f890[m Ajout système avis clients
+[33m53e4fa8[m Ajout espace client premium et emails automatiques
+[33m990ed9f[m Ajout espace client premium et détail commandes
+[33m1c301df[m admin cleanup before commands debug
+[33m28dbea1[m Ajout du système de statut des commandes
+[33m48ad3a4[m Ajout espace client + historique commandes + menu mobile sync
+[33m61551c6[m Ajout espace client + historique commandes + menu mobile sync
+[33mc48406d[m Ajout historique commandes réel dans espace client
+[33m104fd73[m Ajout espace client premium avec authentification Supabase
+[33m792b43d[m Ajout espace client avec authentification Supabase
+[33m9ea9c33[m feat: customer auth and account page
+[33m25315fe[m feat: auth supabase register and login working
+[33mcee22e3[m Fix sitemap domain for SEO
+[33mb2a5bf4[m Add SEO technical setup with robots and sitemap
+[33m7462837[m Add SEO metadata and Open Graph configuration
+[33m59a16c9[m Style premium checkout form inputs and textarea
+[33m36f36fd[m style: upgrade checkout inputs with premium focus effects
+[33mf6588cc[m style: upgrade quantity buttons with premium hover animation
+[33mf82420a[m style: add premium hover animation to cart product cards
+[33m9e17206[m style: compact related product cards for cleaner layout
+[33mdb7a23a[m style: refine product cards height and preserve responsive grid layout
+[33m3e4de8c[m style: improve related products grid alignment and card width
+[33mc8fc207[m fix: improve product page grid overflow and layout stability
+[33m4166d1f[m fix: improve info column overflow and grid alignment
+[33mc726f30[m fix: restore desktop thumbnails wrapper and improve scroll behavior
+[33me4448b6[m Correction layout colonne infos sans overflow
+[33m07b4442[m Ajustement bouton panier full width premium
+[33m0f0600f[m feat: enhance premium CTA button on related product cards
+[33mf69909a[m feat: enhance premium hover effect on related product cards
+[33m88f489b[m feat: make product cards images clickable for better mobile UX
+[33mb016261[m fix: center premium product model cards on desktop and mobile
+[33m7165765[m fix: improve desktop product model cards layout
+[33m59a5e5a[m fix: improve desktop product variants layout
+[33mf2edb4f[m feat: enhance premium product variants on mobile and desktop
+[33m12992d3[m feat: improve premium image transitions for desktop and mobile
+[33m59df01f[m feat: improve mobile swipe smoothness and auto-center product view
+[33mb60c044[m fix: remove broken image fade transition and stabilize gallery
+[33m5b976a5[m feat: add smooth premium image transitions
+[33m356d537[m feat: add premium product image zoom lightbox
+[33m2826e83[m Refine product gallery spacing and mobile model cards
+[33ma4291a7[m Refine product gallery spacing and mobile model cards
+[33mc155ae2[m Refine desktop gallery spacing and product UI
+[33ma6ccca3[m Fix product gallery and mobile model cards UI
+[33md46da37[m polish active thumbnails without overflow
+[33m7154c9d[m premium active thumbnails pc and mobile
+[33m1c000ec[m Add mobile swipe support for product gallery
+[33mdf78a2a[m Add mobile swipe support for product gallery
+[33m10561dd[m Fix mobile product thumbnails alignment
+[33md40c85e[m Fix mobile checkout panel overflow
+[33m5305347[m Show ordered products in admin orders dashboard
+[33mee4ac62[m Add admin orders dashboard with sales stats and delete actions
+[33m5c1eead[m Add premium success page after Stripe checkout
+[33m8034926[m Replace alerts with premium checkout error messages
+[33me5ee982[m Add loading state and prevent double checkout clicks
+[33m0d7c287[m Improve checkout validation and error handling
+[33mb07f84c[m Add premium cart layout with sticky checkout
+[33m5a6d6c9[m Add premium cart layout with sticky checkout
+[33mb6b51fd[m Add premium cart layout with sticky checkout
+[33m27ce550[m Fix product thumbnails ratio on desktop
+[33ma85943a[m Limit product card descriptions for consistent layout
+[33m7a196a7[m Improve discover section grid and center layout
+[33m628ee1c[m Improve discover section grid and center layout
+[33m1cdb8db[m Fix product cards image spacing and clean duplicate JSX
+[33m4f9e357[m Improve related products cards image quality and layout
+[33m04ec1b7[m Improve related products cards image quality and layout
+[33m4b8e550[m Fix desktop gallery vertical scroll and limit thumbnails height
+[33m9775c6f[m Create premium horizontal mobile model slider
+[33macd5242[m Create premium horizontal mobile model slider
+[33mc2a5059[m Create premium horizontal mobile model slider
+[33m855c65d[m Fix mobile overflow on product info container
+[33m03cde9c[m Create premium horizontal mobile model slider
+[33m3dc5050[m Create premium horizontal mobile model slider
+[33m4066e3a[m Reduce mobile model card width
+[33m149a01b[m Fix mobile slider spacing
+[33m84b7c60[m Center mobile product slider
+[33ma47b025[m Fix product models responsive layout for desktop and mobile
+[33m7c5588c[m Fix product models responsive sizing and mobile alignment
+[33m593bf42[m Fix product models responsive sizing and mobile alignment
+[33m33e1846[m Fix responsive product models layout mobile and desktop
+[33m237fb0e[m Fix responsive product models layout mobile and desktop
+[33m0a3fa83[m Fix mobile layout overflow and stabilize product models
+[33mf5df803[m Fix mobile layout overflow and stabilize product models
+[33mdbb494e[m Fix mobile layout overflow and stabilize product models
+[33m17e648f[m Fix mobile layout overflow and stabilize product models
+[33m39c8e54[m Fix mobile layout overflow and stabilize product models
+[33maddda19[m Fix mobile horizontal scroll and stabilize models slider
+[33mc8e7e80[m Fix mobile horizontal scroll and stabilize models slider
+[33mfda5f10[m Fix mobile horizontal scroll and stabilize models slider
+[33m06a6950[m Mobile premium models
+[33ma62d25d[m Mobile premium models
+[33m7fa4013[m Mobile premium models
+[33mc00ce89[m Remove product category from product page
+[33m04998ff[m Remove product category from product page
+[33m1739c0a[m Remove product category from product page
+[33m0225907[m Correction image principale mobile
+[33m60af609[m Improve premium product title layout
+[33m652d548[m Correction image principale mobile
+[33m6b1c55f[m Ajout zoom premium image produit PC
+[33m459e501[m style premium des modèles produit
+[33mac3b1af[m style premium des modèles produit
+[33mba99a89[m style premium des modèles produit
+[33m17149a5[m Improve desktop gallery layout
+[33mc9923e3[m Improve desktop gallery layout
+[33m319fb0f[m Improve desktop gallery layout
+[33mf5e4c2c[m Improve desktop gallery layout
+[33m9346f8a[m Fix desktop gallery layout with thumbnails on left
+[33m3c9d7ce[m Fix desktop gallery layout with thumbnails on left
+[33me29befb[m Fix desktop gallery layout with thumbnails on left
+[33m4d69c63[m Fix desktop gallery layout with thumbnails on left
+[33m7c1e19b[m Fix desktop gallery layout with thumbnails on left
+[33m90d20fe[m Reorganize mobile product layout for better UX
+[33med97e83[m Save current responsive product page progress
+[33m424b966[m Save current responsive product page progress
+[33mf437aec[m Reorganize mobile product layout for better UX
+[33m21977b3[m Reorganize mobile product layout for better UX
+[33m9759198[m Fix product page structure and restore layout
+[33m75d5e20[m Improve mobile product layout and simplify product page
+[33m2892417[m Improve mobile product layout and simplify product page
+[33md7b57f8[m Improve mobile product layout and simplify product page
+[33m24354d1[m Improve mobile product layout and simplify product page
+[33m65da4cf[m Improve mobile product layo

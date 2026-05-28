@@ -4,6 +4,7 @@ import { supabase } from "@/lib/supabase";
 import { useEffect, useState } from "react";
 import { useCart } from "../context/CartContext";
 
+
 export default function ProduitPage() {
 
   const { addToCart } = useCart();
@@ -25,6 +26,11 @@ export default function ProduitPage() {
 
   const [touchStart, setTouchStart] =
   useState<number | null>(null);
+
+  const [reviews, setReviews] = useState<any[]>([]);
+  const [client, setClient] = useState("");
+  const [note, setNote] = useState(5);
+  const [commentaire, setCommentaire] = useState("");
 
   useEffect(() => {
     fetchData();
@@ -159,6 +165,26 @@ const handleTouchEnd = (
       behavior: "smooth",
     });
   };
+
+    const fetchReviews = async () => {
+  const res = await fetch("/api/reviews");
+
+  if (!res.ok) return;
+
+  const data = await res.json();
+
+  const filtered = data.filter(
+    (review: any) =>review.product_id === selectedProduct.id
+  );
+
+  setReviews(filtered);
+ };
+
+ useEffect(() => {
+  if (selectedProduct?.id) {
+    fetchReviews();
+  }
+ }, [selectedProduct]);
 
   if (!selectedProduct) {
 
@@ -558,6 +584,94 @@ const handleTouchEnd = (
         </div>
 
       </div>
+
+       {/* AVIS CLIENTS */}
+<div className="mt-16">
+  <h2 className="text-3xl font-bold mb-8">
+    ⭐ Avis clients
+  </h2>
+
+  {/* FORMULAIRE */}
+  <div className="bg-white rounded-3xl shadow p-6 mb-10">
+    <input
+      type="text"
+      placeholder="Votre prénom"
+      value={client}
+      onChange={(e) => setClient(e.target.value)}
+      className="w-full border rounded-xl px-4 py-3 mb-4"
+    />
+
+    <select
+      value={note}
+      onChange={(e) => setNote(Number(e.target.value))}
+      className="w-full border rounded-xl px-4 py-3 mb-4"
+    >
+      <option value={5}>⭐⭐⭐⭐⭐</option>
+      <option value={4}>⭐⭐⭐⭐</option>
+      <option value={3}>⭐⭐⭐</option>
+      <option value={2}>⭐⭐</option>
+      <option value={1}>⭐</option>
+    </select>
+
+    <textarea
+      placeholder="Votre avis..."
+      value={commentaire}
+      onChange={(e) => setCommentaire(e.target.value)}
+      className="w-full border rounded-xl px-4 py-3 mb-4 h-32"
+    />
+
+    <button
+      onClick={async () => {
+        await fetch("/api/reviews", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            product_id: selectedProduct.id,
+            client,
+            note,
+            commentaire,
+          }),
+        });
+
+        setClient("");
+        setNote(5);
+        setCommentaire("");
+
+        fetchReviews();
+      }}
+      className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-2xl font-semibold"
+    >
+      Envoyer mon avis
+    </button>
+  </div>
+
+  {/* LISTE AVIS */}
+  <div className="space-y-6">
+    {reviews.map((review, index) => (
+      <div
+        key={index}
+        className="bg-gray-50 rounded-3xl p-6 shadow-sm"
+      >
+        <div className="flex items-center justify-between mb-3">
+          <p className="font-bold text-lg">
+            {review.client}
+          </p>
+
+          <p className="text-yellow-500">
+            {"⭐".repeat(review.note)}
+          </p>
+        </div>
+
+        <p className="text-gray-700">
+          {review.commentaire}
+        </p>
+      </div>
+    ))}
+  </div>
+</div>
+
                {/* AUTRES PRODUITS */}
       <div className="mt-28">
 

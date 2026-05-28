@@ -94,21 +94,31 @@ export default function CommandeDetailPage() {
               Statut
             </p>
 
-          <div className="flex items-center justify-between gap-4">
+        <div className="relative flex justify-between items-center mt-6">
+
+  {/* LIGNE */}
+  <div className="absolute top-5 left-0 w-full h-1 bg-gray-200 rounded-full" />
 
   {/* REÇUE */}
-  <div className="flex flex-col items-center">
-    <span className="text-2xl">
+  <div className="relative z-10 flex flex-col items-center">
+    <span
+      className={
+        ["en_attente", "payée", "expediee", "livree"].includes(
+          commande.statut
+        )
+          ? "text-green-600"
+          : "text-gray-400"
+      }
+    >
       📦
     </span>
 
     <span
       className={
-        commande.statut === "en_attente" ||
-        commande.statut === "payée" ||
-        commande.statut === "expediee" ||
-        commande.statut === "livree"
-          ? "text-green-600 font-bold"
+        ["en_attente", "payée", "expediee", "livree"].includes(
+          commande.statut
+        )
+          ? "font-bold text-green-600"
           : "text-gray-400"
       }
     >
@@ -117,17 +127,25 @@ export default function CommandeDetailPage() {
   </div>
 
   {/* PAYÉE */}
-  <div className="flex flex-col items-center">
-    <span className="text-2xl">
+  <div className="relative z-10 flex flex-col items-center">
+    <span
+      className={
+        ["payée", "expediee", "livree"].includes(
+          commande.statut
+        )
+          ? "text-green-600"
+          : "text-gray-400"
+      }
+    >
       💳
     </span>
 
     <span
       className={
-        commande.statut === "payée" ||
-        commande.statut === "expediee" ||
-        commande.statut === "livree"
-          ? "text-green-600 font-bold"
+        ["payée", "expediee", "livree"].includes(
+          commande.statut
+        )
+          ? "font-bold text-green-600"
           : "text-gray-400"
       }
     >
@@ -136,16 +154,25 @@ export default function CommandeDetailPage() {
   </div>
 
   {/* EXPÉDIÉE */}
-  <div className="flex flex-col items-center">
-    <span className="text-2xl">
+  <div className="relative z-10 flex flex-col items-center">
+    <span
+      className={
+        ["expediee", "livree"].includes(
+          commande.statut
+        )
+          ? "text-green-600"
+          : "text-gray-400"
+      }
+    >
       🚚
     </span>
 
     <span
       className={
-        commande.statut === "expediee" ||
-        commande.statut === "livree"
-          ? "text-green-600 font-bold"
+        ["expediee", "livree"].includes(
+          commande.statut
+        )
+          ? "font-bold text-green-600"
           : "text-gray-400"
       }
     >
@@ -154,21 +181,29 @@ export default function CommandeDetailPage() {
   </div>
 
   {/* LIVRÉE */}
-  <div className="flex flex-col items-center">
-    <span className="text-2xl">
+  <div className="relative z-10 flex flex-col items-center">
+    <span
+      className={
+        commande.statut === "livree"
+          ? "text-green-600"
+          : "text-gray-400"
+      }
+    >
       ✅
     </span>
 
     <span
       className={
         commande.statut === "livree"
-          ? "text-green-600 font-bold"
+          ? "font-bold text-green-600"
           : "text-gray-400"
       }
     >
       Livrée
     </span>
   </div>
+
+</div>
 
 </div>
 </div>
@@ -247,6 +282,5 @@ export default function CommandeDetailPage() {
         </div>
 
       </div>
-    </div>
   );
 }

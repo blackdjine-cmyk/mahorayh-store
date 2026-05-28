@@ -52,6 +52,7 @@ export default function CommandeDetailPage() {
       </div>
     );
   }
+  console.log("STATUT =", commande.statut);
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
@@ -103,7 +104,7 @@ export default function CommandeDetailPage() {
             ${
               commande.statut === "en_attente"
                 ? "w-0"
-                : commande.statut === "payee"
+                : commande.statut === "payée"
                 ? "w-1/3"
                 : commande.statut === "expediee"
                 ? "w-2/3"
@@ -117,7 +118,7 @@ export default function CommandeDetailPage() {
 
       <div className="relative z-10 flex flex-col items-center flex-1">
         <span className="text-3xl">📦</span>
-        <span className={["en_attente","payee","expediee","livree"].includes(commande.statut)
+        <span className={["en_attente","payée","expediee","livree"].includes(commande.statut)
           ? "text-green-600 font-bold"
           : "text-gray-400"}>
           Reçue
@@ -126,7 +127,7 @@ export default function CommandeDetailPage() {
 
       <div className="relative z-10 flex flex-col items-center flex-1">
         <span className="text-3xl">💳</span>
-        <span className={["payee","expediee","livree"].includes(commande.statut)
+        <span className={["payée","expediee","livree"].includes(commande.statut)
           ? "text-green-600 font-bold"
           : "text-gray-400"}>
           Payée

@@ -54,9 +54,9 @@ export default function CommandeDetailPage() {
   }
   console.log("STATUT =", commande.statut);
 
-   return (
-  <div className="min-h-screen bg-gray-100 px-2 py-6 sm:p-6">
-    <div className="max-w-4xl mx-auto bg-white rounded-[32px] shadow-xl p-5 sm:p-8">
+  return (
+  <div className="min-h-screen bg-gray-100 px-3 py-6 sm:p-6">
+  <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl p-6 sm:p-8">
 
         <button
           onClick={() =>

@@ -94,22 +94,36 @@ export default function CommandeDetailPage() {
               Statut
             </p>
 
-        <div className="relative flex justify-between items-center mt-6">
+<div className="relative flex justify-between items-start mt-6 px-2">
 
-  {/* LIGNE */}
-  <div className="absolute top-5 left-0 w-full h-1 bg-gray-200 rounded-full" />
+  {/* LIGNE FOND */}
+  <div className="absolute top-4 left-10 right-10 h-1 bg-gray-200 rounded-full overflow-hidden">
+
+    {/* PROGRESSION */}
+    <div
+      className={`h-full bg-green-500 rounded-full transition-all duration-500
+        ${
+          commande.statut === "en_attente"
+            ? "w-0"
+
+          : commande.statut === "payée"
+            ? "w-1/3"
+
+          : commande.statut === "expediee"
+            ? "w-2/3"
+
+          : commande.statut === "livree"
+            ? "w-full"
+
+          : "w-0"
+        }
+      `}
+    />
+  </div>
 
   {/* REÇUE */}
-  <div className="relative z-10 flex flex-col items-center">
-    <span
-      className={
-        ["en_attente", "payée", "expediee", "livree"].includes(
-          commande.statut
-        )
-          ? "text-green-600"
-          : "text-gray-400"
-      }
-    >
+  <div className="relative z-10 flex flex-col items-center bg-gray-50 px-2">
+    <span className="text-3xl">
       📦
     </span>
 
@@ -118,7 +132,7 @@ export default function CommandeDetailPage() {
         ["en_attente", "payée", "expediee", "livree"].includes(
           commande.statut
         )
-          ? "font-bold text-green-600"
+          ? "text-green-600 font-bold"
           : "text-gray-400"
       }
     >
@@ -127,16 +141,8 @@ export default function CommandeDetailPage() {
   </div>
 
   {/* PAYÉE */}
-  <div className="relative z-10 flex flex-col items-center">
-    <span
-      className={
-        ["payée", "expediee", "livree"].includes(
-          commande.statut
-        )
-          ? "text-green-600"
-          : "text-gray-400"
-      }
-    >
+  <div className="relative z-10 flex flex-col items-center bg-gray-50 px-2">
+    <span className="text-3xl">
       💳
     </span>
 
@@ -145,7 +151,7 @@ export default function CommandeDetailPage() {
         ["payée", "expediee", "livree"].includes(
           commande.statut
         )
-          ? "font-bold text-green-600"
+          ? "text-green-600 font-bold"
           : "text-gray-400"
       }
     >
@@ -154,16 +160,8 @@ export default function CommandeDetailPage() {
   </div>
 
   {/* EXPÉDIÉE */}
-  <div className="relative z-10 flex flex-col items-center">
-    <span
-      className={
-        ["expediee", "livree"].includes(
-          commande.statut
-        )
-          ? "text-green-600"
-          : "text-gray-400"
-      }
-    >
+  <div className="relative z-10 flex flex-col items-center bg-gray-50 px-2">
+    <span className="text-3xl">
       🚚
     </span>
 
@@ -172,7 +170,7 @@ export default function CommandeDetailPage() {
         ["expediee", "livree"].includes(
           commande.statut
         )
-          ? "font-bold text-green-600"
+          ? "text-green-600 font-bold"
           : "text-gray-400"
       }
     >
@@ -181,21 +179,15 @@ export default function CommandeDetailPage() {
   </div>
 
   {/* LIVRÉE */}
-  <div className="relative z-10 flex flex-col items-center">
-    <span
-      className={
-        commande.statut === "livree"
-          ? "text-green-600"
-          : "text-gray-400"
-      }
-    >
+  <div className="relative z-10 flex flex-col items-center bg-gray-50 px-2">
+    <span className="text-3xl">
       ✅
     </span>
 
     <span
       className={
         commande.statut === "livree"
-          ? "font-bold text-green-600"
+          ? "text-green-600 font-bold"
           : "text-gray-400"
       }
     >

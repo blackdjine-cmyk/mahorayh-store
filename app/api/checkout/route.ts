@@ -21,6 +21,8 @@ export async function POST(req: Request) {
    adresse,
    } = await req.json();
 
+   console.log("CART CHECKOUT :", cart);
+
     // 🛒 Transformer le panier pour Stripe
     const line_items = cart.map((item: any) => ({
       price_data: {
@@ -58,7 +60,13 @@ const { data, error } = await supabase
       0
     ),
 
-    produits: JSON.parse(JSON.stringify(cart)),
+   produits: cart.map((item: any) => ({
+  id: item.id,
+  name: item.name,
+  price: item.price,
+  image: item.image,
+  quantity: item.quantity,
+})),
   },
 ])
   .select();

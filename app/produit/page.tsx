@@ -562,25 +562,26 @@ const handleTouchEnd = (
             {activeDescription}
           </p>
 
-          {/* PANIER */}
-          <button
-            onClick={() =>
-              addToCart({
-                name:
-                  selectedModel
-                    ? `${selectedProduct.name} - ${selectedModel.model_name}`
-                    : selectedProduct.name,
+         {/* PANIER */}
+<button
+  onClick={() =>
+    addToCart({
+      id: selectedProduct.id,
 
-                price: activePrice,
+      name:
+        selectedModel
+          ? `${selectedProduct.name} - ${selectedModel.model_name}`
+          : selectedProduct.name,
 
-                image: activeImage,
-              })
-            }
-          className="w-full mt-2 bg-gradient-to-r from-fuchsia-600 to-purple-700 text-white py-5 rounded-2xl font-bold text-xl shadow-xl hover:scale-[1.02] transition-all duration-300"
-          >
-            🛒 Ajouter au panier
-          </button>
+      price: activePrice,
 
+      image: activeImage,
+    })
+  }
+  className="w-full mt-2 bg-gradient-to-r from-fuchsia-600 to-purple-700 text-white py-5 rounded-2xl font-bold text-xl shadow-xl hover:scale-[1.02] transition-all duration-300"
+>
+  🛒 Ajouter au panier
+</button>
         </div>
 
       </div>
@@ -595,7 +596,7 @@ const handleTouchEnd = (
   <div className="bg-white rounded-3xl shadow p-6 mb-10">
     <input
       type="text"
-      placeholder="Votre prénom"
+      placeholder="Votre email"
       value={client}
       onChange={(e) => setClient(e.target.value)}
       className="w-full border rounded-xl px-4 py-3 mb-4"

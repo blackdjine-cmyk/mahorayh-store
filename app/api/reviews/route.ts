@@ -11,6 +11,27 @@ export async function POST(req: Request) {
       commentaire,
     } = body;
 
+    // 🔒 Vérifie si le client a acheté le produit
+const { data: commandes } = await supabase
+  .from("commandes")
+  .select("*")
+  .eq("email", client);
+
+const achatValide = commandes?.some(
+  (commande: any) =>
+    commande.produits?.some(
+      (produit: any) =>
+        produit.id === product_id
+    )
+);
+
+if (!achatValide) {
+  return new Response(
+    "Vous devez acheter ce produit avant de laisser un avis",
+    { status: 403 }
+  );
+}
+
     const { data, error } = await supabase
       .from("reviews")
       .insert([

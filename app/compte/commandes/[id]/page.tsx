@@ -94,134 +94,82 @@ export default function CommandeDetailPage() {
               Statut
             </p>
 
-           <div className="mt-6">
+          <div className="flex items-center justify-between gap-4">
 
- <div className="mt-8">
+  {/* REÇUE */}
+  <div className="flex flex-col items-center">
+    <span className="text-2xl">
+      📦
+    </span>
 
-  <div className="flex items-center justify-between">
-
-    {/* ETAPE 1 */}
-    <div className="flex flex-col items-center flex-1">
-      <div
-        className={`w-10 h-10 rounded-full flex items-center justify-center text-white z-10
-          ${
-            ["en_attente", "payee", "expediee", "livree"].includes(
-              commande.statut
-            )
-              ? "bg-yellow-500"
-              : "bg-gray-300"
-          }
-        `}
-      >
-        📦
-      </div>
-
-      <p className="text-xs mt-2 font-semibold">
-        Reçue
-      </p>
-    </div>
-
-    {/* TRAIT 1 */}
-    <div
-      className={`h-2 flex-1 rounded-full mx-2
-        ${
-          ["payee", "expediee", "livree"].includes(
-            commande.statut
-          )
-            ? "bg-green-500"
-            : "bg-gray-300"
-        }
-      `}
-    ></div>
-
-    {/* ETAPE 2 */}
-    <div className="flex flex-col items-center flex-1">
-      <div
-        className={`w-10 h-10 rounded-full flex items-center justify-center text-white z-10
-          ${
-            ["payee", "expediee", "livree"].includes(
-              commande.statut
-            )
-              ? "bg-green-500"
-              : "bg-gray-300"
-          }
-        `}
-      >
-        💳
-      </div>
-
-      <p className="text-xs mt-2 font-semibold">
-        Payée
-      </p>
-    </div>
-
-    {/* TRAIT 2 */}
-    <div
-      className={`h-2 flex-1 rounded-full mx-2
-        ${
-          ["expediee", "livree"].includes(
-            commande.statut
-          )
-            ? "bg-blue-500"
-            : "bg-gray-300"
-        }
-      `}
-    ></div>
-
-    {/* ETAPE 3 */}
-    <div className="flex flex-col items-center flex-1">
-      <div
-        className={`w-10 h-10 rounded-full flex items-center justify-center text-white z-10
-          ${
-            ["expediee", "livree"].includes(
-              commande.statut
-            )
-              ? "bg-blue-500"
-              : "bg-gray-300"
-          }
-        `}
-      >
-        🚚
-      </div>
-
-      <p className="text-xs mt-2 font-semibold">
-        Expédiée
-      </p>
-    </div>
-
-    {/* TRAIT 3 */}
-    <div
-      className={`h-2 flex-1 rounded-full mx-2
-        ${
-          commande.statut === "livree"
-            ? "bg-emerald-500"
-            : "bg-gray-300"
-        }
-      `}
-    ></div>
-
-    {/* ETAPE 4 */}
-    <div className="flex flex-col items-center flex-1">
-      <div
-        className={`w-10 h-10 rounded-full flex items-center justify-center text-white z-10
-          ${
-            commande.statut === "livree"
-              ? "bg-emerald-500"
-              : "bg-gray-300"
-          }
-        `}
-      >
-        ✅
-      </div>
-
-      <p className="text-xs mt-2 font-semibold">
-        Livrée
-      </p>
-    </div>
-
+    <span
+      className={
+        commande.statut === "en_attente" ||
+        commande.statut === "payée" ||
+        commande.statut === "expediee" ||
+        commande.statut === "livree"
+          ? "text-green-600 font-bold"
+          : "text-gray-400"
+      }
+    >
+      Reçue
+    </span>
   </div>
 
-</div>
+  {/* PAYÉE */}
+  <div className="flex flex-col items-center">
+    <span className="text-2xl">
+      💳
+    </span>
+
+    <span
+      className={
+        commande.statut === "payée" ||
+        commande.statut === "expediee" ||
+        commande.statut === "livree"
+          ? "text-green-600 font-bold"
+          : "text-gray-400"
+      }
+    >
+      Payée
+    </span>
+  </div>
+
+  {/* EXPÉDIÉE */}
+  <div className="flex flex-col items-center">
+    <span className="text-2xl">
+      🚚
+    </span>
+
+    <span
+      className={
+        commande.statut === "expediee" ||
+        commande.statut === "livree"
+          ? "text-green-600 font-bold"
+          : "text-gray-400"
+      }
+    >
+      Expédiée
+    </span>
+  </div>
+
+  {/* LIVRÉE */}
+  <div className="flex flex-col items-center">
+    <span className="text-2xl">
+      ✅
+    </span>
+
+    <span
+      className={
+        commande.statut === "livree"
+          ? "text-green-600 font-bold"
+          : "text-gray-400"
+      }
+    >
+      Livrée
+    </span>
+  </div>
+
 </div>
 </div>
 

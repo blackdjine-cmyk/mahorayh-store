@@ -73,141 +73,114 @@ export default function CommandeDetailPage() {
         <p className="text-gray-500 mb-8">
           Commande #{commande.id}
         </p>
+       {/* INFOS */}
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
 
-        {/* INFOS */}
-        <div className="grid md:grid-cols-2 gap-6 mb-10">
+  {/* DATE */}
+  <div className="bg-gray-100 p-6 rounded-2xl min-h-[120px]">
+    <p className="text-sm text-gray-500">
+      Date
+    </p>
 
-          <div className="bg-gray-50 p-5 rounded-2xl">
-            <p className="text-sm text-gray-500">
-              Date
-            </p>
-
-            <p className="font-bold">
-              {new Date(
-                commande.created_at
-              ).toLocaleDateString("fr-FR")}
-            </p>
-          </div>
-
-          <div className="bg-gray-50 p-5 rounded-2xl">
-            <p className="text-sm text-gray-500">
-              Statut
-            </p>
-
-    <div className="relative flex items-center justify-between w-full mt-4">
-
-  {/* LIGNE FOND */}
-  <div className="absolute left-12 right-12 top-4 h-1 bg-gray-200 rounded-full">
-    <div
-      className={`h-full bg-green-500 rounded-full transition-all duration-500
-        ${
-          commande.statut === "en_attente"
-            ? "w-0"
-
-            : commande.statut === "payée"
-            ? "w-1/3"
-
-            : commande.statut === "expediee"
-            ? "w-2/3"
-
-            : commande.statut === "livree"
-            ? "w-full"
-
-            : "w-0"
-        }
-      `}
-    />
+    <p className="font-bold text-xl">
+      {new Date(
+        commande.created_at
+      ).toLocaleDateString("fr-FR")}
+    </p>
   </div>
 
-  {/* REÇUE */}
-  <div className="relative z-10 flex flex-col items-center flex-1">
-    <span className="text-3xl">📦</span>
-    <span
-      className={
-        ["en_attente", "payée", "expediee", "livree"].includes(
-          commande.statut
-        )
+  {/* STATUT */}
+  <div className="bg-gray-100 p-6 rounded-2xl min-h-[120px]">
+    <p className="text-sm text-gray-500 mb-6">
+      Statut
+    </p>
+
+    <div className="relative flex items-center justify-between w-full">
+
+      <div className="absolute left-10 right-10 top-5 h-1 bg-gray-300 rounded-full">
+        <div
+          className={`h-full bg-green-500 rounded-full transition-all duration-500
+            ${
+              commande.statut === "en_attente"
+                ? "w-0"
+                : commande.statut === "payee"
+                ? "w-1/3"
+                : commande.statut === "expediee"
+                ? "w-2/3"
+                : commande.statut === "livree"
+                ? "w-full"
+                : "w-0"
+            }
+          `}
+        />
+      </div>
+
+      <div className="relative z-10 flex flex-col items-center flex-1">
+        <span className="text-3xl">📦</span>
+        <span className={["en_attente","payee","expediee","livree"].includes(commande.statut)
           ? "text-green-600 font-bold"
-          : "text-gray-400"
-      }
-    >
-      Reçue
-    </span>
+          : "text-gray-400"}>
+          Reçue
+        </span>
+      </div>
+
+      <div className="relative z-10 flex flex-col items-center flex-1">
+        <span className="text-3xl">💳</span>
+        <span className={["payee","expediee","livree"].includes(commande.statut)
+          ? "text-green-600 font-bold"
+          : "text-gray-400"}>
+          Payée
+        </span>
+      </div>
+
+      <div className="relative z-10 flex flex-col items-center flex-1">
+        <span className="text-3xl">🚚</span>
+        <span className={["expediee","livree"].includes(commande.statut)
+          ? "text-green-600 font-bold"
+          : "text-gray-400"}>
+          Expédiée
+        </span>
+      </div>
+
+      <div className="relative z-10 flex flex-col items-center flex-1">
+        <span className="text-3xl">✅</span>
+        <span className={
+          commande.statut === "livree"
+            ? "text-green-600 font-bold"
+            : "text-gray-400"
+        }>
+          Livrée
+        </span>
+      </div>
+
+    </div>
   </div>
 
-  {/* PAYÉE */}
-  <div className="relative z-10 flex flex-col items-center flex-1">
-    <span className="text-3xl">💳</span>
-    <span
-      className={
-        ["payée", "expediee", "livree"].includes(
-          commande.statut
-        )
-          ? "text-green-600 font-bold"
-          : "text-gray-400"
-      }
-    >
-      Payée
-    </span>
+  {/* ADRESSE */}
+  <div className="bg-gray-100 p-6 rounded-2xl min-h-[120px]">
+    <p className="text-sm text-gray-500">
+      Adresse
+    </p>
+
+    <p className="font-bold text-xl">
+      {commande.adresse}
+    </p>
   </div>
 
-  {/* EXPÉDIÉE */}
-  <div className="relative z-10 flex flex-col items-center flex-1">
-    <span className="text-3xl">🚚</span>
-    <span
-      className={
-        ["expediee", "livree"].includes(
-          commande.statut
-        )
-          ? "text-green-600 font-bold"
-          : "text-gray-400"
-      }
-    >
-      Expédiée
-    </span>
-  </div>
+  {/* TOTAL */}
+  <div className="bg-gray-100 p-6 rounded-2xl min-h-[120px]">
+    <p className="text-sm text-gray-500">
+      Total
+    </p>
 
-  {/* LIVRÉE */}
-  <div className="relative z-10 flex flex-col items-center flex-1">
-    <span className="text-3xl">✅</span>
-    <span
-      className={
-        commande.statut === "livree"
-          ? "text-green-600 font-bold"
-          : "text-gray-400"
-      }
-    >
-      Livrée
-    </span>
+    <p className="font-bold text-purple-700 text-4xl">
+      {Number(
+        commande.total
+      ).toFixed(2)} €
+    </p>
   </div>
 
 </div>
-</div>
-</div>
-
-          <div className="bg-gray-50 p-5 rounded-2xl">
-            <p className="text-sm text-gray-500">
-              Adresse
-            </p>
-
-            <p className="font-bold">
-              {commande.adresse}
-            </p>
-          </div>
-
-          <div className="bg-gray-50 p-5 rounded-2xl">
-            <p className="text-sm text-gray-500">
-              Total
-            </p>
-
-            <p className="font-bold text-purple-700 text-2xl">
-              {Number(
-                commande.total
-              ).toFixed(2)} €
-            </p>
-          </div>
-
-        </div>
 
         {/* PRODUITS */}
         <div>
@@ -255,9 +228,12 @@ export default function CommandeDetailPage() {
               )
             )}
 
-          </div>
+                   </div>
+
         </div>
 
       </div>
+
+    </div>
   );
 }

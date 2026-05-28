@@ -94,39 +94,34 @@ export default function CommandeDetailPage() {
               Statut
             </p>
 
-<div className="relative flex justify-between items-start mt-6 px-2">
+    <div className="relative flex items-center justify-between w-full mt-4">
 
   {/* LIGNE FOND */}
-  <div className="absolute top-4 left-10 right-10 h-1 bg-gray-200 rounded-full overflow-hidden">
-
-    {/* PROGRESSION */}
+  <div className="absolute left-12 right-12 top-4 h-1 bg-gray-200 rounded-full">
     <div
       className={`h-full bg-green-500 rounded-full transition-all duration-500
         ${
           commande.statut === "en_attente"
             ? "w-0"
 
-          : commande.statut === "payée"
+            : commande.statut === "payée"
             ? "w-1/3"
 
-          : commande.statut === "expediee"
+            : commande.statut === "expediee"
             ? "w-2/3"
 
-          : commande.statut === "livree"
+            : commande.statut === "livree"
             ? "w-full"
 
-          : "w-0"
+            : "w-0"
         }
       `}
     />
   </div>
 
   {/* REÇUE */}
-  <div className="relative z-10 flex flex-col items-center bg-gray-50 px-2">
-    <span className="text-3xl">
-      📦
-    </span>
-
+  <div className="relative z-10 flex flex-col items-center flex-1">
+    <span className="text-3xl">📦</span>
     <span
       className={
         ["en_attente", "payée", "expediee", "livree"].includes(
@@ -141,11 +136,8 @@ export default function CommandeDetailPage() {
   </div>
 
   {/* PAYÉE */}
-  <div className="relative z-10 flex flex-col items-center bg-gray-50 px-2">
-    <span className="text-3xl">
-      💳
-    </span>
-
+  <div className="relative z-10 flex flex-col items-center flex-1">
+    <span className="text-3xl">💳</span>
     <span
       className={
         ["payée", "expediee", "livree"].includes(
@@ -160,11 +152,8 @@ export default function CommandeDetailPage() {
   </div>
 
   {/* EXPÉDIÉE */}
-  <div className="relative z-10 flex flex-col items-center bg-gray-50 px-2">
-    <span className="text-3xl">
-      🚚
-    </span>
-
+  <div className="relative z-10 flex flex-col items-center flex-1">
+    <span className="text-3xl">🚚</span>
     <span
       className={
         ["expediee", "livree"].includes(
@@ -179,11 +168,8 @@ export default function CommandeDetailPage() {
   </div>
 
   {/* LIVRÉE */}
-  <div className="relative z-10 flex flex-col items-center bg-gray-50 px-2">
-    <span className="text-3xl">
-      ✅
-    </span>
-
+  <div className="relative z-10 flex flex-col items-center flex-1">
+    <span className="text-3xl">✅</span>
     <span
       className={
         commande.statut === "livree"
@@ -196,7 +182,6 @@ export default function CommandeDetailPage() {
   </div>
 
 </div>
-
 </div>
 </div>
 

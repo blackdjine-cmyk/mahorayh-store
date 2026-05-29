@@ -1,23 +1,29 @@
 export default function Hero() {
   return (
-    <section className="bg-[#f5efe6] py-10 md:py-20 px-6">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+  <section className="bg-gradient-to-b from-[#faf7f2] to-[#f3ede6] py-10 md:py-20 px-6">
+
+  <div className="max-w-6xl mx-auto bg-white rounded-[40px] shadow-2xl p-8 md:p-14">
+
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center"></div>
 
         {/* TEXTE */}
          <div className="max-w-xl order-2 md:order-1">
 
           {/* BADGE */}
           <p className="inline-block bg-purple-100 text-purple-700 px-4 py-1 rounded-full text-sm font-semibold mb-4">
-            ✨ Soins naturels pour peaux noires & métissées
+            🔥 Produit le plus apprécié de nos clientes
           </p>
 
           {/* TITRE */}
           <h1 className="text-3xl md:text-5xl font-bold text-gray-900 leading-tight mb-5">
-            Une peau éclatante, <br />
+            Révélez l'éclat <br />
             <span className="text-yellow-600 italic font-semibold">
-              naturellement
+             naturel de votre peau
             </span>
           </h1>
+          <h2 className="text-xl md:text-3xl font-semibold text-purple-700 mb-5">
+            avec notre routine au curcuma
+          </h2>
 
           {/* DESCRIPTION */}
           <p className="text-gray-600 text-lg mb-6">
@@ -30,6 +36,25 @@ export default function Hero() {
             <p>✨ Teint plus uniforme</p>
             <p>✨ Éclat naturel retrouvé</p>
           </div>
+          <div className="flex flex-wrap gap-4 mb-8">
+
+         <div className="bg-purple-50 px-4 py-3 rounded-2xl">
+            ⭐⭐⭐⭐⭐
+          <br />
+         <span className="text-sm">
+          Avis clients
+         </span>
+         </div>
+
+         <div className="bg-green-50 px-4 py-3 rounded-2xl">
+          🚚 Livraison rapide
+         </div>
+
+          <div className="bg-yellow-50 px-4 py-3 rounded-2xl">
+         🔒 Paiement sécurisé
+       </div>
+
+      </div>
 
           {/* BOUTON */}
           <button className="w-full md:w-auto bg-gradient-to-r from-purple-700 to-purple-900 text-white px-8 py-4 rounded-full font-semibold shadow-xl hover:scale-105 hover:shadow-2xl transition duration-300">

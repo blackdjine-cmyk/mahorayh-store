@@ -163,9 +163,9 @@ export default function CommandeDetailPage() {
       Adresse
     </p>
 
-    <p className="font-bold text-xl">
-      {commande.adresse}
-    </p>
+   <p className="font-bold text-xl break-words">
+  {commande.adresse}
+</p>
   </div>
 
   {/* TOTAL */}
@@ -204,10 +204,10 @@ export default function CommandeDetailPage() {
                   <img
                     src={item.image}
                     alt={item.name}
-                    className="w-24 h-24 object-cover rounded-2xl"
+                    className="w-24 h-24 shrink-0 object-cover rounded-2xl"
                   />
 
-                  <div className="flex-1">
+                  <div className="flex-1 min-w-0">
 
                     <h3 className="font-bold text-lg">
                       {item.name}

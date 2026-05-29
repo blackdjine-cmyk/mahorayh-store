@@ -55,7 +55,7 @@ export default function CommandeDetailPage() {
   console.log("STATUT =", commande.statut);
 
   return (
-  <div className="min-h-screen bg-gray-100 px-3 py-6 sm:p-6">
+  <div className="min-h-screen bg-gray-100 overflow-x-hidden">
   <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl p-6 sm:p-8">
 
         <button
@@ -98,7 +98,7 @@ export default function CommandeDetailPage() {
 
     <div className="relative flex items-center justify-between w-full">
 
-      <div className="absolute left-10 right-10 top-5 h-1 bg-gray-300 rounded-full">
+       <div className="absolute left-6 right-6 top-5 h-1 bg-gray-300 rounded-full">
         <div
           className={`h-full bg-green-500 rounded-full transition-all duration-500
             ${

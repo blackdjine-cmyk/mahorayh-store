@@ -31,6 +31,7 @@ export default function ProduitPage() {
   const [client, setClient] = useState("");
   const [note, setNote] = useState(5);
   const [commentaire, setCommentaire] = useState("");
+  const [showReviewForm, setShowReviewForm] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -592,8 +593,20 @@ const handleTouchEnd = (
     ⭐ Avis clients
   </h2>
 
-  {/* FORMULAIRE */}
+ {/* BOUTON OUVRIR FORMULAIRE */}
+{!showReviewForm && (
+  <button
+    onClick={() => setShowReviewForm(true)}
+    className="mb-6 bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-2xl font-semibold"
+  >
+    ✍️ Laisser un avis
+  </button>
+)}
+
+{/* FORMULAIRE */}
+{showReviewForm && (
   <div className="bg-white rounded-3xl shadow p-6 mb-10">
+
     <input
       type="text"
       placeholder="Votre email"
@@ -621,32 +634,47 @@ const handleTouchEnd = (
       className="w-full border rounded-xl px-4 py-3 mb-4 h-32"
     />
 
-    <button
-      onClick={async () => {
-        await fetch("/api/reviews", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            product_id: selectedProduct.id,
-            client,
-            note,
-            commentaire,
-          }),
-        });
+    <div className="flex gap-3 flex-wrap">
 
-        setClient("");
-        setNote(5);
-        setCommentaire("");
+      <button
+        onClick={async () => {
+          await fetch("/api/reviews", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              product_id: selectedProduct.id,
+              client,
+              note,
+              commentaire,
+            }),
+          });
 
-        fetchReviews();
-      }}
-      className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-2xl font-semibold"
-    >
-      Envoyer mon avis
-    </button>
+          setClient("");
+          setNote(5);
+          setCommentaire("");
+
+          fetchReviews();
+
+          setShowReviewForm(false);
+        }}
+        className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-2xl font-semibold"
+      >
+        Envoyer mon avis
+      </button>
+
+      <button
+        onClick={() => setShowReviewForm(false)}
+        className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-3 rounded-2xl font-semibold"
+      >
+        Annuler
+      </button>
+
+    </div>
+
   </div>
+)}
 
   {/* LISTE AVIS */}
   <div className="space-y-6">

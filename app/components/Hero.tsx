@@ -4,7 +4,7 @@ export default function Hero() {
 
       <div className="max-w-6xl mx-auto bg-white rounded-[40px] shadow-2xl p-8 md:p-14">
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
 
           {/* TEXTE */}
           <div className="max-w-xl order-2 md:order-1">
@@ -85,7 +85,7 @@ export default function Hero() {
           </div>
 
           {/* IMAGE */}
-          <div className="relative order-1 md:order-2">
+           <div className="relative order-1 md:order-2 md:self-start">
             <img
               src="https://image.noelshack.com/fichiers/2026/18/6/1777727887-le-pack.jpg"
               alt="Mahorayh Beauté produits"

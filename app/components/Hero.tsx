@@ -1,10 +1,11 @@
+import Link from "next/link";
 export default function Hero() {
   return (
     <section className="bg-gradient-to-b from-[#faf7f2] to-[#f3ede6] py-10 md:py-20 px-4 md:px-6">
 
       <div className="max-w-6xl mx-auto bg-white rounded-[40px] shadow-2xl p-6 md:p-14">
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
 
           {/* TEXTE */}
           <div>
@@ -74,12 +75,31 @@ export default function Hero() {
             </div>
 
             {/* BOUTON */}
-            <button className="w-full md:w-auto bg-gradient-to-r from-purple-700 to-purple-900 text-white px-10 py-4 rounded-full font-semibold shadow-xl hover:scale-105 transition">
-              ✨ Découvrir la routine
-            </button>
+           <button
+             className="
+             w-full
+             md:w-auto
+             bg-gradient-to-r
+             from-fuchsia-600
+             to-purple-700
+             text-white
+             px-12
+             py-5
+             rounded-full
+             font-bold
+             text-lg
+             shadow-xl
+             hover:scale-105
+             hover:shadow-2xl
+             transition-all
+             duration-300
+             "
+            >
+            ✨ Découvrir la routine
+           </button>
 
             {/* PREUVES */}
-            <div className="mt-6 flex flex-col md:flex-row gap-3 md:gap-6 text-sm text-gray-600">
+             <div className="mt-8 flex flex-col md:flex-row gap-4 md:gap-8 text-sm text-gray-600 font-medium">
               <span>✔️ Résultats visibles</span>
               <span>✔️ Sans routine compliquée</span>
               <span>✔️ Peaux sensibles</span>

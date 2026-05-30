@@ -126,19 +126,21 @@ const handleTouchEnd = (
       productsData.length > 0
     ) {
 
-      const firstProduct =
-        productsData[0];
+      const featuredProduct =
+     productsData.find(
+    (product) => product.id === 1
+   ) || productsData[0];
 
-      setSelectedProduct(firstProduct);
+   setSelectedProduct(featuredProduct);
 
-      const firstModel =
-        modelsData?.find(
-          (model) =>
-            model.product_id ===
-            firstProduct.id
-        );
+   const firstModel =
+   modelsData?.find(
+    (model) =>
+      model.product_id ===
+      featuredProduct.id
+  );
 
-      setSelectedModel(firstModel || null);
+setSelectedModel(firstModel || null);
     }
   };
 

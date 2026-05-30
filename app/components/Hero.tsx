@@ -15,15 +15,17 @@ export default function Hero() {
           </p>
 
           {/* TITRE */}
-          <h1 className="text-3xl md:text-5xl font-bold text-gray-900 leading-tight mb-5">
-            Révélez l'éclat <br />
-            <span className="text-yellow-600 italic font-semibold">
-             naturel de votre peau
-            </span>
-          </h1>
-          <h2 className="text-xl md:text-3xl font-semibold text-purple-700 mb-5">
-            avec notre routine au curcuma
-          </h2>
+         <h1 className="text-3xl md:text-5xl font-bold text-gray-900 leading-tight mb-2">
+           Révélez l'éclat naturel de votre peau
+        </h1>
+
+         <h2 className="text-2xl md:text-4xl font-bold text-purple-700 mb-2">
+           Routine Éclat au Curcuma
+         </h2>
+
+          <p className="text-yellow-600 font-semibold mb-6">
+           ⭐⭐⭐⭐⭐ Produit préféré de nos clientes
+          </p>
 
           {/* DESCRIPTION */}
           <p className="text-gray-600 text-lg mb-6">

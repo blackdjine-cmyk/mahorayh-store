@@ -391,6 +391,17 @@ setSelectedModel(firstModel || null);
 
           </div>
 
+         <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-4 py-2 rounded-full font-semibold mb-6">
+          ✔ Produit en stock
+         </div>
+
+         <div className="bg-[#faf7f2] rounded-2xl p-5 mb-8 space-y-3">
+          <p>🚚 Livraison rapide</p>
+          <p>🔒 Paiement sécurisé</p>
+          <p>⭐ Satisfaction client</p>
+          <p>💜 Adapté aux peaux noires et métissées</p>
+       </div>
+
           {/* IMAGE MOBILE */}
            <div className="md:hidden w-full overflow-x-hidden">
          <div className="bg-[#f8f5ef] rounded-3xl p-4 shadow-lg mb-8 w-full">

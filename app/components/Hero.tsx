@@ -75,28 +75,30 @@ export default function Hero() {
             </div>
 
             {/* BOUTON */}
+           <Link href="/produit">
            <button
-             className="
-             w-full
-             md:w-auto
-             bg-gradient-to-r
-             from-fuchsia-600
-             to-purple-700
-             text-white
-             px-12
-             py-5
-             rounded-full
-             font-bold
-             text-lg
-             shadow-xl
-             hover:scale-105
-             hover:shadow-2xl
-             transition-all
-             duration-300
-             "
-            >
-            ✨ Découvrir la routine
-           </button>
+            className="
+            w-full
+            md:w-auto
+            bg-gradient-to-r
+            from-fuchsia-600
+           to-purple-700
+           text-white
+           px-12
+           py-5
+           rounded-full
+           font-bold
+           text-lg
+           shadow-xl
+           hover:scale-105
+           hover:shadow-2xl
+           transition-all
+           duration-300
+          "
+         >
+         ✨ Découvrir la routine
+         </button>
+        </Link>
 
             {/* PREUVES */}
              <div className="mt-8 flex flex-col md:flex-row gap-4 md:gap-8 text-sm text-gray-600 font-medium">

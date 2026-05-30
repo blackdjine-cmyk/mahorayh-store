@@ -30,14 +30,17 @@ export default function Hero() {
               ⭐⭐⭐⭐⭐ Produit préféré de nos clientes
             </p>
 
-            {/* IMAGE MOBILE */}
-            <div className="block md:hidden mb-6">
-              <img
-                src="https://image.noelshack.com/fichiers/2026/18/6/1777727887-le-pack.jpg"
-                alt="Mahorayh Beauté"
-                className="w-full rounded-[30px] shadow-xl"
-              />
-            </div>
+           {/* IMAGE MOBILE */}
+           <Link
+           href="/produit"
+           className="block md:hidden mb-6"
+           >
+           <img
+           src="https://image.noelshack.com/fichiers/2026/18/6/1777727887-le-pack.jpg"
+           alt="Mahorayh Beauté"
+           className="w-full rounded-[30px] shadow-xl"
+           />
+           </Link>
 
             {/* DESCRIPTION */}
             <p className="text-gray-600 text-lg mb-6 leading-relaxed">
@@ -110,13 +113,16 @@ export default function Hero() {
           </div>
 
           {/* IMAGE DESKTOP */}
-          <div className="hidden md:flex justify-center self-start">
-            <img
-              src="https://image.noelshack.com/fichiers/2026/18/6/1777727887-le-pack.jpg"
-              alt="Mahorayh Beauté"
-              className="w-full max-w-[520px] rounded-[30px] shadow-2xl"
-            />
-          </div>
+          <Link
+           href="/produit"
+           className="hidden md:flex justify-center self-start"
+          >
+         <img
+         src="https://image.noelshack.com/fichiers/2026/18/6/1777727887-le-pack.jpg"
+         alt="Mahorayh Beauté"
+         className="w-full max-w-[520px] rounded-[30px] shadow-2xl hover:scale-[1.02] transition duration-300 cursor-pointer"
+        />
+      </Link>
 
         </div>
 

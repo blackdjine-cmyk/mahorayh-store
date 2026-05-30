@@ -1,3 +1,4 @@
+import Link from "next/link";
 export default function BeforeAfter() {
   return (
     <section className="bg-[#f8f5f2] py-20 px-6">
@@ -55,10 +56,12 @@ export default function BeforeAfter() {
 
         {/* BOUTON */}
         <div className="mt-8">
-          <button className="bg-gradient-to-r from-purple-700 to-purple-900 text-white px-8 py-3 rounded-full font-semibold shadow-lg hover:scale-105 hover:shadow-xl transition duration-300">
-            ✨ Essayer la routine
-          </button>
-        </div>
+        <Link href="/produit">
+        <button className="bg-gradient-to-r from-fuchsia-600 to-purple-700 text-white px-10 py-4 rounded-full font-bold shadow-xl hover:scale-105 hover:shadow-2xl transition-all duration-300">
+      ✨ Essayer la routine
+        </button>
+      </Link>
+     </div>
 
       </div>
     </section>

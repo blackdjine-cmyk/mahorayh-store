@@ -223,7 +223,36 @@ if (totalWeight <= 500) {
       </h2>
     </div>
   
+   <div className="space-y-3 text-gray-700">
 
+  <div className="flex justify-between">
+    <span>Sous-total</span>
+    <span>{total.toFixed(2)}€</span>
+  </div>
+
+  <div className="flex justify-between">
+    <span>Poids colis</span>
+    <span>{(totalWeight / 1000).toFixed(2)} kg</span>
+  </div>
+
+  <div className="flex justify-between">
+    <span>Livraison</span>
+    <span className="text-purple-500 font-semibold">
+      {shippingCost.toFixed(2)}€
+    </span>
+  </div>
+
+  <div className="flex justify-between">
+    <span>TVA</span>
+    <span>Incluse</span>
+  </div>
+
+  <div className="flex justify-between text-3xl font-bold text-purple-700 pt-5 border-t border-purple-200 mt-5">
+    <span>Total</span>
+    <span>{(total + shippingCost).toFixed(2)}€</span>
+  </div>
+
+</div>
 
     {/* FORMULAIRE */}
     <input

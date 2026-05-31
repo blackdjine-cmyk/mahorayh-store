@@ -599,7 +599,12 @@ setSelectedModel(firstModel || null);
       price: activePrice,
 
       image: activeImage,
+
+      weight: selectedModel?.model_weight
+           ? Number(selectedModel.model_weight)
+           : Number(selectedProduct.weight || 0),
     })
+    
   }
   className={`w-full mt-2 py-5 rounded-2xl font-bold text-xl shadow-xl transition-all duration-300 ${
     selectedProduct.stock > 0

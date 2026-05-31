@@ -26,6 +26,20 @@ const [errorMessage, setErrorMessage] = useState("");
     0
   );
 
+  const totalWeight = cart.reduce(
+  (acc: number, item: any) =>
+    acc + (item.weight || 0) * item.quantity,
+  0
+);
+
+let shippingCost = 0;
+
+if (totalWeight <= 500) {
+  shippingCost = 3.69;
+} else if (totalWeight <= 1000) {
+  shippingCost = 4.25;
+}
+
   // 💳 CHECKOUT
   const handleCheckout = async () => {
   // panier vide
@@ -211,19 +225,27 @@ const [errorMessage, setErrorMessage] = useState("");
       <div className="space-y-3 text-gray-700">
         <div className="flex justify-between">
           <span>Sous-total</span>
+          <div className="flex justify-between">
+          <span>Poids total :</span>
+         <span>
+         {(totalWeight / 1000).toFixed(2)} kg
+         </span>
+         </div>
           <span>{total.toFixed(2)}€</span>
         </div>
 
         <div className="flex justify-between">
           <span>Livraison</span>
           <span className="text-purple-500 font-semibold">
-            Offerte
-        </span>
+           {shippingCost.toFixed(2)}€
+          </span>
         </div>
 
        <div className="flex justify-between text-3xl font-bold text-purple-700 pt-5 border-t border-purple-200 mt-5">
           <span>Total</span>
-          <span>{total.toFixed(2)}€</span>
+          <span>
+         {(total + shippingCost).toFixed(2)}€
+         </span>
         </div>
       </div>
     </div>

@@ -19,6 +19,7 @@ export default function AdminPage() {
   const [price, setPrice] = useState("");
   const [oldPrice, setOldPrice] = useState("");
   const [stock, setStock] = useState("");
+  const [weight, setWeight] = useState("");
   const [image, setImage] = useState("");
   const [badge, setBadge] = useState("");
   const [category, setCategory] = useState("");
@@ -32,6 +33,7 @@ export default function AdminPage() {
   const [modelImage, setModelImage] = useState("");
   const [modelDescription, setModelDescription] = useState("");
   const [modelStock, setModelStock] = useState("");
+  const [modelWeight, setModelWeight] = useState("");
 
   const [editingModelId, setEditingModelId] =
     useState<number | null>(null);
@@ -232,6 +234,7 @@ const addProduct = async () => {
     badge: badge.trim(),
     category,
     stock: Number(stock || 0),
+    weight: Number(weight || 0),
   },
 ]);
 
@@ -251,6 +254,7 @@ const addProduct = async () => {
   setBadge("");
   setCategory("");
   setStock("");
+  setWeight("");
 
   fetchProducts();
 };
@@ -276,6 +280,7 @@ const addModel = async () => {
         model_image: modelImage,
         model_description:
           modelDescription.trim(),
+        model_weight: Number(modelWeight || 0),
       })
       .eq("id", editingModelId);
 
@@ -312,6 +317,7 @@ const addModel = async () => {
     model_description:
       modelDescription.trim(),
     stock: Number(modelStock || 0),
+    model_weight: Number(modelWeight || 0),
   },
 ]);
 
@@ -588,6 +594,16 @@ const totalClients = new Set(
           />
 
           <input
+          type="number"
+          placeholder="Poids produit emballé (g)"
+          value={weight}
+          onChange={(e) =>
+          setWeight(e.target.value)
+         }
+         className="w-full border p-4 rounded-xl"
+        />
+
+          <input
             type="file"
             accept="image/*"
             onChange={(e) =>
@@ -762,6 +778,16 @@ const totalClients = new Set(
    }
    className="w-full border p-4 rounded-xl"
    />
+
+   <input
+  type="number"
+  placeholder="Poids modèle emballé (g)"
+  value={modelWeight}
+  onChange={(e) =>
+    setModelWeight(e.target.value)
+  }
+  className="w-full border p-4 rounded-xl"
+/>
 
           <input
             type="file"

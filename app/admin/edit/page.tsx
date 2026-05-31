@@ -14,6 +14,9 @@ export default function EditPage() {
   const [oldPrice, setOldPrice] =
     useState("");
 
+  const [weight, setWeight] =
+    useState("");
+
   const [badge, setBadge] = useState("");
   const [category, setCategory] = useState("");
 
@@ -99,9 +102,9 @@ export default function EditPage() {
     }
 
     setImages((prev) => [
-  ...prev,
-  ...uploadedImages,
-]);
+      ...prev,
+      ...uploadedImages,
+    ]);
 
     setUploading(false);
   };
@@ -130,6 +133,10 @@ export default function EditPage() {
         parsed.old_price || ""
       );
 
+      setWeight(
+        parsed.weight || ""
+      );
+
       setBadge(parsed.badge || "");
 
       setCategory(
@@ -155,6 +162,7 @@ export default function EditPage() {
         description,
         price: Number(price),
         old_price: Number(oldPrice),
+        weight: Number(weight),
         badge,
         category,
         image,
@@ -226,6 +234,16 @@ export default function EditPage() {
           value={oldPrice}
           onChange={(e) =>
             setOldPrice(e.target.value)
+          }
+          className="w-full border p-4 rounded-xl"
+        />
+
+        <input
+          type="number"
+          placeholder="Poids produit emballé (g)"
+          value={weight}
+          onChange={(e) =>
+            setWeight(e.target.value)
           }
           className="w-full border p-4 rounded-xl"
         />

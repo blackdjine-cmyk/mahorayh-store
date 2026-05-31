@@ -28,8 +28,8 @@ export default function AdminPage() {
   const [modelName, setModelName] = useState("");
   const [modelPrice, setModelPrice] = useState("");
   const [modelImage, setModelImage] = useState("");
-  const [modelDescription, setModelDescription] =
-    useState("");
+  const [modelDescription, setModelDescription] = useState("");
+  const [modelStock, setModelStock] = useState("");
 
   const [editingModelId, setEditingModelId] =
     useState<number | null>(null);
@@ -247,6 +247,7 @@ const addModel = async () => {
     setModelPrice("");
     setModelImage("");
     setModelDescription("");
+    setModelStock("");
 
     fetchModels();
     return;
@@ -255,17 +256,18 @@ const addModel = async () => {
   const { error } = await supabase
     .from("product_models")
     .insert([
-      {
-        product_id: Number(
-          selectedProductId
-        ),
-        model_name: modelName.trim(),
-        model_price: Number(modelPrice),
-        model_image: modelImage,
-        model_description:
-          modelDescription.trim(),
-      },
-    ]);
+  {
+    product_id: Number(
+      selectedProductId
+    ),
+    model_name: modelName.trim(),
+    model_price: Number(modelPrice),
+    model_image: modelImage,
+    model_description:
+      modelDescription.trim(),
+    stock: Number(modelStock || 0),
+  },
+]);
 
   if (error) {
     console.log(error);
@@ -659,15 +661,25 @@ const totalClients = new Set(
           />
 
           <textarea
-            placeholder="Description modèle"
-            value={modelDescription}
-            onChange={(e) =>
-              setModelDescription(
-                e.target.value
-              )
-            }
-            className="w-full border p-4 rounded-xl"
-          />
+          placeholder="Description modèle"
+          value={modelDescription}
+          onChange={(e) =>
+         setModelDescription(
+        e.target.value
+       )
+      }
+      className="w-full border p-4 rounded-xl"
+     />
+
+    <input
+    type="number"
+    placeholder="Stock du modèle"
+    value={modelStock}
+    onChange={(e) =>
+    setModelStock(e.target.value)
+   }
+   className="w-full border p-4 rounded-xl"
+   />
 
           <input
             type="file"

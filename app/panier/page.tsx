@@ -4,13 +4,13 @@ import { useCart } from "../context/CartContext";
 import { useState } from "react";
 
 export default function PanierPage() {
-  const [nom, setNom] = useState("");
-  const [email, setEmail] = useState("");
-  const [telephone, setTelephone] = useState("");
-  const [codePostal, setCodePostal] = useState("");
-  const [adresse, setAdresse] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+const [nom, setNom] = useState("");
+const [email, setEmail] = useState("");
+const [telephone, setTelephone] = useState("");
+const [codePostal, setCodePostal] = useState("");
+const [adresse, setAdresse] = useState("");
+const [isLoading, setIsLoading] = useState(false);
+const [errorMessage, setErrorMessage] = useState("");
 
   const {
     cart,

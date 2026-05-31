@@ -391,9 +391,17 @@ setSelectedModel(firstModel || null);
 
           </div>
 
-         <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-4 py-2 rounded-full font-semibold mb-6">
-          ✔ Produit en stock
-         </div>
+         <div
+  className={`inline-flex items-center gap-2 px-4 py-2 rounded-full font-semibold mb-6 ${
+    selectedProduct.stock > 0
+      ? "bg-green-100 text-green-700"
+      : "bg-red-100 text-red-700"
+  }`}
+>
+  {selectedProduct.stock > 0
+    ? `✔ En stock (${selectedProduct.stock})`
+    : "❌ Rupture de stock"}
+</div>
 
          <div className="bg-[#faf7f2] rounded-2xl p-5 mb-8 space-y-3">
           <p>🚚 Livraison rapide</p>
@@ -578,6 +586,7 @@ setSelectedModel(firstModel || null);
 
          {/* PANIER */}
 <button
+  disabled={selectedProduct.stock <= 0}
   onClick={() =>
     addToCart({
       id: selectedProduct.id,
@@ -592,10 +601,17 @@ setSelectedModel(firstModel || null);
       image: activeImage,
     })
   }
-  className="w-full mt-2 bg-gradient-to-r from-fuchsia-600 to-purple-700 text-white py-5 rounded-2xl font-bold text-xl shadow-xl hover:scale-[1.02] transition-all duration-300"
+  className={`w-full mt-2 py-5 rounded-2xl font-bold text-xl shadow-xl transition-all duration-300 ${
+    selectedProduct.stock > 0
+      ? "bg-gradient-to-r from-fuchsia-600 to-purple-700 text-white hover:scale-[1.02]"
+      : "bg-gray-300 text-gray-500 cursor-not-allowed"
+  }`}
 >
-  🛒 Ajouter au panier
+  {selectedProduct.stock > 0
+    ? "🛒 Ajouter au panier"
+    : "❌ Produit indisponible"}
 </button>
+
         </div>
 
       </div>

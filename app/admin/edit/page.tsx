@@ -8,23 +8,19 @@ export default function EditPage() {
   const [product, setProduct] = useState<any>(null);
 
   const [name, setName] = useState("");
-  const [description, setDescription] =
-    useState("");
+  const [description, setDescription] = useState("");
 
   const [price, setPrice] = useState("");
   const [oldPrice, setOldPrice] =
     useState("");
 
   const [badge, setBadge] = useState("");
-  const [category, setCategory] =
-    useState("");
+  const [category, setCategory] = useState("");
 
   const [image, setImage] = useState("");
-  const [images, setImages] =
-    useState<string[]>([]);
+  const [images, setImages] = useState<string[]>([]);
 
-  const [uploading, setUploading] =
-    useState(false);
+  const [uploading, setUploading] = useState(false);
 
   // 📸 IMAGE PRINCIPALE
   const uploadImage = async (

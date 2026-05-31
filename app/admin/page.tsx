@@ -7,6 +7,7 @@ export default function AdminPage() {
 
   const [products, setProducts] = useState<any[]>([]);
   const [models, setModels] = useState<any[]>([]);
+  const [images, setImages] = useState<string[]>([]);
 
   // 🔐 LOGIN
   const [isAuth, setIsAuth] = useState(false);
@@ -17,6 +18,7 @@ export default function AdminPage() {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [oldPrice, setOldPrice] = useState("");
+  const [stock, setStock] = useState("");
   const [image, setImage] = useState("");
   const [badge, setBadge] = useState("");
   const [category, setCategory] = useState("");
@@ -161,6 +163,47 @@ export default function AdminPage() {
     setUploading(false);
   };
 
+  const uploadGalleryImages = async (
+  e: React.ChangeEvent<HTMLInputElement>
+) => {
+  const files = e.target.files;
+
+  if (!files) return;
+
+  setUploading(true);
+
+  const uploadedImages: string[] = [];
+
+  for (const file of Array.from(files)) {
+    const fileName =
+      `${Date.now()}-${file.name}`;
+
+    const { error } = await supabase.storage
+      .from("products")
+      .upload(fileName, file);
+
+    if (error) {
+      console.log(error);
+      continue;
+    }
+
+    const {
+      data: { publicUrl },
+    } = supabase.storage
+      .from("products")
+      .getPublicUrl(fileName);
+
+    uploadedImages.push(publicUrl);
+  }
+
+  setImages((prev) => [
+    ...prev,
+    ...uploadedImages,
+  ]);
+
+  setUploading(false);
+};
+
   // ➕ AJOUT PRODUIT
 const addProduct = async () => {
   if (
@@ -177,18 +220,20 @@ const addProduct = async () => {
   const { error } = await supabase
     .from("products")
     .insert([
-      {
-        name: name.trim(),
-        description: description.trim(),
-        price: Number(price),
-        old_price: oldPrice
-          ? Number(oldPrice)
-          : null,
-        image,
-        badge: badge.trim(),
-        category,
-      },
-    ]);
+  {
+    name: name.trim(),
+    description: description.trim(),
+    price: Number(price),
+    old_price: oldPrice
+      ? Number(oldPrice)
+      : null,
+    image,
+    images,
+    badge: badge.trim(),
+    category,
+    stock: Number(stock || 0),
+  },
+]);
 
   if (error) {
     console.log(error);
@@ -205,6 +250,7 @@ const addProduct = async () => {
   setImage("");
   setBadge("");
   setCategory("");
+  setStock("");
 
   fetchProducts();
 };
@@ -532,6 +578,16 @@ const totalClients = new Set(
           />
 
           <input
+           type="number"
+           placeholder="Stock du produit"
+           value={stock}
+           onChange={(e) =>
+           setStock(e.target.value)
+          }  
+          className="w-full border p-4 rounded-xl"
+          />
+
+          <input
             type="file"
             accept="image/*"
             onChange={(e) =>
@@ -547,6 +603,32 @@ const totalClients = new Set(
               className="w-40 rounded-xl"
             />
           )}
+
+          <div className="space-y-4">
+
+         <input
+          type="file"
+          accept="image/*"
+          multiple
+          onChange={uploadGalleryImages}
+          className="w-full border p-4 rounded-xl"
+          />
+
+         <div className="flex gap-3 flex-wrap">
+
+    {images.map((img, index) => (
+
+      <img
+        key={index}
+        src={img}
+        className="w-24 h-24 object-cover rounded-xl border"
+      />
+
+    ))}
+
+  </div>
+
+</div>
 
           <input
             type="text"

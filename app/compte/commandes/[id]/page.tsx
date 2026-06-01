@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { useParams, useRouter } from "next/navigation";
+import jsPDF from "jspdf";
 
 export default function CommandeDetailPage() {
   const params = useParams();
@@ -54,6 +55,64 @@ export default function CommandeDetailPage() {
   }
   console.log("STATUT =", commande.statut);
 
+  const downloadPDF = () => {
+  const doc = new jsPDF();
+
+  doc.setFontSize(22);
+  doc.text("Mahorayh Beauté", 20, 20);
+
+  doc.setFontSize(16);
+  doc.text("FACTURE", 20, 35);
+
+  doc.setFontSize(12);
+
+  doc.text(
+    `N° facture : ${commande.invoice_number}`,
+    20,
+    50
+  );
+
+  doc.text(
+    `Client : ${commande.client}`,
+    20,
+    60
+  );
+
+  doc.text(
+    `Email : ${commande.email}`,
+    20,
+    70
+  );
+
+  doc.text(
+    `Téléphone : ${commande.telephone}`,
+    20,
+    80
+  );
+
+  doc.text(
+    `Adresse : ${commande.adresse}`,
+    20,
+    90
+  );
+
+  doc.text(
+    `Code postal : ${commande.code_postal}`,
+    20,
+    100
+  );
+
+  doc.text(
+    `Total : ${commande.total} €`,
+    20,
+    120
+  );
+
+  doc.save(
+    `Facture-${commande.invoice_number}.pdf`
+  );
+};
+
   return (
   <div className="min-h-screen bg-gray-100 px-3 py-6 overflow-x-hidden">
   <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl p-6 sm:p-8">
@@ -74,6 +133,69 @@ export default function CommandeDetailPage() {
         <p className="text-gray-500 mb-8">
           Commande #{commande.id}
         </p>
+
+<div className="bg-purple-50 border border-purple-200 rounded-2xl p-5 mb-8">
+
+ <div className="flex items-center justify-between mb-4">
+
+  <h2 className="text-xl font-bold text-purple-700">
+    📄 Facture
+  </h2>
+
+  <button
+  onClick={downloadPDF}
+  className="bg-purple-700 text-white px-4 py-2 rounded-xl hover:bg-purple-800 transition"
+>
+  Télécharger PDF
+</button>
+
+</div>
+
+  <div className="space-y-2">
+
+    <p>
+      <strong>N° facture :</strong>{" "}
+      {commande.invoice_number}
+    </p>
+
+    <p>
+      <strong>Statut :</strong>{" "}
+      {commande.invoice_status}
+    </p>
+
+    <p>
+      <strong>Client :</strong>{" "}
+      {commande.client}
+    </p>
+
+    <p>
+      <strong>Email :</strong>{" "}
+      {commande.email}
+    </p>
+
+    <p>
+      <strong>Téléphone :</strong>{" "}
+      {commande.telephone}
+    </p>
+    <p>
+     <strong>Adresse :</strong>{" "}
+      {commande.adresse}
+    </p>
+
+   <p>
+   <strong>Code postal :</strong>{" "}
+   {commande.code_postal}
+   </p>
+
+   <p>
+   <strong>Total :</strong>{" "}
+   {commande.total}€
+   </p>
+
+  </div>
+
+</div>
+
        {/* INFOS */}
 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
 

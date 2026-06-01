@@ -44,15 +44,21 @@ const session = await stripe.checkout.sessions.create({
   cancel_url: `${req.headers.get("origin")}/panier`,
 });
 // 💾 Sauvegarde commande (JSON)
+const invoiceNumber =
+  `MB-${new Date().getFullYear()}-${Date.now()}`;
 const { data, error } = await supabase
   .from("commandes")
  .insert([
-  {
-    client: nom,
-    email: email,
-    telephone: telephone,
-    code_postal: codePostal,
-    adresse: adresse,
+  
+    {
+  client: nom,
+  email: email,
+  telephone: telephone,
+  code_postal: codePostal,
+  adresse: adresse,
+
+  invoice_number: invoiceNumber,
+  invoice_status: "paid",
 
     total: cart.reduce(
       (acc: number, item: any) =>

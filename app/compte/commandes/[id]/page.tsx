@@ -54,65 +54,114 @@ export default function CommandeDetailPage() {
     );
   }
   console.log("STATUT =", commande.statut);
-
-  const downloadPDF = () => {
+const downloadPDF = () => {
   const doc = new jsPDF();
 
-  doc.setFontSize(22);
-  doc.text("Mahorayh Beauté", 20, 20);
+  let y = 20;
 
-  doc.setFontSize(16);
-  doc.text("FACTURE", 20, 35);
+  doc.setFontSize(22);
+  doc.text("Mahorayh Beauté", 20, y);
+
+  y += 15;
+
+  doc.setFontSize(18);
+  doc.text("FACTURE", 20, y);
+
+  y += 15;
 
   doc.setFontSize(12);
 
   doc.text(
     `N° facture : ${commande.invoice_number}`,
     20,
-    50
+    y
   );
+
+  y += 10;
+
+  doc.text(
+    `Date : ${new Date(
+      commande.created_at
+    ).toLocaleDateString("fr-FR")}`,
+    20,
+    y
+  );
+
+  y += 10;
 
   doc.text(
     `Client : ${commande.client}`,
     20,
-    60
+    y
   );
+
+  y += 10;
 
   doc.text(
     `Email : ${commande.email}`,
     20,
-    70
+    y
   );
+
+  y += 10;
 
   doc.text(
     `Téléphone : ${commande.telephone}`,
     20,
-    80
+    y
   );
+
+  y += 10;
 
   doc.text(
     `Adresse : ${commande.adresse}`,
     20,
-    90
+    y
   );
+
+  y += 10;
 
   doc.text(
     `Code postal : ${commande.code_postal}`,
     20,
-    100
+    y
   );
 
+  y += 20;
+
+  doc.setFontSize(15);
+  doc.text("Produits commandés", 20, y);
+
+  y += 10;
+
+  doc.setFontSize(12);
+
+  commande.produits?.forEach((item: any) => {
+    doc.text(
+      `${item.name} | Qté : ${item.quantity} | ${item.price} €`,
+      20,
+      y
+    );
+
+    y += 10;
+  });
+
+  y += 10;
+
+  doc.setFontSize(15);
+
   doc.text(
-    `Total : ${commande.total} €`,
+    `TOTAL : ${Number(
+      commande.total
+    ).toFixed(2)} €`,
     20,
-    120
+    y
   );
 
   doc.save(
     `Facture-${commande.invoice_number}.pdf`
   );
 };
-
   return (
   <div className="min-h-screen bg-gray-100 px-3 py-6 overflow-x-hidden">
   <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl p-6 sm:p-8">

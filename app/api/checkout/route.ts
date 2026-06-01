@@ -19,6 +19,7 @@ export async function POST(req: Request) {
    telephone,
    codePostal,
    adresse,
+   shippingCost,
    } = await req.json();
 
    console.log("CART CHECKOUT :", cart);
@@ -56,15 +57,17 @@ const { data, error } = await supabase
   telephone: telephone,
   code_postal: codePostal,
   adresse: adresse,
+  shipping_cost: shippingCost,
 
   invoice_number: invoiceNumber,
   invoice_status: "paid",
 
-    total: cart.reduce(
-      (acc: number, item: any) =>
-        acc + item.price * item.quantity,
-      0
-    ),
+   total:
+  cart.reduce(
+    (acc: number, item: any) =>
+      acc + item.price * item.quantity,
+    0
+  ) + shippingCost,
 
    produits: cart.map((item: any) => ({
   id: item.id,

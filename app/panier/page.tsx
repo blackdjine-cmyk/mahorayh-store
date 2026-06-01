@@ -82,6 +82,7 @@ if (totalWeight <= 500) {
         telephone,
         codePostal,
         adresse,
+        shippingCost,
       }),
     });
 

@@ -53,13 +53,15 @@ export default function CommandeDetailPage() {
       </div>
     );
   }
-
-  const downloadPDF = () => {
+const downloadPDF = () => {
   const doc = new jsPDF();
 
   let y = 20;
 
+  // =========================
   // HEADER
+  // =========================
+
   doc.setFontSize(24);
   doc.text("Mahorayh Beauté", 20, y);
 
@@ -68,6 +70,24 @@ export default function CommandeDetailPage() {
   doc.setFontSize(18);
   doc.text("FACTURE", 20, y);
 
+  y += 8;
+
+  doc.setFontSize(10);
+
+  doc.text(
+    "Email : mahorayhbeaute@gmail.com",
+    20,
+    y
+  );
+
+  y += 6;
+
+  doc.text(
+    "Site : Mahorayh Beauté",
+    20,
+    y
+  );
+
   y += 15;
 
   doc.setDrawColor(150, 100, 255);
@@ -75,7 +95,10 @@ export default function CommandeDetailPage() {
 
   y += 10;
 
+  // =========================
   // INFOS FACTURE
+  // =========================
+
   doc.setFontSize(12);
 
   doc.text(
@@ -97,14 +120,21 @@ export default function CommandeDetailPage() {
   y += 8;
 
   doc.text(
-    `Statut : ${commande.invoice_status}`,
+    `Statut : ${
+      commande.invoice_status === "paid"
+        ? "Payée"
+        : commande.invoice_status
+    }`,
     20,
     y
   );
 
   y += 15;
 
+  // =========================
   // CLIENT
+  // =========================
+
   doc.setFontSize(15);
   doc.text("Informations client", 20, y);
 
@@ -112,16 +142,36 @@ export default function CommandeDetailPage() {
 
   doc.setFontSize(12);
 
-  doc.text(`Client : ${commande.client}`, 20, y);
+  doc.text(
+    `Client : ${commande.client}`,
+    20,
+    y
+  );
+
   y += 8;
 
-  doc.text(`Email : ${commande.email}`, 20, y);
+  doc.text(
+    `Email : ${commande.email}`,
+    20,
+    y
+  );
+
   y += 8;
 
-  doc.text(`Téléphone : ${commande.telephone}`, 20, y);
+  doc.text(
+    `Téléphone : ${commande.telephone}`,
+    20,
+    y
+  );
+
   y += 8;
 
-  doc.text(`Adresse : ${commande.adresse}`, 20, y);
+  doc.text(
+    `Adresse : ${commande.adresse}`,
+    20,
+    y
+  );
+
   y += 8;
 
   doc.text(
@@ -132,17 +182,25 @@ export default function CommandeDetailPage() {
 
   y += 20;
 
+  // =========================
   // PRODUITS
+  // =========================
+
   doc.setFontSize(15);
   doc.text("Produits commandés", 20, y);
 
-  y += 10;
+  y += 12;
 
   doc.setFontSize(12);
 
   commande.produits?.forEach((item: any) => {
+    const nomProduit = item.name.replace(
+      /[^\p{L}\p{N}\s\-]/gu,
+      ""
+    );
+
     doc.text(
-      `${item.name}`,
+      nomProduit,
       20,
       y
     );
@@ -168,63 +226,72 @@ export default function CommandeDetailPage() {
 
   y += 10;
 
+  // =========================
   // TOTAL
+  // =========================
+
   const sousTotal =
-  commande.total - commande.shipping_cost;
+    Number(commande.total) -
+    Number(commande.shipping_cost || 0);
 
- doc.setFontSize(12);
-
-doc.text(
-  `Sous-total : ${sousTotal.toFixed(2)} €`,
-  20,
-  y
-);
-
-y += 10;
-
-doc.text(
-  `Livraison : ${Number(
-    commande.shipping_cost
-  ).toFixed(2)} €`,
-  20,
-  y
-);
-
-y += 10;
-
-doc.text(
-  `TVA : Incluse`,
-  20,
-  y
-);
-
-y += 15;
-
-doc.setFontSize(16);
-
-doc.text(
-  `TOTAL PAYÉ : ${Number(
-    commande.total
-  ).toFixed(2)} €`,
-  20,
-  y
-);
-
-  y += 20;
-
-  // FOOTER
-  doc.setFontSize(10);
+  doc.setFontSize(12);
 
   doc.text(
-    "Merci pour votre confiance - Mahorayh Beaute",
+    `Sous-total : ${sousTotal.toFixed(2)} €`,
     20,
     y
   );
 
+  y += 10;
+
+  doc.text(
+    `Livraison : ${Number(
+      commande.shipping_cost || 0
+    ).toFixed(2)} €`,
+    20,
+    y
+  );
+
+  y += 10;
+
+  doc.text(
+    "TVA : Incluse",
+    20,
+    y
+  );
+
+  y += 15;
+
+  doc.setFontSize(16);
+
+  doc.text(
+    `TOTAL PAYÉ : ${Number(
+      commande.total
+    ).toFixed(2)} €`,
+    20,
+    y
+  );
+
+  y += 20;
+
+  // =========================
+  // FOOTER
+  // =========================
+
+  doc.setFontSize(10);
+
+  doc.text(
+    "Merci pour votre confiance - Mahorayh Beauté",
+    20,
+    y
+  );
+
+  y += 8;
+
   doc.text(
     "Mahorayh Beauté",
     20,
-    y + 8
+    y
   );
 
   doc.save(

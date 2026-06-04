@@ -53,56 +53,62 @@ export default function CommandeDetailPage() {
       </div>
     );
   }
-const downloadPDF = () => {
+const downloadPDF = async () => {
   const doc = new jsPDF();
 
-  let y = 20;
+  // =========================
+  // LOGO
+  // =========================
+
+  const logo = new Image();
+  logo.src = "/logo-facture.png";
+
+  await new Promise((resolve) => {
+    logo.onload = resolve;
+  });
+
+doc.addImage(
+  logo,
+  "PNG",
+  20,
+  10,
+  55,
+  40
+);
+
+  let y = 65;
 
   // =========================
   // HEADER
   // =========================
 
   doc.setFontSize(24);
-  doc.text("Mahorayh Beauté", 20, y);
+  doc.setTextColor(111, 66, 193);
+  doc.text("Mahorayh Beauté", 85, 22);
 
-  y += 15;
-
-  doc.setFontSize(18);
-  doc.text("FACTURE", 20, y);
-
-  y += 8;
+  doc.setFontSize(16);
+  doc.setTextColor(80, 80, 80);
+  doc.text("FACTURE", 85, 32);
 
   doc.setFontSize(10);
+  doc.text("mahorayhbeaute@gmail.com", 85, 40);
 
-  doc.text(
-    "Email : mahorayhbeaute@gmail.com",
-    20,
-    y
-  );
+  doc.text("www.mahorayhbeaute.com", 85, 46);
 
-  y += 6;
-
-  doc.text(
-    "Site : Mahorayh Beauté",
-    20,
-    y
-  );
-
-  y += 15;
-
-  doc.setDrawColor(150, 100, 255);
-  doc.line(20, y, 190, y);
-
-  y += 10;
+  doc.setDrawColor(111, 66, 193);
+  doc.setLineWidth(0.8);
+  doc.line(20, 55, 190, 55);
 
   // =========================
-  // INFOS FACTURE
+  // FACTURE
   // =========================
+
+  doc.setTextColor(0, 0, 0);
 
   doc.setFontSize(12);
 
   doc.text(
-    `N° facture : ${commande.invoice_number}`,
+    `Facture : ${commande.invoice_number}`,
     20,
     y
   );
@@ -136,10 +142,12 @@ const downloadPDF = () => {
   // =========================
 
   doc.setFontSize(15);
+  doc.setTextColor(111, 66, 193);
   doc.text("Informations client", 20, y);
 
   y += 10;
 
+  doc.setTextColor(0, 0, 0);
   doc.setFontSize(12);
 
   doc.text(
@@ -180,39 +188,43 @@ const downloadPDF = () => {
     y
   );
 
-  y += 20;
+  y += 18;
 
   // =========================
   // PRODUITS
   // =========================
 
   doc.setFontSize(15);
+  doc.setTextColor(111, 66, 193);
   doc.text("Produits commandés", 20, y);
 
   y += 12;
 
+  doc.setTextColor(0, 0, 0);
   doc.setFontSize(12);
 
   commande.produits?.forEach((item: any) => {
-    const nomProduit = item.name.replace(
-      /[^\p{L}\p{N}\s\-]/gu,
-      ""
-    );
+    const nomProduit = item.name
+  .replace(/✨/g, "")
+  .replace(/⭐/g, "")
+  .replace(/🌟/g, "")
+  .replace(/💎/g, "")
+  .trim();
+
+doc.text(
+  nomProduit,
+  20,
+  y
+);
 
     doc.text(
-      nomProduit,
-      20,
+      `x${item.quantity}`,
+      130,
       y
     );
 
     doc.text(
-      `Qté : ${item.quantity}`,
-      120,
-      y
-    );
-
-    doc.text(
-      `${item.price} €`,
+      `${Number(item.price).toFixed(2)} €`,
       170,
       y
     );
@@ -220,21 +232,15 @@ const downloadPDF = () => {
     y += 10;
   });
 
-  y += 10;
+  y += 5;
 
   doc.line(20, y, 190, y);
 
-  y += 10;
-
-  // =========================
-  // TOTAL
-  // =========================
+  y += 12;
 
   const sousTotal =
     Number(commande.total) -
     Number(commande.shipping_cost || 0);
-
-  doc.setFontSize(12);
 
   doc.text(
     `Sous-total : ${sousTotal.toFixed(2)} €`,
@@ -242,7 +248,7 @@ const downloadPDF = () => {
     y
   );
 
-  y += 10;
+  y += 8;
 
   doc.text(
     `Livraison : ${Number(
@@ -252,7 +258,7 @@ const downloadPDF = () => {
     y
   );
 
-  y += 10;
+  y += 8;
 
   doc.text(
     "TVA : Incluse",
@@ -262,10 +268,11 @@ const downloadPDF = () => {
 
   y += 15;
 
-  doc.setFontSize(16);
+  doc.setFontSize(18);
+  doc.setTextColor(111, 66, 193);
 
   doc.text(
-    `TOTAL PAYÉ : ${Number(
+    `TOTAL : ${Number(
       commande.total
     ).toFixed(2)} €`,
     20,
@@ -278,15 +285,21 @@ const downloadPDF = () => {
   // FOOTER
   // =========================
 
+  doc.setDrawColor(111, 66, 193);
+  doc.line(20, y, 190, y);
+
+  y += 10;
+
   doc.setFontSize(10);
+  doc.setTextColor(120, 120, 120);
 
   doc.text(
-    "Merci pour votre confiance - Mahorayh Beauté",
+    "Merci pour votre confiance.",
     20,
     y
   );
 
-  y += 8;
+  y += 6;
 
   doc.text(
     "Mahorayh Beauté",

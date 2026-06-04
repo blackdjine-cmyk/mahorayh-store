@@ -15,20 +15,11 @@ export default function Hero() {
               🔥 Produit le plus apprécié de nos clientes
             </p>
 
-            {/* TITRE */}
-            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 leading-tight mb-3">
-              Révélez l'éclat naturel de votre peau
-            </h1>
 
             {/* SOUS TITRE */}
             <h2 className="text-3xl md:text-4xl font-bold text-purple-700 mb-3">
               Routine Éclat au Curcuma
             </h2>
-
-            {/* ETOILES */}
-            <p className="text-yellow-600 font-semibold mb-6">
-              ⭐⭐⭐⭐⭐ Produit préféré de nos clientes
-            </p>
 
            {/* IMAGE MOBILE */}
            <Link
@@ -41,6 +32,11 @@ export default function Hero() {
            className="w-full rounded-[30px] shadow-xl"
            />
            </Link>
+
+           {/* ETOILES */}
+            <p className="text-yellow-600 font-semibold mb-6">
+              ⭐⭐⭐⭐⭐ Produit préféré de nos clientes
+            </p>
 
             {/* DESCRIPTION */}
             <p className="text-gray-600 text-lg mb-6 leading-relaxed">

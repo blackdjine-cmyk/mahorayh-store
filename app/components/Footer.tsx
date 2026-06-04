@@ -68,7 +68,7 @@ export default function Footer() {
           </p>
 
           <p className="text-gray-500 text-sm mt-2">
-            🌐 mahorayh-beaute.net
+            🌐 mahorayhbeaute.net
           </p>
 
         </div>

@@ -20,5 +20,19 @@ export default function sitemap() {
       url: "https://mahorayhbeaute.net/success",
       lastModified: new Date(),
     },
+
+    // Pages juridiques
+    {
+      url: "https://mahorayhbeaute.net/mentions-legales",
+      lastModified: new Date(),
+    },
+    {
+      url: "https://mahorayhbeaute.net/conditions-generales-de-vente",
+      lastModified: new Date(),
+    },
+    {
+      url: "https://mahorayhbeaute.net/politique-de-confidentialite",
+      lastModified: new Date(),
+    },
   ];
 }

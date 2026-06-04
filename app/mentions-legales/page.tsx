@@ -39,7 +39,7 @@ export default function MentionsLegalesPage() {
             </p>
 
             <p>
-              🌐 mahorayh-beaute.net
+              🌐 mahorayhbeaute.net
             </p>
 
             <p>

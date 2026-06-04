@@ -4,6 +4,6 @@ export default function robots() {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://mahorayh-store.vercel.app/sitemap.xml",
+    sitemap: "https://mahorayhbeaute.net/sitemap.xml",
   };
 }

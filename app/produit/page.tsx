@@ -403,13 +403,6 @@ setSelectedModel(firstModel || null);
     : "❌ Rupture de stock"}
 </div>
 
-         <div className="bg-[#faf7f2] rounded-2xl p-5 mb-8 space-y-3">
-          <p>🚚 Livraison rapide</p>
-          <p>🔒 Paiement sécurisé</p>
-          <p>⭐ Satisfaction client</p>
-          <p>💜 Adapté aux peaux noires et métissées</p>
-       </div>
-
           {/* IMAGE MOBILE */}
            <div className="md:hidden w-full overflow-x-hidden">
          <div className="bg-[#f8f5ef] rounded-3xl p-4 shadow-lg mb-8 w-full">
@@ -578,11 +571,32 @@ setSelectedModel(firstModel || null);
   ))}
 </div>
 </div>
+{/* BLOC CONFIANCE */}
+<div className="bg-[#faf7f2] rounded-2xl p-5 mb-8">
+  <div className="space-y-4">
 
-          {/* DESCRIPTION */}
-          <p className="text-gray-600 text-lg mb-8 mt-6">
-            {activeDescription}
-          </p>
+    <div className="flex items-center gap-3">
+      <span>🚚</span>
+      <span>Livraison rapide</span>
+    </div>
+
+    <div className="flex items-center gap-3">
+      <span>🔒</span>
+      <span>Paiement sécurisé</span>
+    </div>
+
+    <div className="flex items-center gap-3">
+      <span>⭐</span>
+      <span>Satisfaction client</span>
+    </div>
+
+    <div className="flex items-center gap-3">
+      <span>💜</span>
+      <span>Adapté aux peaux noires et métissées</span>
+    </div>
+
+  </div>
+</div>
 
          {/* PANIER */}
 <button
@@ -617,100 +631,105 @@ setSelectedModel(firstModel || null);
     : "❌ Produit indisponible"}
 </button>
 
+ {/* DESCRIPTION */}
+          <p className="text-gray-600 text-lg mb-8 mt-6">
+            {activeDescription}
+          </p>
+
         </div>
 
       </div>
-
-       {/* AVIS CLIENTS */}
+      
+      {/* AVIS CLIENTS */}
 <div className="mt-16">
+
   <h2 className="text-3xl font-bold mb-8">
     ⭐ Avis clients
   </h2>
 
- {/* BOUTON OUVRIR FORMULAIRE */}
-{!showReviewForm && (
-  <button
-    onClick={() => setShowReviewForm(true)}
-    className="mb-6 bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-2xl font-semibold"
-  >
-    ✍️ Laisser un avis
-  </button>
-)}
-
-{/* FORMULAIRE */}
-{showReviewForm && (
-  <div className="bg-white rounded-3xl shadow p-6 mb-10">
-
-    <input
-      type="text"
-      placeholder="Votre email"
-      value={client}
-      onChange={(e) => setClient(e.target.value)}
-      className="w-full border rounded-xl px-4 py-3 mb-4"
-    />
-
-    <select
-      value={note}
-      onChange={(e) => setNote(Number(e.target.value))}
-      className="w-full border rounded-xl px-4 py-3 mb-4"
+  {!showReviewForm && (
+    <button
+      onClick={() => setShowReviewForm(true)}
+      className="mb-6 bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-2xl font-semibold"
     >
-      <option value={5}>⭐⭐⭐⭐⭐</option>
-      <option value={4}>⭐⭐⭐⭐</option>
-      <option value={3}>⭐⭐⭐</option>
-      <option value={2}>⭐⭐</option>
-      <option value={1}>⭐</option>
-    </select>
+      ✍️ Laisser un avis
+    </button>
+  )}
 
-    <textarea
-      placeholder="Votre avis..."
-      value={commentaire}
-      onChange={(e) => setCommentaire(e.target.value)}
-      className="w-full border rounded-xl px-4 py-3 mb-4 h-32"
-    />
+  {showReviewForm && (
+    <div className="bg-white rounded-3xl shadow p-6 mb-10">
 
-    <div className="flex gap-3 flex-wrap">
+      <input
+        type="text"
+        placeholder="Votre email"
+        value={client}
+        onChange={(e) => setClient(e.target.value)}
+        className="w-full border rounded-xl px-4 py-3 mb-4"
+      />
 
-      <button
-        onClick={async () => {
-          await fetch("/api/reviews", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              product_id: selectedProduct.id,
-              client,
-              note,
-              commentaire,
-            }),
-          });
-
-          setClient("");
-          setNote(5);
-          setCommentaire("");
-
-          fetchReviews();
-
-          setShowReviewForm(false);
-        }}
-        className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-2xl font-semibold"
+      <select
+        value={note}
+        onChange={(e) => setNote(Number(e.target.value))}
+        className="w-full border rounded-xl px-4 py-3 mb-4"
       >
-        Envoyer mon avis
-      </button>
+        <option value={5}>⭐⭐⭐⭐⭐</option>
+        <option value={4}>⭐⭐⭐⭐</option>
+        <option value={3}>⭐⭐⭐</option>
+        <option value={2}>⭐⭐</option>
+        <option value={1}>⭐</option>
+      </select>
 
-      <button
-        onClick={() => setShowReviewForm(false)}
-        className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-3 rounded-2xl font-semibold"
-      >
-        Annuler
-      </button>
+      <textarea
+        placeholder="Votre avis..."
+        value={commentaire}
+        onChange={(e) => setCommentaire(e.target.value)}
+        className="w-full border rounded-xl px-4 py-3 mb-4 h-32"
+      />
+
+      <div className="flex gap-3 flex-wrap">
+
+        <button
+          onClick={async () => {
+
+            await fetch("/api/reviews", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                product_id: selectedProduct.id,
+                client,
+                note,
+                commentaire,
+              }),
+            });
+
+            setClient("");
+            setNote(5);
+            setCommentaire("");
+
+            fetchReviews();
+
+            setShowReviewForm(false);
+
+          }}
+          className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-2xl font-semibold"
+        >
+          Envoyer mon avis
+        </button>
+
+        <button
+          onClick={() => setShowReviewForm(false)}
+          className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-3 rounded-2xl font-semibold"
+        >
+          Annuler
+        </button>
+
+      </div>
 
     </div>
+  )}
 
-  </div>
-)}
-
-  {/* LISTE AVIS */}
   <div className="space-y-6">
     {reviews.map((review, index) => (
       <div
@@ -718,6 +737,7 @@ setSelectedModel(firstModel || null);
         className="bg-gray-50 rounded-3xl p-6 shadow-sm"
       >
         <div className="flex items-center justify-between mb-3">
+
           <p className="font-bold text-lg">
             {review.client}
           </p>
@@ -725,14 +745,17 @@ setSelectedModel(firstModel || null);
           <p className="text-yellow-500">
             {"⭐".repeat(review.note)}
           </p>
+
         </div>
 
         <p className="text-gray-700">
           {review.commentaire}
         </p>
+
       </div>
     ))}
   </div>
+
 </div>
 
                {/* AUTRES PRODUITS */}

@@ -1,0 +1,123 @@
+[33m6e88263[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m Optimize mobile homepage hero section
+[33me8e31df[m SEO complet, sitemap, robots, mentions legales, CGV et politique de confidentialite
+[33m6804e1c[m Correction SEO robots et sitemap
+[33mca4ce90[m Ajout des pages juridiques et amélioration facture PDF
+[33m38da66a[m Improve invoice PDF layout and totals
+[33mfe81f5d[m Ajout facture PDF et amélioration détail commande
+[33m6d1e188[m Ajout génération PDF facture professionnelle
+[33m59c2bea[m Add PDF invoice generation
+[33mc91ae63[m Improve checkout summary with weight shipping and VAT
+[33m72a848d[m Fix checkout JSX structure and restore panier page
+[33m0f7d589[m Ajout gestion poids produits et calcul frais livraison
+[33m4ef813c[m Ajout gestion poids produits et modèles
+[33m8253cc0[m Ajout stock produit et galerie images dans creation produit
+[33mf8c1613[m Ajout gestion stock produits et modèles
+[33m76e70c3[m Amélioration fiche produit et bloc confiance
+[33me4579c5[m Photos hero cliquables et navigation produit finalisée
+[33ma3c11db[m Finalisation accueil et navigation produit vedette
+[33maa5b490[m Amélioration Hero premium et navigation produit vedette
+[33m2f4860c[m Hero final + produit vedette Curcuma
+[33mfb072ca[m Amélioration Hero accueil desktop et mobile
+[33m3614e53[m Amélioration page accueil : Hero premium, photo produit repositionnée, titre produit mis en avant, responsive mobile et desktop
+[33mf1a0771[m Fix hero premium layout
+[33mabc9a66[m Produit star homepage
+[33m7accd03[m Refonte responsive commandes, amélioration Hero accueil et système avis
+[33m089bde6[m Improve reviews form UX and auto close after submit
+[33mc7895e8[m Refine order details responsive layout and timeline
+[33mf68efd2[m Fix mobile overflow on order details page
+[33mdc9f5c6[m Fix mobile layout and prevent horizontal overflow
+[33maae239d[m Fix page détail commande mobile et timeline statut
+[33m721353a[m Fix page détail commande mobile et timeline statut
+[33mcaa101b[m Fix statut payée accent
+[33mf75de0e[m Fix detail commande responsive and timeline
+[33m5705f90[m Fix timeline statut commande responsive mobile et desktop
+[33mc25d9b3[m improve order status timeline UI
+[33m6645043[m fix order status timeline and history sync
+[33m0457b7d[m fix commandes reviews et synchronisation statuts
+[33me4a1db5[m version stable checkout emails commandes ok
+[33m4d5f890[m Ajout système avis clients
+[33m53e4fa8[m Ajout espace client premium et emails automatiques
+[33m990ed9f[m Ajout espace client premium et détail commandes
+[33m1c301df[m admin cleanup before commands debug
+[33m28dbea1[m Ajout du système de statut des commandes
+[33m48ad3a4[m Ajout espace client + historique commandes + menu mobile sync
+[33m61551c6[m Ajout espace client + historique commandes + menu mobile sync
+[33mc48406d[m Ajout historique commandes réel dans espace client
+[33m104fd73[m Ajout espace client premium avec authentification Supabase
+[33m792b43d[m Ajout espace client avec authentification Supabase
+[33m9ea9c33[m feat: customer auth and account page
+[33m25315fe[m feat: auth supabase register and login working
+[33mcee22e3[m Fix sitemap domain for SEO
+[33mb2a5bf4[m Add SEO technical setup with robots and sitemap
+[33m7462837[m Add SEO metadata and Open Graph configuration
+[33m59a16c9[m Style premium checkout form inputs and textarea
+[33m36f36fd[m style: upgrade checkout inputs with premium focus effects
+[33mf6588cc[m style: upgrade quantity buttons with premium hover animation
+[33mf82420a[m style: add premium hover animation to cart product cards
+[33m9e17206[m style: compact related product cards for cleaner layout
+[33mdb7a23a[m style: refine product cards height and preserve responsive grid layout
+[33m3e4de8c[m style: improve related products grid alignment and card width
+[33mc8fc207[m fix: improve product page grid overflow and layout stability
+[33m4166d1f[m fix: improve info column overflow and grid alignment
+[33mc726f30[m fix: restore desktop thumbnails wrapper and improve scroll behavior
+[33me4448b6[m Correction layout colonne infos sans overflow
+[33m07b4442[m Ajustement bouton panier full width premium
+[33m0f0600f[m feat: enhance premium CTA button on related product cards
+[33mf69909a[m feat: enhance premium hover effect on related product cards
+[33m88f489b[m feat: make product cards images clickable for better mobile UX
+[33mb016261[m fix: center premium product model cards on desktop and mobile
+[33m7165765[m fix: improve desktop product model cards layout
+[33m59a5e5a[m fix: improve desktop product variants layout
+[33mf2edb4f[m feat: enhance premium product variants on mobile and desktop
+[33m12992d3[m feat: improve premium image transitions for desktop and mobile
+[33m59df01f[m feat: improve mobile swipe smoothness and auto-center product view
+[33mb60c044[m fix: remove broken image fade transition and stabilize gallery
+[33m5b976a5[m feat: add smooth premium image transitions
+[33m356d537[m feat: add premium product image zoom lightbox
+[33m2826e83[m Refine product gallery spacing and mobile model cards
+[33ma4291a7[m Refine product gallery spacing and mobile model cards
+[33mc155ae2[m Refine desktop gallery spacing and product UI
+[33ma6ccca3[m Fix product gallery and mobile model cards UI
+[33md46da37[m polish active thumbnails without overflow
+[33m7154c9d[m premium active thumbnails pc and mobile
+[33m1c000ec[m Add mobile swipe support for product gallery
+[33mdf78a2a[m Add mobile swipe support for product gallery
+[33m10561dd[m Fix mobile product thumbnails alignment
+[33md40c85e[m Fix mobile checkout panel overflow
+[33m5305347[m Show ordered products in admin orders dashboard
+[33mee4ac62[m Add admin orders dashboard with sales stats and delete actions
+[33m5c1eead[m Add premium success page after Stripe checkout
+[33m8034926[m Replace alerts with premium checkout error messages
+[33me5ee982[m Add loading state and prevent double checkout clicks
+[33m0d7c287[m Improve checkout validation and error handling
+[33mb07f84c[m Add premium cart layout with sticky checkout
+[33m5a6d6c9[m Add premium cart layout with sticky checkout
+[33mb6b51fd[m Add premium cart layout with sticky checkout
+[33m27ce550[m Fix product thumbnails ratio on desktop
+[33ma85943a[m Limit product card descriptions for consistent layout
+[33m7a196a7[m Improve discover section grid and center layout
+[33m628ee1c[m Improve discover section grid and center layout
+[33m1cdb8db[m Fix product cards image spacing and clean duplicate JSX
+[33m4f9e357[m Improve related products cards image quality and layout
+[33m04ec1b7[m Improve related products cards image quality and layout
+[33m4b8e550[m Fix desktop gallery vertical scroll and limit thumbnails height
+[33m9775c6f[m Create premium horizontal mobile model slider
+[33macd5242[m Create premium horizontal mobile model slider
+[33mc2a5059[m Create premium horizontal mobile model slider
+[33m855c65d[m Fix mobile overflow on product info container
+[33m03cde9c[m Create premium horizontal mobile model slider
+[33m3dc5050[m Create premium horizontal mobile model slider
+[33m4066e3a[m Reduce mobile model card width
+[33m149a01b[m Fix mobile slider spacing
+[33m84b7c60[m Center mobile product slider
+[33ma47b025[m Fix product models responsive layout for desktop and mobile
+[33m7c5588c[m Fix product models responsive sizing and mobile alignment
+[33m593bf42[m Fix product models responsive sizing and mobile alignment
+[33m33e1846[m Fix responsive product models layout mobile and desktop
+[33m237fb0e[m Fix responsive product models layout mobile and desktop
+[33m0a3fa83[m Fix mobile layout overflow and stabilize product models
+[33mf5df803[m Fix mobile layout overflow and stabilize product models
+[33mdbb494e[m Fix mobile layout overflow and stabilize product models
+[33m17e648f[m Fix mobile layout overflow and stabilize product models
+[33m39c8e54[m Fix mobile layout overflow and stabilize product models
+[33maddda19[m Fix mobile hor

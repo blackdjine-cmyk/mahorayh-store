@@ -1,7 +1,8 @@
 "use client";
 
 import { useCart } from "../context/CartContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabase";
 
 export default function PanierPage() {
 const [nom, setNom] = useState("");
@@ -11,6 +12,24 @@ const [codePostal, setCodePostal] = useState("");
 const [adresse, setAdresse] = useState("");
 const [isLoading, setIsLoading] = useState(false);
 const [errorMessage, setErrorMessage] = useState("");
+useEffect(() => {
+  const loadUser = async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (user) {
+      setEmail(user.email || "");
+
+      const nomUtilisateur =
+        user.email?.split("@")[0] || "";
+
+      setNom(nomUtilisateur);
+    }
+  };
+
+  loadUser();
+}, []);
 
   const {
     cart,

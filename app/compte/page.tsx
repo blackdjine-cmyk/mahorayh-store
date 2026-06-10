@@ -23,37 +23,38 @@ export default function ComptePage() {
   const router = useRouter();
 
   useEffect(() => {
-    const getUser = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
+  const loadData = async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
-      if (!user) {
-        router.push("/login");
-      } else {
-        setUser(user);
-      }
-    };
+    if (!user) {
+      router.push("/login");
+      return;
+    }
 
-    const getCommandes = async () => {
-      try {
-        const res = await fetch("/api/historique");
-        const data = await res.json();
+    setUser(user);
 
-        setCommandes(data);
+    try {
+      const res = await fetch(
+        `/api/historique?email=${user.email}`
+      );
 
-      } catch (error) {
-        console.error(
-          "Erreur chargement commandes :",
-          error
-        );
-      }
-    };
+      const data = await res.json();
 
-    getUser();
-    getCommandes();
+      setCommandes(
+        Array.isArray(data) ? data : []
+      );
+    } catch (error) {
+      console.error(
+        "Erreur chargement commandes :",
+        error
+      );
+    }
+  };
 
-  }, [router]);
+  loadData();
+}, [router]);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();

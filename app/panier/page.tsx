@@ -19,13 +19,37 @@ useEffect(() => {
     } = await supabase.auth.getUser();
 
     if (user) {
-      setEmail(user.email || "");
+  setEmail(user.email || "");
 
-      const nomUtilisateur =
-        user.email?.split("@")[0] || "";
+  const res = await fetch(
+    `/api/historique?email=${user.email}`
+  );
 
-      setNom(nomUtilisateur);
-    }
+  const commandes = await res.json();
+
+  if (
+    Array.isArray(commandes) &&
+    commandes.length > 0
+  ) {
+    const derniereCommande = commandes[0];
+
+    setNom(
+      derniereCommande.client || ""
+    );
+
+    setTelephone(
+      derniereCommande.telephone || ""
+    );
+
+    setAdresse(
+      derniereCommande.adresse || ""
+    );
+
+    setCodePostal(
+      derniereCommande.code_postal || ""
+    );
+  }
+}
   };
 
   loadUser();

@@ -115,6 +115,44 @@ export default function ComptePage() {
 
         </div>
 
+        {/* STATISTIQUES CLIENT */}
+
+<div className="grid grid-cols-2 gap-4 mb-8">
+
+  <div className="bg-purple-50 rounded-2xl p-5 text-center">
+
+    <p className="text-sm text-gray-500">
+      Nombre de commandes
+    </p>
+
+    <p className="text-3xl font-bold text-purple-700">
+      {commandes.length}
+    </p>
+
+  </div>
+
+  <div className="bg-purple-50 rounded-2xl p-5 text-center">
+
+    <p className="text-sm text-gray-500">
+      Total dépensé
+    </p>
+
+    <p className="text-3xl font-bold text-purple-700">
+
+      {commandes
+        .reduce(
+          (total, commande) =>
+            total + Number(commande.total),
+          0
+        )
+        .toFixed(2)} €
+
+    </p>
+
+  </div>
+
+</div>
+
         {/* HISTORIQUE COMMANDES */}
         <div className="bg-purple-50 rounded-2xl p-5 mb-8 text-left">
 

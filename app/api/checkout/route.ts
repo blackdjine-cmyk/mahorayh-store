@@ -22,6 +22,12 @@ export async function POST(req: Request) {
    shippingCost,
    } = await req.json();
 
+   const {
+  data: { user },
+} = await supabase.auth.getUser();
+
+console.log("USER :", user);
+
    console.log("CART CHECKOUT :", cart);
 
     // 🛒 Transformer le panier pour Stripe
@@ -45,6 +51,7 @@ const session = await stripe.checkout.sessions.create({
   cancel_url: `${req.headers.get("origin")}/panier`,
 });
 // 💾 Sauvegarde commande (JSON)
+
 const invoiceNumber =
   `MB-${new Date().getFullYear()}-${Date.now()}`;
 const { data, error } = await supabase
@@ -52,6 +59,8 @@ const { data, error } = await supabase
  .insert([
   
     {
+   user_id: user?.id || null,
+
   client: nom,
   email: email,
   telephone: telephone,

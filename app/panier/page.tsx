@@ -83,8 +83,8 @@ if (totalWeight <= 500) {
   shippingCost = 4.25;
 }
 
-  // 💳 CHECKOUT
-  const handleCheckout = async () => {
+// 💳 CHECKOUT
+const handleCheckout = async () => {
   // panier vide
   if (cart.length === 0) {
     setErrorMessage("Votre panier est vide");
@@ -107,11 +107,15 @@ if (totalWeight <= 500) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   if (!emailRegex.test(email)) {
-    setErrorMessage("Veuillez entrer une adresse e-mail valide");
+    setErrorMessage(
+      "Veuillez entrer une adresse e-mail valide"
+    );
     return;
   }
- setErrorMessage("");
- setIsLoading(true);
+
+  setErrorMessage("");
+  setIsLoading(true);
+
   try {
     const res = await fetch("/api/checkout", {
       method: "POST",
@@ -134,16 +138,17 @@ if (totalWeight <= 500) {
     if (data.url) {
       window.location.href = data.url;
     } else {
-  setIsLoading(false);
-  setErrorMessage("Erreur lors du paiement");
-}
+      setIsLoading(false);
+      setErrorMessage("Erreur lors du paiement");
+    }
   } catch (error) {
-  setIsLoading(false);
-  console.error(error);
-  setErrorMessage("Impossible de lancer le paiement");
-}
+    setIsLoading(false);
+    console.error(error);
+    setErrorMessage(
+      "Impossible de lancer le paiement"
+    );
+  }
 };
-
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
       <h1 className="text-4xl font-bold mb-8">

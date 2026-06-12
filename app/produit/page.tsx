@@ -641,7 +641,7 @@ setSelectedModel(firstModel || null);
       </div>
       
       {/* AVIS CLIENTS */}
-<div className="mt-16">
+<div className="mt-4 border-4 border-red-500">
 
   <h2 className="text-3xl font-bold mb-8">
     ⭐ Avis clients

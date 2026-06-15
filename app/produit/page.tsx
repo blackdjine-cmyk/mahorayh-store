@@ -238,25 +238,28 @@ setSelectedModel(firstModel || null);
 >
 
      {/* MINIATURES */}
-<div className="w-24 flex flex-col items-center gap-4">
+<div className="relative w-20 h-[500px] flex flex-col items-center">
 
   <button
   className="
-    w-10
-    h-10
+    absolute
+    top-0
+    left-1/2
+    -translate-x-1/2
+    w-8
+    h-8
     rounded-full
     bg-white
-    shadow-md
     border
-    hover:shadow-lg
-    hover:scale-110
-    transition
+    shadow
+    z-10
+    hover:shadow-md
   "
 >
-  ↑
+  ▲
 </button>
 
-  <div className="flex flex-col gap-4 h-[500px] overflow-hidden select-none">
+ <div className="flex flex-col gap-3 mt-10 mb-10 overflow-hidden select-none">
     {selectedProduct.images?.map(
       (img: string, index: number) => (
    <img
@@ -287,18 +290,21 @@ setSelectedModel(firstModel || null);
 
   <button
   className="
-    w-10
-    h-10
+    absolute
+    bottom-0
+    left-1/2
+    -translate-x-1/2
+    w-8
+    h-8
     rounded-full
     bg-white
-    shadow-md
     border
-    hover:shadow-lg
-    hover:scale-110
-    transition
+    shadow
+    z-10
+    hover:shadow-md
   "
 >
-  ↓
+  ▼
 </button>
 
 </div>

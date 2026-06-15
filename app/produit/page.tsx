@@ -226,6 +226,8 @@ setSelectedModel(firstModel || null);
         ) / reviews.length
       ).toFixed(1)
     : "5.0";
+
+    console.log("isZoomOpen =", isZoomOpen);
   
     return (
   <>

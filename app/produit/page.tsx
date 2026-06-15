@@ -491,15 +491,16 @@ setSelectedModel(firstModel || null);
           ✕
         </button>
 
-        <img
-          src={activeImage}
-          onClick={(e) => e.stopPropagation()}
-          className="
-            max-w-full
-            max-h-[90vh]
-            object-contain
-          "
-        />
+       <img
+       src={activeImage}
+       onClick={() => setIsZoomOpen(true)}
+       className="
+       w-full
+       h-full
+       object-contain
+       cursor-zoom-in
+       "
+       />
       </div>
     )}
   </>

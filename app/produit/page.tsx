@@ -240,9 +240,21 @@ setSelectedModel(firstModel || null);
      {/* MINIATURES */}
 <div className="w-24 flex flex-col items-center gap-4">
 
-  <button className="w-8 h-8 rounded-full bg-white shadow-md border">
-    ▲
-  </button>
+  <button
+  className="
+    w-10
+    h-10
+    rounded-full
+    bg-white
+    shadow-md
+    border
+    hover:shadow-lg
+    hover:scale-110
+    transition
+  "
+>
+  ↑
+</button>
 
   <div className="flex flex-col gap-4 h-[500px] overflow-hidden select-none">
     {selectedProduct.images?.map(
@@ -253,8 +265,8 @@ setSelectedModel(firstModel || null);
   onClick={() => setSelectedImage(img)}
   draggable={false}
   className={`
-    w-20
-    h-20
+    w-[70px]
+    h-[70px]
     object-cover
     rounded-2xl
     cursor-pointer
@@ -273,9 +285,21 @@ setSelectedModel(firstModel || null);
     )}
   </div>
 
-  <button className="w-8 h-8 rounded-full bg-white shadow-md border">
-    ▼
-  </button>
+  <button
+  className="
+    w-10
+    h-10
+    rounded-full
+    bg-white
+    shadow-md
+    border
+    hover:shadow-lg
+    hover:scale-110
+    transition
+  "
+>
+  ↓
+</button>
 
 </div>
 

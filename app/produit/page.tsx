@@ -1,8 +1,9 @@
 "use client";
 
 import { supabase } from "@/lib/supabase";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useCart } from "../context/CartContext";
+
 
 
 export default function ProduitPage() {
@@ -28,6 +29,7 @@ export default function ProduitPage() {
   const [commentaire, setCommentaire] = useState("");
   const [showReviewForm, setShowReviewForm] = useState(false);
   const [showReviews, setShowReviews] = useState(false);
+  const miniaturesRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     fetchData();
@@ -241,6 +243,12 @@ setSelectedModel(firstModel || null);
 <div className="relative w-20 h-[500px] flex flex-col items-center">
 
   <button
+  onClick={() =>
+    miniaturesRef.current?.scrollBy({
+      top: -100,
+      behavior: "smooth",
+    })
+  }
   className="
     absolute
     top-0
@@ -253,13 +261,24 @@ setSelectedModel(firstModel || null);
     border
     shadow
     z-10
-    hover:shadow-md
   "
 >
   ▲
 </button>
 
- <div className="flex flex-col gap-3 mt-10 mb-10 overflow-hidden select-none">
+ <div
+  ref={miniaturesRef}
+  className="
+    flex
+    flex-col
+    gap-3
+    mt-10
+    mb-10
+    overflow-y-auto
+    scrollbar-hide
+    select-none
+  "
+>
     {selectedProduct.images?.map(
       (img: string, index: number) => (
    <img
@@ -288,7 +307,13 @@ setSelectedModel(firstModel || null);
     )}
   </div>
 
-  <button
+ <button
+  onClick={() =>
+    miniaturesRef.current?.scrollBy({
+      top: 100,
+      behavior: "smooth",
+    })
+  }
   className="
     absolute
     bottom-0
@@ -301,7 +326,6 @@ setSelectedModel(firstModel || null);
     border
     shadow
     z-10
-    hover:shadow-md
   "
 >
   ▼

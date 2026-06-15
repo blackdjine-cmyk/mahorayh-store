@@ -355,15 +355,16 @@ setSelectedModel(firstModel || null);
 
          {/* flèches temporairement désactivées */}
 
-          <img
-          
+         <img
          src={activeImage}
+         onClick={() => setIsZoomOpen(true)}
          className="
          w-full
          h-full
          object-contain
+         cursor-zoom-in
          "
-        />
+       />
 
         </div>
 

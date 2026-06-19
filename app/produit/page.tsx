@@ -239,8 +239,18 @@ setSelectedModel(firstModel || null);
   }}
 >
 
-     {/* MINIATURES */}
-<div className="relative w-20 h-[500px] flex flex-col items-center">
+    {/* MINIATURES */}
+   <div
+   className="
+   relative
+   w-[88px]
+   h-[500px]
+   flex
+   flex-col
+   items-center
+   justify-center
+   "
+   >
 
   <button
   onClick={() =>
@@ -249,18 +259,22 @@ setSelectedModel(firstModel || null);
       behavior: "smooth",
     })
   }
-  className="
-    absolute
-    top-0
-    left-1/2
-    -translate-x-1/2
-    w-8
-    h-8
-    rounded-full
-    bg-white
-    border
-    shadow
-    z-10
+   className="
+   absolute
+   top-2
+   z-10
+   w-12
+   h-12
+   rounded-full
+   bg-white/90
+   backdrop-blur
+   shadow-lg
+   border
+   border-gray-200
+   hover:scale-105
+   hover:shadow-xl
+   transition-all
+   duration-300
   "
 >
   ▲
@@ -314,18 +328,22 @@ setSelectedModel(firstModel || null);
       behavior: "smooth",
     })
   }
-  className="
-    absolute
-    bottom-0
-    left-1/2
-    -translate-x-1/2
-    w-8
-    h-8
-    rounded-full
-    bg-white
-    border
-    shadow
-    z-10
+   className="
+   absolute
+   bottom-2
+   z-10
+   w-12
+   h-12
+   rounded-full
+   bg-white/90
+   backdrop-blur
+   shadow-lg
+   border
+   border-gray-200
+   hover:scale-105
+   hover:shadow-xl
+   transition-all
+   duration-300
   "
 >
   ▼
@@ -467,43 +485,125 @@ setSelectedModel(firstModel || null);
     </div>
 
     {isZoomOpen && (
-      <div
-        onClick={() => setIsZoomOpen(false)}
-        className="
-          fixed
-          inset-0
-          bg-black/85
-          z-50
-          flex
-          items-center
-          justify-center
-        "
-      >
-        <button
-          onClick={() => setIsZoomOpen(false)}
-          className="
-            absolute
-            top-6
-            right-6
-            text-white
-            text-4xl
-          "
-        >
-          ✕
-        </button>
+<div
+onClick={() => setIsZoomOpen(false)}
+className="
+fixed
+inset-0
+bg-black/85
+z-50
+flex
+items-center
+justify-center
+"
+>
 
-       <img
-       src={activeImage}
-       onClick={() => setIsZoomOpen(true)}
-       className="
-       w-full
-       h-full
-       object-contain
-       cursor-zoom-in
-       "
-       />
-      </div>
-    )}
+{/* FERMER */}
+<button
+onClick={() => setIsZoomOpen(false)}
+className="
+absolute
+top-6
+right-6
+text-white
+text-5xl
+z-20
+"
+>
+✕
+</button>
+
+{/* IMAGE PRECEDENTE */}
+<button
+onClick={(e) => {
+e.stopPropagation();
+
+const images =
+selectedModel?.images ||
+selectedProduct.images ||
+[];
+
+const index =
+images.indexOf(activeImage);
+
+if (index > 0) {
+setSelectedImage(
+images[index - 1]
+);
+}
+}}
+className="
+absolute
+left-8
+top-1/2
+-translate-y-1/2
+w-14
+h-14
+rounded-full
+bg-white/10
+backdrop-blur
+text-white
+text-4xl
+hover:bg-white/20
+z-20
+"
+>
+‹
+</button>
+
+<img
+src={activeImage}
+onClick={(e) => e.stopPropagation()}
+className="
+max-w-[90vw]
+max-h-[90vh]
+object-contain
+"
+/>
+
+{/* IMAGE SUIVANTE */}
+<button
+onClick={(e) => {
+e.stopPropagation();
+
+const images =
+selectedModel?.images ||
+selectedProduct.images ||
+[];
+
+const index =
+images.indexOf(activeImage);
+
+if (
+index <
+images.length - 1
+) {
+setSelectedImage(
+images[index + 1]
+);
+}
+}}
+className="
+absolute
+right-8
+top-1/2
+-translate-y-1/2
+w-14
+h-14
+rounded-full
+bg-white/10
+backdrop-blur
+text-white
+text-4xl
+hover:bg-white/20
+z-20
+"
+>
+›
+</button>
+
+</div>
+)}
   </>
 );
    

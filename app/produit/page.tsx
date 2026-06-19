@@ -354,14 +354,15 @@ setSelectedModel(firstModel || null);
         {/* IMAGE PRINCIPALE */}
         <div
           className="
-         relative
-         bg-[#f8f5ef]
+          relative
+          bg-[#f8f5ef]
          rounded-3xl
          overflow-hidden
          shadow-lg
          flex
          items-center
          justify-center
+         group
          "
          style={{
          width: "500px",
@@ -371,6 +372,43 @@ setSelectedModel(firstModel || null);
 
          {/* flèches temporairement désactivées */}
 
+         <button
+         onClick={(e) => {
+         e.stopPropagation();
+
+         const images =
+         selectedProduct.images || [];
+
+         const index =
+         images.indexOf(activeImage);
+
+         setSelectedImage(
+         images[
+         (index - 1 + images.length) %
+         images.length
+         ]
+         );
+        }}
+         className="
+         absolute
+         left-4
+         top-1/2
+         -translate-y-1/2
+         z-20
+         w-12
+         h-12
+         rounded-full
+         bg-white/80
+         backdrop-blur
+         shadow-lg
+         opacity-0
+         group-hover:opacity-100
+         transition
+        "
+       >
+‹
+     </button>
+
          <img
          src={activeImage}
          onClick={() => setIsZoomOpen(true)}
@@ -379,10 +417,50 @@ setSelectedModel(firstModel || null);
          h-full
          object-contain
          cursor-zoom-in
+         transition-transform
+         duration-500
+         group-hover:scale-[1.04]
          "
-       />
+        />
 
-        </div>
+         <button
+         onClick={(e) => {
+         e.stopPropagation();
+
+         const images =
+         selectedProduct.images || [];
+
+         const index =
+         images.indexOf(activeImage);
+
+         setSelectedImage(
+         images[
+         (index + 1) %
+         images.length
+       ]
+      );
+     }}
+         className="
+         absolute
+         right-4
+         top-1/2
+         -translate-y-1/2
+         z-20
+         w-12
+         h-12
+         rounded-full
+         bg-white/80
+         backdrop-blur
+         shadow-lg
+         opacity-0
+         group-hover:opacity-100
+         transition
+        "
+       >
+›
+        </button>
+
+      </div>
 
         {/* COLONNE DROITE */}
         <div className="flex flex-col gap-6">

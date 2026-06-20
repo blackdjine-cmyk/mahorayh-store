@@ -232,25 +232,18 @@ setSelectedModel(firstModel || null);
     <div className="max-w-[1400px] mx-auto px-6 py-8">
 
       <div
-  style={{
-    display: "grid",
-    gridTemplateColumns: "90px 650px 400px",
-    gap: "30px",
-  }}
->
+     className="
+     grid
+     grid-cols-1
+     lg:grid-cols-[90px_650px_400px]
+     gap-6
+     lg:gap-[30px]
+     justify-center
+     "
+    >
 
     {/* MINIATURES */}
-   <div
-   className="
-   relative
-   w-[88px]
-   h-[500px]
-   flex
-   flex-col
-   items-center
-   justify-center
-   "
-   >
+   <div className="hidden lg:flex relative">
 
   <button
   onClick={() =>
@@ -351,116 +344,171 @@ setSelectedModel(firstModel || null);
 
 </div>
 
-        {/* IMAGE PRINCIPALE */}
-        <div
-          className="
-          relative
-          bg-[#f8f5ef]
-         rounded-3xl
-         overflow-hidden
-         shadow-lg
-         flex
-         items-center
-         justify-center
-         group
-         "
-         style={{
-         width: "500px",
-         height: "500px",
-         }}
-        >
+{/* MINIATURES MOBILE */}
+<div
+  className="
+  lg:hidden
+  flex
+  gap-3
+  overflow-x-auto
+  scrollbar-hide
+  px-4
+  pb-4
+  "
+>
+  {selectedProduct.images?.map(
+    (img: string, index: number) => (
+      <img
+        key={index}
+        src={img}
+        onClick={() => setSelectedImage(img)}
+        className={`
+          w-20
+          h-20
+          rounded-2xl
+          object-cover
+          flex-shrink-0
+          cursor-pointer
+          ${
+            activeImage === img
+              ? "border-2 border-purple-500 shadow-lg"
+              : "border border-gray-200"
+          }
+        `}
+      />
+    )
+  )}
+</div>
 
-         {/* flèches temporairement désactivées */}
+   {/* IMAGE PRINCIPALE */}
+<div
+  className="
+  relative
+  bg-[#f8f5ef]
+  rounded-3xl
+  overflow-hidden
+  shadow-lg
+  flex
+  items-center
+  justify-center
+  group
+  mx-auto
 
-         <button
-         onClick={(e) => {
-         e.stopPropagation();
+  w-full
+  h-[340px]
 
-         const images =
-         selectedProduct.images || [];
+  lg:w-[500px]
+  lg:h-[500px]
+  "
+>
 
-         const index =
-         images.indexOf(activeImage);
+  {/* FLÈCHES DE NAVIGATION */}
 
-         setSelectedImage(
-         images[
-         (index - 1 + images.length) %
-         images.length
-         ]
-         );
-        }}
-         className="
-         absolute
-         left-4
-         top-1/2
-         -translate-y-1/2
-         z-20
-         w-12
-         h-12
-         rounded-full
-         bg-white/80
-         backdrop-blur
-         shadow-lg
-         opacity-0
-         group-hover:opacity-100
-         transition
-        "
-       >
-‹
-     </button>
+  <button
+    onClick={(e) => {
+      e.stopPropagation();
 
-         <img
-         src={activeImage}
-         onClick={() => setIsZoomOpen(true)}
-         className="
-         w-full
-         h-full
-         object-contain
-         cursor-zoom-in
-         transition-transform
-         duration-500
-         group-hover:scale-[1.04]
-         "
-        />
+      const images =
+        selectedProduct.images || [];
 
-         <button
-         onClick={(e) => {
-         e.stopPropagation();
+      const index =
+        images.indexOf(activeImage);
 
-         const images =
-         selectedProduct.images || [];
-
-         const index =
-         images.indexOf(activeImage);
-
-         setSelectedImage(
-         images[
-         (index + 1) %
-         images.length
-       ]
+      setSelectedImage(
+        images[
+          (index - 1 + images.length) %
+          images.length
+        ]
       );
-     }}
-         className="
-         absolute
-         right-4
-         top-1/2
-         -translate-y-1/2
-         z-20
-         w-12
-         h-12
-         rounded-full
-         bg-white/80
-         backdrop-blur
-         shadow-lg
-         opacity-0
-         group-hover:opacity-100
-         transition
-        "
-       >
-›
-        </button>
+    }}
+    className="
+    absolute
+    left-3
+    top-1/2
+    -translate-y-1/2
+    z-20
 
-      </div>
+    w-10
+    h-10
+
+    lg:w-12
+    lg:h-12
+
+    rounded-full
+    bg-white/80
+    backdrop-blur
+    shadow-lg
+
+    opacity-100
+    lg:opacity-0
+    lg:group-hover:opacity-100
+
+    transition
+    "
+  >
+    ‹
+  </button>
+
+  <img
+    src={activeImage}
+    onClick={() => setIsZoomOpen(true)}
+    className="
+    w-full
+    h-full
+    object-contain
+    cursor-zoom-in
+    transition-transform
+    duration-500
+    group-hover:scale-[1.04]
+    "
+  />
+
+  <button
+    onClick={(e) => {
+      e.stopPropagation();
+
+      const images =
+        selectedProduct.images || [];
+
+      const index =
+        images.indexOf(activeImage);
+
+      setSelectedImage(
+        images[
+          (index + 1) %
+          images.length
+        ]
+      );
+    }}
+    className="
+    absolute
+    right-3
+    top-1/2
+    -translate-y-1/2
+    z-20
+
+    w-10
+    h-10
+
+    lg:w-12
+    lg:h-12
+
+    rounded-full
+    bg-white/80
+    backdrop-blur
+    shadow-lg
+
+    opacity-100
+    lg:opacity-0
+    lg:group-hover:opacity-100
+
+    transition
+    "
+  >
+    ›
+  </button>
+
+</div>
 
         {/* COLONNE DROITE */}
         <div className="flex flex-col gap-6">

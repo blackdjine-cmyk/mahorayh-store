@@ -542,42 +542,64 @@ setSelectedModel(firstModel || null);
             </div>
           </div>
 
-          <div className="bg-white rounded-3xl p-6 shadow-md">
+         {relatedModels.length > 0 && (
+  <div className="bg-white rounded-3xl p-6 shadow-md">
 
-            <h3 className="font-semibold text-xl mb-4">
-              Choisir un modèle
-            </h3>
+    <h3 className="font-semibold text-xl mb-5">
+      Choisir un modèle
+    </h3>
 
-            <div className="flex flex-wrap gap-3">
+    <div
+      className="
+      flex
+      gap-4
+      overflow-x-auto
+      scrollbar-hide
+      pb-2
+      "
+    >
+      {relatedModels.map((model) => (
 
-              {relatedModels.map((model) => (
-
-                <button
-                  key={model.id}
-                  onClick={() => {
-                    setSelectedModel(model);
-                    setSelectedImage("");
-                  }}
-                  className={`
-                    px-4
-                    py-3
-                    rounded-2xl
-                    border-2
-                    ${
-                      selectedModel?.id === model.id
-                        ? "border-purple-600 bg-purple-50"
-                        : "border-gray-200"
-                    }
-                  `}
-                >
-                  {model.model_name}
-                </button>
-
-              ))}
-
-            </div>
-
+        <button
+          key={model.id}
+          onClick={() => {
+            setSelectedModel(model);
+            setSelectedImage("");
+          }}
+          className={`
+            min-w-[140px]
+            p-4
+            rounded-2xl
+            border-2
+            shadow-sm
+            transition-all
+            duration-300
+            text-left
+            flex-shrink-0
+            hover:shadow-lg
+            ${
+              selectedModel?.id === model.id
+                ? "border-purple-600 bg-purple-50 shadow-lg"
+                : "border-gray-200 bg-white"
+            }
+          `}
+        >
+          <div className="font-semibold">
+            {model.model_name}
           </div>
+
+          {model.price && (
+            <div className="mt-2 text-purple-600 font-bold">
+              {model.price}€
+            </div>
+          )}
+        </button>
+
+      ))}
+    </div>
+
+  </div>
+)}
 
           <div className="bg-white rounded-3xl p-6 shadow-md space-y-3">
             <div>🚚 Livraison rapide</div>
@@ -618,6 +640,104 @@ setSelectedModel(firstModel || null);
       </div>
 
     </div>
+
+    {/* DÉCOUVREZ AUSSI */}
+
+<div className="mt-20">
+
+  <h2 className="
+    text-3xl
+    font-bold
+    mb-8
+    text-center
+  ">
+    Découvrez aussi
+  </h2>
+
+   <div
+  className="
+  flex
+  gap-5
+  overflow-x-auto
+  scrollbar-hide
+  pb-4
+
+  lg:grid
+  lg:grid-cols-3
+  lg:max-w-[1100px]
+  lg:mx-auto
+  "
+>
+
+    {products
+      .filter(
+        (product) =>
+          product.id !== selectedProduct.id
+      )
+      .map((product) => (
+
+        <div
+          key={product.id}
+          onClick={() =>
+            changeProduct(product)
+          }
+          className="
+          min-w-[260px]
+          max-w-[320px]
+          lg:min-w-0
+          bg-white
+          rounded-3xl
+          shadow-lg
+          overflow-hidden
+          cursor-pointer
+          transition-all
+          duration-300
+          hover:scale-[1.02]
+          hover:shadow-xl
+          "
+        >
+
+          <img
+            src={
+              product.image ||
+              product.images?.[0]
+            }
+            className="
+            w-full
+            h-44
+            object-contain
+            bg-[#f8f5ef]
+           "
+          />
+
+          <div className="p-5">
+
+            <h3 className="
+              font-bold
+              text-lg
+              mb-2
+            ">
+              {product.name}
+            </h3>
+
+             <div className="
+              text-purple-600
+              text-2xl
+              font-bold
+              mt-3
+              ">
+              {product.price}€
+            </div>
+
+          </div>
+
+        </div>
+
+      ))}
+
+  </div>
+
+</div>
 
     {isZoomOpen && (
 <div

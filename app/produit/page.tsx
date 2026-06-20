@@ -235,152 +235,122 @@ setSelectedModel(firstModel || null);
      className="
      grid
      grid-cols-1
-     lg:grid-cols-[90px_650px_400px]
+     lg:grid-cols-[80px_500px_320px]
      gap-6
      lg:gap-[30px]
      justify-center
      "
     >
 
-    {/* MINIATURES */}
-   <div className="hidden lg:flex relative">
-
-  <button
-  onClick={() =>
-    miniaturesRef.current?.scrollBy({
-      top: -100,
-      behavior: "smooth",
-    })
-  }
-   className="
-   absolute
-   top-2
-   z-10
-   w-12
-   h-12
-   rounded-full
-   bg-white/90
-   backdrop-blur
-   shadow-lg
-   border
-   border-gray-200
-   hover:scale-105
-   hover:shadow-xl
-   transition-all
-   duration-300
+ {/* MINIATURES PC */}
+<div
+  className="
+  hidden
+  lg:flex
+  relative
+  h-[500px]
+  flex-col
+  items-center
+  justify-center
   "
 >
-  ▲
-</button>
 
- <div
-  ref={miniaturesRef}
-  className="
+  <button
+    onClick={() =>
+      miniaturesRef.current?.scrollBy({
+        top: -100,
+        behavior: "smooth",
+      })
+    }
+    className="
+    absolute
+    top-2
+    left-1/2
+    -translate-x-1/2
+    z-20
+    w-10
+    h-10
+    rounded-full
+    bg-white/90
+    shadow-lg
+    border
+    border-gray-200
+    transition
+    hover:scale-105
+    "
+  >
+    ▲
+  </button>
+
+  <div
+    ref={miniaturesRef}
+    className="
+    h-[380px]
     flex
     flex-col
     gap-3
-    mt-10
-    mb-10
     overflow-y-auto
     scrollbar-hide
     select-none
-  "
->
+    items-center
+    "
+  >
     {selectedProduct.images?.map(
       (img: string, index: number) => (
-   <img
-  key={index}
-  src={img}
-  onClick={() => setSelectedImage(img)}
-  draggable={false}
-  className={`
-    w-[70px]
-    h-[70px]
-    object-cover
-    rounded-2xl
-    cursor-pointer
-    select-none
-    outline-none
-    transition-all
-    duration-200
-    ${
-      activeImage === img
-        ? "border-2 border-purple-500 shadow-lg"
-        : "border-2 border-gray-200"
-    }
-  `}
-/>
+        <img
+          key={index}
+          src={img}
+          onClick={() => setSelectedImage(img)}
+          draggable={false}
+          className={`
+            w-[70px]
+            h-[70px]
+            object-cover
+            rounded-2xl
+            cursor-pointer
+            transition-all
+            duration-200
+            ${
+              activeImage === img
+                ? "border-2 border-purple-500 shadow-lg"
+                : "border-2 border-gray-200"
+            }
+          `}
+        />
       )
     )}
   </div>
 
- <button
-  onClick={() =>
-    miniaturesRef.current?.scrollBy({
-      top: 100,
-      behavior: "smooth",
-    })
-  }
-   className="
-   absolute
-   bottom-2
-   z-10
-   w-12
-   h-12
-   rounded-full
-   bg-white/90
-   backdrop-blur
-   shadow-lg
-   border
-   border-gray-200
-   hover:scale-105
-   hover:shadow-xl
-   transition-all
-   duration-300
-  "
->
-  ▼
-</button>
+  <button
+    onClick={() =>
+      miniaturesRef.current?.scrollBy({
+        top: 100,
+        behavior: "smooth",
+      })
+    }
+    className="
+    absolute
+    bottom-2
+    left-1/2
+    -translate-x-1/2
+    z-20
+    w-10
+    h-10
+    rounded-full
+    bg-white/90
+    shadow-lg
+    border
+    border-gray-200
+    transition
+    hover:scale-105
+    "
+  >
+    ▼
+  </button>
 
 </div>
 
-{/* MINIATURES MOBILE */}
-<div
-  className="
-  lg:hidden
-  flex
-  gap-3
-  overflow-x-auto
-  scrollbar-hide
-  px-4
-  pb-4
-  "
->
-  {selectedProduct.images?.map(
-    (img: string, index: number) => (
-      <img
-        key={index}
-        src={img}
-        onClick={() => setSelectedImage(img)}
-        className={`
-          w-20
-          h-20
-          rounded-2xl
-          object-cover
-          flex-shrink-0
-          cursor-pointer
-          ${
-            activeImage === img
-              ? "border-2 border-purple-500 shadow-lg"
-              : "border border-gray-200"
-          }
-        `}
-      />
-    )
-  )}
-</div>
-
-   {/* IMAGE PRINCIPALE */}
+{/* IMAGE PRINCIPALE */}
 <div
   className="
   relative
@@ -399,6 +369,8 @@ setSelectedModel(firstModel || null);
 
   lg:w-[500px]
   lg:h-[500px]
+
+  lg:mx-0
   "
 >
 
@@ -509,6 +481,43 @@ setSelectedModel(firstModel || null);
   </button>
 
 </div>
+
+{/* MINIATURES MOBILE */}
+<div
+  className="
+  lg:hidden
+  flex
+  gap-3
+  overflow-x-auto
+  scrollbar-hide
+  px-4
+  pb-4
+  "
+>
+  {selectedProduct.images?.map(
+    (img: string, index: number) => (
+      <img
+        key={index}
+        src={img}
+        onClick={() => setSelectedImage(img)}
+        className={`
+          w-20
+          h-20
+          rounded-2xl
+          object-cover
+          flex-shrink-0
+          cursor-pointer
+          ${
+            activeImage === img
+              ? "border-2 border-purple-500 shadow-lg"
+              : "border border-gray-200"
+          }
+        `}
+      />
+    )
+  )}
+</div>
+
 
         {/* COLONNE DROITE */}
         <div className="flex flex-col gap-6">

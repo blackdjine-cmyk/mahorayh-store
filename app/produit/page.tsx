@@ -31,6 +31,9 @@ export default function ProduitPage() {
   const [showReviews, setShowReviews] = useState(false);
   const miniaturesRef = useRef<HTMLDivElement>(null);
   const modelsRef = useRef<HTMLDivElement>(null); 
+  const [showDescription, setShowDescription] = useState(false);
+  const [descriptionOpen, setDescriptionOpen] = useState(false);
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -350,8 +353,9 @@ setSelectedModel(firstModel || null);
 
 </div>
 
-{/* IMAGE PRINCIPALE */}
-<div
+{/* IMAGE + DESCRIPTION */}
+<div className="flex flex-col gap-6">
+  <div
   className="
   relative
   bg-[#f8f5ef]
@@ -480,6 +484,55 @@ setSelectedModel(firstModel || null);
     ›
   </button>
 
+</div>
+
+<div
+  className="
+bg-gradient-to-br
+from-[#fffdf9]
+to-[#f9f4eb]
+
+rounded-3xl
+p-8
+
+border
+border-[#eadfcf]
+
+shadow-[0_15px_40px_rgba(0,0,0,0.08)]
+
+backdrop-blur-sm
+"
+>
+  <h2 className="
+text-3xl
+font-bold
+mb-5
+text-[#1a1a1a]
+">
+  Description
+</h2>
+
+  <p className="
+    text-gray-700
+    leading-8
+    text-[17px]
+  ">
+    {selectedProduct.description?.slice(0, 220)}...
+  </p>
+
+  <button
+  onClick={() => setDescriptionOpen(true)}
+  className="
+    mt-6
+    text-purple-600
+    font-semibold
+    hover:text-purple-700
+    transition
+  "
+>
+  Lire la fiche complète →
+</button>
+</div>
 </div>
 
 {/* MINIATURES MOBILE */}
@@ -948,6 +1001,55 @@ z-20
 </button>
 
 </div>
+)}
+
+{/* =======================================
+    MODAL DESCRIPTION COMPLÈTE PRODUIT
+======================================= */}
+{descriptionOpen && (
+  <div className="
+    fixed
+    inset-0
+    bg-black/60
+    z-50
+    flex
+    items-center
+    justify-center
+    p-4
+  ">
+    <div className="
+      bg-white
+      rounded-3xl
+      max-w-3xl
+      w-full
+      max-h-[85vh]
+      overflow-y-auto
+      p-8
+      relative
+    ">
+      <button
+        onClick={() =>
+          setDescriptionOpen(false)
+        }
+        className="
+          absolute
+          top-5
+          right-5
+          text-2xl
+        "
+      >
+        ✕
+      </button>
+
+      <h2 className="text-3xl font-bold mb-6">
+        Description complète
+      </h2>
+
+      <p className="leading-8 text-gray-700">
+        {selectedProduct.description}
+      </p>
+    </div>
+  </div>
 )}
   </>
 );

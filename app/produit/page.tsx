@@ -235,7 +235,7 @@ setSelectedModel(firstModel || null);
      className="
      grid
      grid-cols-1
-     lg:grid-cols-[80px_500px_320px]
+     lg:grid-cols-[80px_500px_360px]
      gap-6
      lg:gap-[30px]
      justify-center
@@ -542,7 +542,7 @@ setSelectedModel(firstModel || null);
             </div>
           </div>
 
-         {relatedModels.length > 0 && (
+  {relatedModels.length > 0 && (
   <div className="bg-white rounded-3xl p-6 shadow-md">
 
     <h3 className="font-semibold text-xl mb-5">
@@ -554,8 +554,11 @@ setSelectedModel(firstModel || null);
       flex
       gap-4
       overflow-x-auto
+      overflow-y-hidden
       scrollbar-hide
-      pb-2
+      pb-3
+      snap-x
+      snap-mandatory
       "
     >
       {relatedModels.map((model) => (
@@ -565,9 +568,17 @@ setSelectedModel(firstModel || null);
           onClick={() => {
             setSelectedModel(model);
             setSelectedImage("");
+
+            window.scrollTo({
+              top: 0,
+              behavior: "smooth",
+            });
           }}
           className={`
-            min-w-[140px]
+            min-w-[150px]
+            lg:min-w-[160px]
+            flex-shrink-0
+
             p-4
             rounded-2xl
             border-2
@@ -575,8 +586,10 @@ setSelectedModel(firstModel || null);
             transition-all
             duration-300
             text-left
-            flex-shrink-0
+            snap-start
+
             hover:shadow-lg
+
             ${
               selectedModel?.id === model.id
                 ? "border-purple-600 bg-purple-50 shadow-lg"

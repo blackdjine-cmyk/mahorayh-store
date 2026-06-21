@@ -184,20 +184,19 @@ setSelectedModel(firstModel || null);
   setReviews(filtered);
  };
 
- useEffect(() => {
+useEffect(() => {
   if (selectedProduct?.id) {
     fetchReviews();
   }
- }, [selectedProduct]);
+}, [selectedProduct]);
 
-  if (!selectedProduct) {
-
-    return (
-      <div className="text-center py-20 text-2xl">
-        Chargement...
-      </div>
-    );
-  }
+if (!selectedProduct) {
+  return (
+    <div className="text-center py-20 text-2xl">
+      Chargement...
+    </div>
+  );
+}
 
   const relatedModels =
     models.filter(
@@ -229,6 +228,36 @@ setSelectedModel(firstModel || null);
         ) / reviews.length
       ).toFixed(1)
     : "5.0";
+
+    const submitReview = async () => {
+  if (!client || !commentaire) return;
+
+  const res = await fetch("/api/reviews", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      product_id: selectedProduct.id,
+      client,
+      note,
+      commentaire,
+    }),
+  });
+
+  if (!res.ok) {
+  const message = await res.text();
+  alert(message);
+  return;
+}
+
+  setClient("");
+  setCommentaire("");
+  setNote(5);
+  setShowReviewForm(false);
+
+  fetchReviews();
+};
   
     return (
   <>
@@ -589,9 +618,23 @@ text-[#1a1a1a]
               {activePrice}€
             </div>
 
-            <div className="mt-2 text-green-600">
-              ✓ En stock
-            </div>
+            <div className="mt-3 flex items-center gap-2">
+  <span className="text-yellow-500 text-xl">
+    ⭐⭐⭐⭐⭐
+  </span>
+
+  <span className="font-semibold">
+    {averageRating}/5
+  </span>
+
+  <span className="text-gray-500">
+    ({reviews.length} avis)
+  </span>
+</div>
+
+<div className="mt-2 text-green-600">
+  ✓ En stock
+</div>
           </div>
 
 {relatedModels.length > 0 && (
@@ -767,6 +810,229 @@ text-[#1a1a1a]
       </div>
 
     </div>
+
+<div
+  className="
+    mt-16
+    bg-gradient-to-br
+    from-[#fffdf9]
+    to-[#f9f4eb]
+    rounded-[36px]
+    p-8
+    border
+    border-[#eadfcf]
+    shadow-[0_15px_40px_rgba(0,0,0,0.08)]
+  "
+>
+
+  <h2 className="text-3xl font-bold mb-6">
+    Avis clients
+  </h2>
+
+  <div className="flex items-center gap-4 mb-6 flex-wrap">
+    <span className="text-yellow-500 text-3xl">
+      ⭐⭐⭐⭐⭐
+    </span>
+
+    <span className="text-2xl font-bold">
+      {averageRating}/5
+    </span>
+
+    <span className="text-gray-500">
+      ({reviews.length} avis)
+    </span>
+  </div>
+
+  {reviews.length === 0 && (
+    <p className="text-gray-500">
+      Aucun avis pour le moment.
+    </p>
+  )}
+
+<div className="mt-4 flex gap-4 flex-wrap">
+
+  <button
+    onClick={() =>
+      setShowReviewForm(
+        !showReviewForm
+      )
+    }
+    className="
+      px-6
+      py-3
+      rounded-2xl
+      bg-purple-600
+      text-white
+      font-semibold
+      hover:bg-purple-700
+      transition
+    "
+  >
+    Laisser un avis
+  </button>
+
+  <button
+  onClick={() =>
+    setShowReviews(!showReviews)
+  }
+  className="
+    px-6
+    py-3
+    rounded-2xl
+    border
+    border-purple-600
+    text-purple-600
+    font-semibold
+  "
+>
+ {showReviews
+  ? "Masquer les avis"
+  : `Voir les avis (${reviews.length})`}
+</button>
+
+</div>
+
+{showReviewForm && (
+  <div className="
+    mt-6
+    p-6
+    rounded-3xl
+    bg-gray-50
+    space-y-4
+  ">
+    <input
+      type="text"
+      placeholder="Votre prénom"
+      value={client}
+      onChange={(e) =>
+        setClient(e.target.value)
+      }
+      className="
+        w-full
+        border
+        rounded-xl
+        p-3
+      "
+    />
+
+    <select
+      value={note}
+      onChange={(e) =>
+        setNote(Number(e.target.value))
+      }
+      className="
+        w-full
+        border
+        rounded-xl
+        p-3
+      "
+    >
+      <option value={5}>★★★★★</option>
+      <option value={4}>★★★★</option>
+      <option value={3}>★★★</option>
+      <option value={2}>★★</option>
+      <option value={1}>★</option>
+    </select>
+
+    <textarea
+      placeholder="Votre avis"
+      value={commentaire}
+      onChange={(e) =>
+        setCommentaire(
+          e.target.value
+        )
+      }
+      rows={4}
+      className="
+        w-full
+        border
+        rounded-xl
+        p-3
+      "
+    />
+
+  <button
+  onClick={submitReview}
+  className="
+    px-6
+    py-3
+    rounded-xl
+    bg-purple-600
+    text-white
+    font-semibold
+    hover:bg-purple-700
+    transition
+  "
+>
+  Envoyer l'avis
+</button> 
+
+  </div>
+)}
+
+{showReviews && (
+  <div className="mt-8">
+
+    <h3 className="
+  text-xl
+  font-semibold
+  mt-8
+  mb-5
+  text-gray-800
+">
+      Avis des clientes
+    </h3>
+
+    <div className="space-y-6">
+
+    {reviews.map((review) => (
+      <div
+  key={review.id}
+  className="
+  max-w-4xl
+  bg-white
+  rounded-3xl
+  p-5
+  shadow-sm
+  border
+  border-gray-100
+"
+>
+        <div className="flex items-center gap-3">
+  <div className="font-bold text-lg">
+    {review.client}
+  </div>
+
+  <span className="
+    bg-green-100
+    text-green-700
+    px-3
+    py-1
+    rounded-full
+    text-sm
+    font-medium
+  ">
+    ✓ Vérifié
+  </span>
+</div>
+
+       <div className="text-yellow-500 text-lg mt-2 mb-2">
+          {"⭐".repeat(review.note)}
+        </div>
+
+        <p className="text-gray-700">
+          {review.commentaire}
+        </p>
+      </div>
+    ))}
+
+  </div>
+  </div>
+)}
+
+  </div>
+
+ 
 
     {/* DÉCOUVREZ AUSSI */}
 

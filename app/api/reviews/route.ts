@@ -12,7 +12,7 @@ export async function POST(req: Request) {
     } = body;
 
     // 🔒 Vérifie si le client a acheté le produit
-const { data: commandes } = await supabase
+/*const { data: commandes } = await supabase
   .from("commandes")
   .select("*")
   .eq("email", client);
@@ -31,7 +31,7 @@ if (!achatValide) {
     { status: 403 }
   );
 }
-
+*/
     const { data, error } = await supabase
       .from("reviews")
       .insert([

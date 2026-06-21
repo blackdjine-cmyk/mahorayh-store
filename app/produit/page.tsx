@@ -486,6 +486,41 @@ setSelectedModel(firstModel || null);
 
 </div>
 
+{/* MINIATURES MOBILE */}
+<div
+  className="
+  lg:hidden
+  flex
+  gap-3
+  overflow-x-auto
+  scrollbar-hide
+  px-4
+  pb-4
+  "
+>
+  {selectedProduct.images?.map(
+    (img: string, index: number) => (
+      <img
+        key={index}
+        src={img}
+        onClick={() => setSelectedImage(img)}
+        className={`
+          w-20
+          h-20
+          rounded-2xl
+          object-cover
+          flex-shrink-0
+          cursor-pointer
+          ${
+            activeImage === img
+              ? "border-2 border-purple-500 shadow-lg"
+              : "border border-gray-200"
+          }
+        `}
+      />
+    )
+  )}
+</div>
 <div
   className="
 bg-gradient-to-br
@@ -533,42 +568,6 @@ text-[#1a1a1a]
   Lire la fiche complète →
 </button>
 </div>
-</div>
-
-{/* MINIATURES MOBILE */}
-<div
-  className="
-  lg:hidden
-  flex
-  gap-3
-  overflow-x-auto
-  scrollbar-hide
-  px-4
-  pb-4
-  "
->
-  {selectedProduct.images?.map(
-    (img: string, index: number) => (
-      <img
-        key={index}
-        src={img}
-        onClick={() => setSelectedImage(img)}
-        className={`
-          w-20
-          h-20
-          rounded-2xl
-          object-cover
-          flex-shrink-0
-          cursor-pointer
-          ${
-            activeImage === img
-              ? "border-2 border-purple-500 shadow-lg"
-              : "border border-gray-200"
-          }
-        `}
-      />
-    )
-  )}
 </div>
 
 

@@ -30,7 +30,7 @@ export default function ProduitPage() {
   const [showReviewForm, setShowReviewForm] = useState(false);
   const [showReviews, setShowReviews] = useState(false);
   const miniaturesRef = useRef<HTMLDivElement>(null);
-
+  const modelsRef = useRef<HTMLDivElement>(null); 
   useEffect(() => {
     fetchData();
   }, []);
@@ -235,7 +235,7 @@ setSelectedModel(firstModel || null);
      className="
      grid
      grid-cols-1
-     lg:grid-cols-[80px_500px_360px]
+     lg:grid-cols-[80px_500px_330px]
      gap-6
      lg:gap-[30px]
      justify-center
@@ -542,77 +542,139 @@ setSelectedModel(firstModel || null);
             </div>
           </div>
 
-  {relatedModels.length > 0 && (
-  <div className="bg-white rounded-3xl p-6 shadow-md">
+{relatedModels.length > 0 && (
+  <div className="bg-white rounded-3xl p-6 shadow-md overflow-hidden">
 
     <h3 className="font-semibold text-xl mb-5">
       Choisir un modèle
     </h3>
 
-    <div
-      className="
-      flex
-      gap-4
-      overflow-x-auto
-      overflow-y-hidden
-      scrollbar-hide
-      pb-3
-      snap-x
-      snap-mandatory
-      "
-    >
-      {relatedModels.map((model) => (
+    <div className="relative">
 
-        <button
-          key={model.id}
-          onClick={() => {
-            setSelectedModel(model);
-            setSelectedImage("");
+      {/* Flèche gauche */}
+      <button
+        type="button"
+        onClick={() =>
+          modelsRef.current?.scrollBy({
+            left: -220,
+            behavior: "smooth",
+          })
+        }
+        className="
+          hidden lg:flex
+          absolute
+          left-0
+          top-1/2
+          -translate-y-1/2
+          z-10
+          w-9
+          h-9
+          rounded-full
+          bg-white
+          shadow-md
+          border
+          items-center
+          justify-center
+        "
+      >
+        ◀
+      </button>
 
-            window.scrollTo({
-              top: 0,
-              behavior: "smooth",
-            });
-          }}
-          className={`
-            min-w-[150px]
-            lg:min-w-[160px]
-            flex-shrink-0
+      {/* Liste des modèles */}
+      <div
+        ref={modelsRef}
+        className="
+          flex
+          gap-4
+          overflow-x-auto
+          overflow-y-hidden
+          scrollbar-hide
+          snap-x
+          snap-mandatory
+          pb-3
+          lg:px-10
+        "
+      >
+        {relatedModels.map((model) => (
 
-            p-4
-            rounded-2xl
-            border-2
-            shadow-sm
-            transition-all
-            duration-300
-            text-left
-            snap-start
+          <button
+            key={model.id}
+            onClick={() => {
+              setSelectedModel(model);
+              setSelectedImage("");
 
-            hover:shadow-lg
+              window.scrollTo({
+                top: 0,
+                behavior: "smooth",
+              });
+            }}
+            className={`
+              min-w-[180px]
+              flex-shrink-0
+              p-4
+              rounded-2xl
+              border-2
+              shadow-sm
+              transition-all
+              duration-300
+              text-left
+              snap-start
+              hover:shadow-lg
 
-            ${
-              selectedModel?.id === model.id
-                ? "border-purple-600 bg-purple-50 shadow-lg"
-                : "border-gray-200 bg-white"
-            }
-          `}
-        >
-          <div className="font-semibold">
-            {model.model_name}
-          </div>
-
-          {model.price && (
-            <div className="mt-2 text-purple-600 font-bold">
-              {model.price}€
+              ${
+                selectedModel?.id === model.id
+                  ? "border-purple-600 bg-purple-50 shadow-lg"
+                  : "border-gray-200 bg-white"
+              }
+            `}
+          >
+            <div className="font-semibold">
+              {model.model_name}
             </div>
-          )}
-        </button>
 
-      ))}
+            {model.price && (
+              <div className="mt-2 text-purple-600 font-bold">
+                {model.price}€
+              </div>
+            )}
+          </button>
+
+        ))}
+      </div>
+
+      {/* Flèche droite */}
+      <button
+        type="button"
+        onClick={() =>
+          modelsRef.current?.scrollBy({
+            left: 220,
+            behavior: "smooth",
+          })
+        }
+        className="
+          hidden lg:flex
+          absolute
+          right-0
+          top-1/2
+          -translate-y-1/2
+          z-10
+          w-9
+          h-9
+          rounded-full
+          bg-white
+          shadow-md
+          border
+          items-center
+          justify-center
+        "
+      >
+        ▶
+      </button>
+
     </div>
 
   </div>
-)}
+)} 
 
           <div className="bg-white rounded-3xl p-6 shadow-md space-y-3">
             <div>🚚 Livraison rapide</div>

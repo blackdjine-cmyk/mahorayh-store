@@ -681,36 +681,51 @@ setSelectedModel(firstModel || null);
           onClick={() =>
             changeProduct(product)
           }
-          className="
-          min-w-[260px]
-          max-w-[320px]
-          lg:min-w-0
-          bg-white
-          rounded-3xl
-          shadow-lg
-          overflow-hidden
-          cursor-pointer
-          transition-all
-          duration-300
-          hover:scale-[1.02]
-          hover:shadow-xl
-          "
+        className="
+min-w-[240px]
+max-w-[290px]
+lg:min-w-0
+
+bg-[#fffdf9]
+
+rounded-[32px]
+
+border-2
+border-[#e5d9c7]
+
+shadow-[0_12px_40px_rgba(0,0,0,0.10)]
+
+overflow-hidden
+
+cursor-pointer
+
+transition-all
+duration-300
+
+hover:-translate-y-1
+hover:shadow-[0_18px_50px_rgba(0,0,0,0.14)]
+"
         >
 
-          <img
-            src={
-              product.image ||
-              product.images?.[0]
-            }
-            className="
-            w-full
-            h-44
-            object-contain
-            bg-[#f8f5ef]
-           "
-          />
+         <div className="overflow-hidden rounded-t-3xl">
+  <img
+    src={
+      product.image ||
+      product.images?.[0]
+    }
+    className="
+    w-full
+    h-64
+    object-cover
+    object-center
+    transition-transform
+    duration-500
+    hover:scale-105
+    "
+  />
+</div>
 
-          <div className="p-5">
+         <div className="p-4">
 
             <h3 className="
               font-bold

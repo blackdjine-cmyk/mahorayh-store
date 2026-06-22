@@ -814,13 +814,20 @@ text-[#1a1a1a]
 <div
   className="
     mt-16
+    max-w-[1100px]
+    mx-auto
+
     bg-gradient-to-br
     from-[#fffdf9]
     to-[#f9f4eb]
+
     rounded-[36px]
+
     p-8
+
     border
     border-[#eadfcf]
+
     shadow-[0_15px_40px_rgba(0,0,0,0.08)]
   "
 >
@@ -973,31 +980,22 @@ text-[#1a1a1a]
 {showReviews && (
   <div className="mt-8">
 
-    <h3 className="
-  text-xl
-  font-semibold
-  mt-8
-  mb-5
-  text-gray-800
-">
-      Avis des clientes
-    </h3>
 
     <div className="space-y-6">
 
     {reviews.map((review) => (
-      <div
+<div
   key={review.id}
   className="
-  max-w-4xl
-  bg-white
-  rounded-3xl
-  p-5
-  shadow-sm
-  border
-  border-gray-100
-"
->
+    bg-white
+    rounded-3xl
+    p-6
+    shadow-sm
+    border
+    border-gray-100
+    max-w-[700px]
+  "
+>      
         <div className="flex items-center gap-3">
   <div className="font-bold text-lg">
     {review.client}

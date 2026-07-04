@@ -124,7 +124,11 @@ setModels(modelsData || []);
 
 if (productsData && productsData.length > 0) {
 
-  const featuredProduct = productsData[0];
+  const featuredProduct =
+  productsData.find(
+    (product) =>
+      product.name === "Routine Éclat au Curcuma"
+  ) || productsData[0];
 
   console.log("Products :", productsData);
   console.log("Produit sélectionné :", featuredProduct);
@@ -259,16 +263,23 @@ if (!selectedProduct) {
   <>
     <div className="max-w-[1400px] mx-auto px-6 py-8">
 
-      <div
-     className="
-     grid
-     grid-cols-1
-     lg:grid-cols-[700px_330px]
-     gap-6
-     lg:gap-[30px]
-     justify-center
-     "
-    >
+ {/* ============================================================
+   GRILLE PRINCIPALE
+============================================================ */}
+
+<div
+  className="
+    grid
+    grid-cols-1
+    lg:grid-cols-[700px_330px]
+    gap-6
+    lg:gap-[30px]
+    justify-center
+
+    lg:[&>*:first-child]:col-start-1
+    lg:[&>*:last-child]:col-start-2
+  "
+>
 
 {/* GRANDE COLONNE GAUCHE */}
 <div className="flex flex-col gap-6">
@@ -826,7 +837,11 @@ if (!selectedProduct) {
 <div
   className="
     mt-16
-    max-w-[1100px]
+
+    w-full
+    max-w-full
+    lg:max-w-[1100px]
+
     mx-auto
 
     bg-gradient-to-br
@@ -835,7 +850,8 @@ if (!selectedProduct) {
 
     rounded-[36px]
 
-    p-8
+    p-5
+    lg:p-8
 
     border
     border-[#eadfcf]
@@ -1057,18 +1073,26 @@ if (!selectedProduct) {
     Découvrez aussi
   </h2>
 
-   <div
+ <div
   className="
-  flex
-  gap-5
-  overflow-x-auto
-  scrollbar-hide
-  pb-4
+    flex
+    gap-4
 
-  lg:grid
-  lg:grid-cols-3
-  lg:max-w-[1100px]
-  lg:mx-auto
+    overflow-x-auto
+    scrollbar-hide
+
+    pb-4
+    px-4
+
+    snap-x
+    snap-mandatory
+
+    lg:grid
+    lg:grid-cols-3
+    lg:gap-6
+    lg:max-w-[1100px]
+    lg:mx-auto
+    lg:px-0
   "
 >
 
@@ -1085,7 +1109,7 @@ if (!selectedProduct) {
             changeProduct(product)
           }
         className="
-min-w-[240px]
+min-w-[170px]
 max-w-[290px]
 lg:min-w-0
 
@@ -1118,7 +1142,7 @@ hover:shadow-[0_18px_50px_rgba(0,0,0,0.14)]
     }
     className="
     w-full
-    h-64
+    h-48
     object-cover
     object-center
     transition-transform

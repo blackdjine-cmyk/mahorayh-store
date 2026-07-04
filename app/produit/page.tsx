@@ -119,30 +119,26 @@ const handleTouchEnd = (
         .from("product_models")
         .select("*");
 
-    setProducts(productsData || []);
-    setModels(modelsData || []);
+  setProducts(productsData || []);
+setModels(modelsData || []);
 
-    if (
-      productsData &&
-      productsData.length > 0
-    ) {
+if (productsData && productsData.length > 0) {
 
-      const featuredProduct =
-     productsData.find(
-    (product) => product.id === 1
-   ) || productsData[0];
+  const featuredProduct = productsData[0];
 
-   setSelectedProduct(featuredProduct);
+  console.log("Products :", productsData);
+  console.log("Produit sélectionné :", featuredProduct);
 
-   const firstModel =
-   modelsData?.find(
-    (model) =>
-      model.product_id ===
-      featuredProduct.id
-  );
+  setSelectedProduct(featuredProduct);
 
-setSelectedModel(firstModel || null);
-    }
+  const firstModel =
+    modelsData?.find(
+      (model) =>
+        model.product_id === featuredProduct.id
+    );
+
+  setSelectedModel(firstModel || null);
+}
   };
 
   const changeProduct = (
@@ -267,148 +263,160 @@ if (!selectedProduct) {
      className="
      grid
      grid-cols-1
-     lg:grid-cols-[80px_500px_330px]
+     lg:grid-cols-[700px_330px]
      gap-6
      lg:gap-[30px]
      justify-center
      "
     >
 
- {/* MINIATURES PC */}
+{/* GRANDE COLONNE GAUCHE */}
+<div className="flex flex-col gap-6">
+
+ {/* ============================================================
+    BLOC IMAGE + MINIATURES
+============================================================ */}
+
 <div
   className="
-  hidden
-  lg:flex
-  relative
-  h-[500px]
-  flex-col
-  items-center
-  justify-center
+    grid
+    lg:grid-cols-[80px_500px]
+    gap-6
+    items-start
   "
 >
 
-  <button
-    onClick={() =>
-      miniaturesRef.current?.scrollBy({
-        top: -100,
-        behavior: "smooth",
-      })
-    }
-    className="
-    absolute
-    top-2
-    left-1/2
-    -translate-x-1/2
-    z-20
-    w-10
-    h-10
-    rounded-full
-    bg-white/90
-    shadow-lg
-    border
-    border-gray-200
-    transition
-    hover:scale-105
-    "
-  >
-    ▲
-  </button>
-
+  {/* MINIATURES PC */}
   <div
-    ref={miniaturesRef}
     className="
-    h-[380px]
-    flex
-    flex-col
-    gap-3
-    overflow-y-auto
-    scrollbar-hide
-    select-none
-    items-center
+      hidden
+      lg:flex
+      relative
+      h-[500px]
+      flex-col
+      items-center
+      justify-center
     "
   >
-    {selectedProduct.images?.map(
-      (img: string, index: number) => (
-        <img
-          key={index}
-          src={img}
-          onClick={() => setSelectedImage(img)}
-          draggable={false}
-          className={`
-            w-[70px]
-            h-[70px]
-            object-cover
-            rounded-2xl
-            cursor-pointer
-            transition-all
-            duration-200
-            ${
-              activeImage === img
-                ? "border-2 border-purple-500 shadow-lg"
-                : "border-2 border-gray-200"
-            }
-          `}
-        />
-      )
-    )}
+
+    <button
+      onClick={() =>
+        miniaturesRef.current?.scrollBy({
+          top: -100,
+          behavior: "smooth",
+        })
+      }
+      className="
+        absolute
+        top-2
+        left-1/2
+        -translate-x-1/2
+        z-20
+        w-10
+        h-10
+        rounded-full
+        bg-white/90
+        shadow-lg
+        border
+        border-gray-200
+        transition
+        hover:scale-105
+      "
+    >
+      ▲
+    </button>
+
+    <div
+      ref={miniaturesRef}
+      className="
+        h-[380px]
+        flex
+        flex-col
+        gap-3
+        overflow-y-auto
+        scrollbar-hide
+        select-none
+        items-center
+      "
+    >
+      {selectedProduct.images?.map(
+        (img: string, index: number) => (
+          <img
+            key={index}
+            src={img}
+            onClick={() => setSelectedImage(img)}
+            draggable={false}
+            className={`
+              w-[70px]
+              h-[70px]
+              object-cover
+              rounded-2xl
+              cursor-pointer
+              transition-all
+              duration-200
+              ${
+                activeImage === img
+                  ? "border-2 border-purple-500 shadow-lg"
+                  : "border-2 border-gray-200"
+              }
+            `}
+          />
+        )
+      )}
+    </div>
+
+    <button
+      onClick={() =>
+        miniaturesRef.current?.scrollBy({
+          top: 100,
+          behavior: "smooth",
+        })
+      }
+      className="
+        absolute
+        bottom-2
+        left-1/2
+        -translate-x-1/2
+        z-20
+        w-10
+        h-10
+        rounded-full
+        bg-white/90
+        shadow-lg
+        border
+        border-gray-200
+        transition
+        hover:scale-105
+      "
+    >
+      ▼
+    </button>
+
   </div>
 
-  <button
-    onClick={() =>
-      miniaturesRef.current?.scrollBy({
-        top: 100,
-        behavior: "smooth",
-      })
-    }
-    className="
-    absolute
-    bottom-2
-    left-1/2
-    -translate-x-1/2
-    z-20
-    w-10
-    h-10
-    rounded-full
-    bg-white/90
-    shadow-lg
-    border
-    border-gray-200
-    transition
-    hover:scale-105
-    "
-  >
-    ▼
-  </button>
-
-</div>
-
-{/* IMAGE */}
-<div className="flex flex-col gap-6">
-
+  {/* IMAGE */}
   <div
     className="
-    relative
-    bg-[#f8f5ef]
-    rounded-3xl
-    overflow-hidden
-    shadow-lg
-    flex
-    items-center
-    justify-center
-    group
-    mx-auto
+      relative
+      bg-[#f8f5ef]
+      rounded-3xl
+      overflow-hidden
+      shadow-lg
+      flex
+      items-center
+      justify-center
+      group
+      mx-auto
 
-    w-full
-    h-[340px]
+      w-full
+      h-[340px]
 
-    lg:w-[500px]
-    lg:h-[500px]
+      lg:w-[500px]
+      lg:h-[500px]
 
-    lg:mx-0
+      lg:mx-0
     "
   >
-
-    {/* FLÈCHES DE NAVIGATION */}
 
     <button
       onClick={(e) => {
@@ -428,28 +436,23 @@ if (!selectedProduct) {
         );
       }}
       className="
-      absolute
-      left-3
-      top-1/2
-      -translate-y-1/2
-      z-20
-
-      w-10
-      h-10
-
-      lg:w-12
-      lg:h-12
-
-      rounded-full
-      bg-white/80
-      backdrop-blur
-      shadow-lg
-
-      opacity-100
-      lg:opacity-0
-      lg:group-hover:opacity-100
-
-      transition
+        absolute
+        left-3
+        top-1/2
+        -translate-y-1/2
+        z-20
+        w-10
+        h-10
+        lg:w-12
+        lg:h-12
+        rounded-full
+        bg-white/80
+        backdrop-blur
+        shadow-lg
+        opacity-100
+        lg:opacity-0
+        lg:group-hover:opacity-100
+        transition
       "
     >
       ‹
@@ -459,13 +462,13 @@ if (!selectedProduct) {
       src={activeImage}
       onClick={() => setIsZoomOpen(true)}
       className="
-      w-full
-      h-full
-      object-contain
-      cursor-zoom-in
-      transition-transform
-      duration-500
-      group-hover:scale-[1.04]
+        w-full
+        h-full
+        object-contain
+        cursor-zoom-in
+        transition-transform
+        duration-500
+        group-hover:scale-[1.04]
       "
     />
 
@@ -487,28 +490,23 @@ if (!selectedProduct) {
         );
       }}
       className="
-      absolute
-      right-3
-      top-1/2
-      -translate-y-1/2
-      z-20
-
-      w-10
-      h-10
-
-      lg:w-12
-      lg:h-12
-
-      rounded-full
-      bg-white/80
-      backdrop-blur
-      shadow-lg
-
-      opacity-100
-      lg:opacity-0
-      lg:group-hover:opacity-100
-
-      transition
+        absolute
+        right-3
+        top-1/2
+        -translate-y-1/2
+        z-20
+        w-10
+        h-10
+        lg:w-12
+        lg:h-12
+        rounded-full
+        bg-white/80
+        backdrop-blur
+        shadow-lg
+        opacity-100
+        lg:opacity-0
+        lg:group-hover:opacity-100
+        transition
       "
     >
       ›
@@ -516,9 +514,11 @@ if (!selectedProduct) {
 
   </div>
 
-  {/* MINIATURES MOBILE */}
-  <div
-    className="
+</div>
+
+{/* MINIATURES MOBILE */}
+<div
+  className="
     lg:hidden
     flex
     gap-3
@@ -526,32 +526,88 @@ if (!selectedProduct) {
     scrollbar-hide
     px-4
     pb-4
+  "
+>
+  {selectedProduct.images?.map(
+    (img: string, index: number) => (
+      <img
+        key={index}
+        src={img}
+        onClick={() => setSelectedImage(img)}
+        className={`
+          w-20
+          h-20
+          rounded-2xl
+          object-cover
+          flex-shrink-0
+          cursor-pointer
+          ${
+            activeImage === img
+              ? "border-2 border-purple-500 shadow-lg"
+              : "border border-gray-200"
+          }
+        `}
+      />
+    )
+  )}
+</div>
+
+{/* BLOC DESCRIPTION PRODUIT */}
+
+<div
+  className="
+    mt-6
+    w-full
+
+    bg-gradient-to-br
+    from-[#fffdf9]
+    to-[#f9f4eb]
+
+    rounded-3xl
+    p-8
+
+    border
+    border-[#eadfcf]
+
+    shadow-[0_15px_40px_rgba(0,0,0,0.08)]
+  "
+>
+
+  <h2
+    className="
+      text-3xl
+      font-bold
+      mb-5
+      text-[#1a1a1a]
     "
   >
-    {selectedProduct.images?.map(
-      (img: string, index: number) => (
-        <img
-          key={index}
-          src={img}
-          onClick={() => setSelectedImage(img)}
-          className={`
-            w-20
-            h-20
-            rounded-2xl
-            object-cover
-            flex-shrink-0
-            cursor-pointer
-            ${
-              activeImage === img
-                ? "border-2 border-purple-500 shadow-lg"
-                : "border border-gray-200"
-            }
-          `}
-        />
-      )
-    )}
-  </div>
+    Description
+  </h2>
 
+  <p
+    className="
+      text-gray-700
+      leading-8
+      text-[17px]
+    "
+  >
+    {selectedProduct.description?.slice(0, 220)}...
+  </p>
+
+  <button
+    onClick={() => setDescriptionOpen(true)}
+    className="
+      mt-6
+      text-purple-600
+      font-semibold
+      hover:text-purple-700
+      transition
+    "
+  >
+    Lire la fiche complète →
+  </button>
+
+</div>
 </div>
 
 {/* COLONNE DROITE */}
@@ -764,62 +820,6 @@ if (!selectedProduct) {
       </div>
 </div>
     
-
-{/* BLOC DESCRIPTION PRODUIT */}
-
- <div
-  className="
-    mt-16
-    bg-gradient-to-br
-    from-[#fffdf9]
-    to-[#f9f4eb]
-
-    rounded-3xl
-    p-8
-
-    border
-    border-[#eadfcf]
-
-    shadow-[0_15px_40px_rgba(0,0,0,0.08)]
-
-    backdrop-blur-sm
-  "
->
-  <h2
-    className="
-      text-3xl
-      font-bold
-      mb-5
-      text-[#1a1a1a]
-    "
-  >
-    Description
-  </h2>
-
-  <p
-    className="
-      text-gray-700
-      leading-8
-      text-[17px]
-    "
-  >
-    {selectedProduct.description?.slice(0, 220)}...
-  </p>
-
-  <button
-    onClick={() => setDescriptionOpen(true)}
-    className="
-      mt-6
-      text-purple-600
-      font-semibold
-      hover:text-purple-700
-      transition
-    "
-  >
-    Lire la fiche complète →
-  </button>
-</div>
-
 
 {/*------- AVIS CLIENTS ----*/ }
 

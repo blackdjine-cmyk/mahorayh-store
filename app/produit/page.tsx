@@ -863,9 +863,9 @@ if (!selectedProduct) {
   className="
     mt-16
 
-    w-full
-    max-w-full
-    lg:max-w-[1100px]
+   w-full
+max-w-[500px]
+lg:max-w-[1100px]
 
     mx-auto
 
@@ -1177,15 +1177,20 @@ hover:shadow-[0_18px_50px_rgba(0,0,0,0.14)]
   />
 </div>
 
-         <div className="p-4">
+         <div className="p-3">
 
-            <h3 className="
-              font-bold
-              text-lg
-              mb-2
-            ">
-              {product.name}
-            </h3>
+            <h3
+            className="
+            font-bold
+            text-lg
+            leading-6
+            h-12
+           overflow-hidden
+           mb-2
+           "
+          >
+           {product.name}
+         </h3>
 
              <div className="
               text-purple-600

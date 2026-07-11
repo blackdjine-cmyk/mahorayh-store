@@ -4,8 +4,6 @@ import { supabase } from "@/lib/supabase";
 import { useEffect, useState, useRef } from "react";
 import { useCart } from "../context/CartContext";
 
-
-
 export default function ProduitPage() {
 
   const { addToCart } = useCart();
@@ -188,6 +186,29 @@ useEffect(() => {
   if (selectedProduct?.id) {
     fetchReviews();
   }
+}, [selectedProduct?.id]);
+useEffect(() => {
+  if (
+    selectedProduct &&
+    window.location.hash === "#achat"
+  ) {
+    const element = document.getElementById("achat");
+
+    if (element) {
+      setTimeout(() => {
+        element.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+       window.history.replaceState(
+       null,
+       "",
+       window.location.pathname
+       );
+
+      }, 300);
+    }
+  }
 }, [selectedProduct]);
 
 if (!selectedProduct) {
@@ -258,6 +279,7 @@ if (!selectedProduct) {
 
   fetchReviews();
 };
+
   
     return (
   <>
@@ -622,7 +644,10 @@ if (!selectedProduct) {
 </div>
 
 {/* COLONNE DROITE */}
-        <div className="flex flex-col gap-6">
+        <div
+  id="achat"
+  className="flex flex-col gap-6"
+>
 
           <div>
             <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm">

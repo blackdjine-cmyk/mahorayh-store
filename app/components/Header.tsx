@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { Menu, X, ShoppingCart } from "lucide-react";
 import { useCart } from "../context/CartContext";
 import { supabase } from "../../lib/supabase";
@@ -11,6 +11,7 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
   const router = useRouter();
+  const pathname = usePathname();
 
   const { cart } = useCart();
 
@@ -42,6 +43,17 @@ export default function Header() {
 const handleLogout = async () => {
   await supabase.auth.signOut();
   setUser(null);
+};
+
+const handleBuyClick = () => {
+  if (pathname === "/produit") {
+    document.getElementById("achat")?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  } else {
+    router.push("/produit#achat");
+  }
 };
 
   return (
@@ -138,13 +150,13 @@ const handleLogout = async () => {
             )}
           </Link>
 
-          {/* BOUTON ACHETER */}
-          <Link
-            href="/produit"
-            className="bg-gradient-to-r from-purple-600 to-purple-800 text-white px-5 py-2 rounded-full font-medium shadow-lg"
-          >
-            Acheter
-          </Link>
+        {/* BOUTON ACHETER */}
+         <button
+         onClick={handleBuyClick}
+         className="bg-gradient-to-r from-purple-600 to-purple-800 text-white px-5 py-2 rounded-full font-medium shadow-lg"
+       >
+        Acheter
+        </button>
 
           {/* MENU */}
           <button

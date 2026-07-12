@@ -235,6 +235,10 @@ if (!selectedProduct) {
     selectedModel?.model_price ||
     selectedProduct.price;
 
+    const activeOldPrice =
+  selectedModel?.old_price ||
+  selectedProduct.old_price;
+
   const activeDescription =
     selectedModel?.model_description ||
     selectedProduct.description;
@@ -660,9 +664,17 @@ if (!selectedProduct) {
           </div>
 
           <div>
-            <div className="text-5xl font-bold text-purple-600">
-              {activePrice}€
-            </div>
+            <div className="flex items-end gap-3">
+            {activeOldPrice && (
+            <span className="text-2xl text-gray-400 line-through">
+            {activeOldPrice}€
+            </span>
+            )}
+
+            <span className="text-5xl font-bold text-purple-600">
+            {activePrice}€
+           </span>
+          </div>
 
             <div className="mt-3 flex items-center gap-2">
   <span className="text-yellow-500 text-xl">
@@ -827,16 +839,19 @@ if (!selectedProduct) {
           <button
             onClick={() =>
               addToCart({
-                id:
-                  selectedModel?.id ||
-                  selectedProduct.id,
-                name:
-                  selectedModel?.model_name ||
-                  selectedProduct.name,
-                price: activePrice,
-                image: activeImage,
-                quantity: 1,
-              })
+             id:
+             selectedModel?.id ||
+             selectedProduct.id,
+             name:
+             selectedModel?.model_name ||
+             selectedProduct.name,
+             price: activePrice,
+             image: activeImage,
+             weight:
+             selectedModel?.weight ||
+             selectedProduct.weight,
+             quantity: 1,
+            })
             }
             className="
               w-full

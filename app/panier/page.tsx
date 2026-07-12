@@ -81,6 +81,12 @@ if (totalWeight <= 500) {
   shippingCost = 3.69;
 } else if (totalWeight <= 1000) {
   shippingCost = 4.25;
+} else if (totalWeight <= 2000) {
+  shippingCost = 5.25;
+} else if (totalWeight <= 5000) {
+  shippingCost = 7.90;
+} else {
+  shippingCost = 9.90;
 }
 
 // 💳 CHECKOUT

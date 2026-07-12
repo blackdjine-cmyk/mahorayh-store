@@ -664,25 +664,29 @@ const totalClients = new Set(
             className="w-full border p-4 rounded-xl"
           >
 
-            <option value="">
-              Choisir une catégorie
-            </option>
+           <option value="">
+            Choisir une catégorie
+           </option>
 
-            <option value="Soins visage">
-              Soins visage
-            </option>
+           <option value="Soins visage">
+           Soins visage
+           </option>
 
-            <option value="Savons">
-              Savons
-            </option>
+           <option value="Soins corps">
+           Soins corps
+           </option>
 
-            <option value="Huiles">
-              Huiles
-            </option>
+           <option value="Savons">
+           Savons
+           </option>
 
-            <option value="Packs">
-              Packs
-            </option>
+           <option value="Huiles">
+           Huiles
+           </option>
+
+           <option value="Packs">
+           Packs
+           </option>
 
           </select>
 

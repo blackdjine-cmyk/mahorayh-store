@@ -12,11 +12,9 @@ export default function EditPage() {
   const [description, setDescription] = useState("");
 
   const [price, setPrice] = useState("");
-  const [oldPrice, setOldPrice] =
-    useState("");
+  const [oldPrice, setOldPrice] = useState("");
 
-  const [weight, setWeight] =
-    useState("");
+  const [weight, setWeight] = useState("");
 
   const [badge, setBadge] = useState("");
   const [category, setCategory] = useState("");
@@ -33,6 +31,16 @@ export default function EditPage() {
   const [editedComment, setEditedComment] = useState("");
 
   const [editedNote, setEditedNote] = useState(5);
+
+  // ➕ Nouvel avis
+
+  const [newClient, setNewClient] = useState("");
+
+  const [newComment, setNewComment] = useState("");
+
+  const [newNote, setNewNote] = useState(5);
+
+  const [addingReview, setAddingReview] = useState(false);
 
   const [models, setModels] = useState<any[]>([]);
   const [showAddModel, setShowAddModel] = useState(false);
@@ -236,6 +244,43 @@ const updateReview = async (id: string) => {
   setEditingReview(null);
 
 };
+
+const addReview = async () => {
+
+  if (!product) return;
+
+  if (!newClient.trim() || !newComment.trim()) {
+    alert("Remplis tous les champs.");
+    return;
+  }
+
+  const { error } = await supabase
+    .from("reviews")
+    .insert([
+      {
+        product_id: product.id,
+        client: newClient.trim(),
+        commentaire: newComment.trim(),
+        note: newNote,
+      },
+    ]);
+
+  if (error) {
+    console.log(error);
+    alert("Erreur lors de l'ajout.");
+    return;
+  }
+
+  alert("Avis ajouté.");
+
+  setNewClient("");
+  setNewComment("");
+  setNewNote(5);
+  setAddingReview(false);
+
+  fetchReviews(String(product.id));
+};
+
 const fetchModels = async (productId: string) => {
 
   const { data, error } = await supabase
@@ -626,9 +671,69 @@ return;
 
 <div className="mt-10 border rounded-2xl p-6 bg-white">
 
-  <h2 className="text-xl font-bold mb-4">
-    Avis clients ({reviews.length})
-  </h2>
+  <div className="flex justify-between items-center mb-6">
+
+<h2 className="text-xl font-bold">
+Avis clients ({reviews.length})
+</h2>
+
+<button
+type="button"
+onClick={() => setAddingReview(!addingReview)}
+className="rounded-xl bg-purple-600 px-4 py-2 text-white font-semibold hover:bg-purple-700"
+>
+{addingReview ? "✖ Fermer" : "➕ Ajouter un avis"}
+</button>
+
+</div>
+
+{addingReview && (
+
+<div className="mb-8 rounded-2xl border bg-gray-50 p-6 space-y-4">
+
+<input
+type="text"
+placeholder="Nom du client"
+value={newClient}
+onChange={(e)=>setNewClient(e.target.value)}
+className="w-full border rounded-xl p-3"
+/>
+
+<select
+value={newNote}
+onChange={(e)=>setNewNote(Number(e.target.value))}
+className="w-full border rounded-xl p-3"
+>
+
+<option value={5}>⭐⭐⭐⭐⭐</option>
+<option value={4}>⭐⭐⭐⭐</option>
+<option value={3}>⭐⭐⭐</option>
+<option value={2}>⭐⭐</option>
+<option value={1}>⭐</option>
+
+</select>
+
+<textarea
+placeholder="Commentaire"
+value={newComment}
+onChange={(e)=>setNewComment(e.target.value)}
+rows={5}
+className="w-full border rounded-xl p-3"
+/>
+
+<button
+type="button"
+onClick={addReview}
+className="w-full rounded-xl bg-green-600 py-3 text-white font-bold hover:bg-green-700"
+>
+
+➕ Ajouter l'avis
+
+</button>
+
+</div>
+
+)}
 
   {reviews.length === 0 ? (
 

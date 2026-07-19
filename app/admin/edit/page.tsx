@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import { supabase } from "@/lib/supabase";
 
+
 export default function EditPage() {
 
   const [product, setProduct] = useState<any>(null);
@@ -35,6 +36,7 @@ export default function EditPage() {
 
   const [models, setModels] = useState<any[]>([]);
   const [showAddModel, setShowAddModel] = useState(false);
+  const [editingModel, setEditingModel] = useState<any>(null);
 
   const [modelName, setModelName] = useState("");
   const [modelPrice, setModelPrice] = useState("");
@@ -247,7 +249,7 @@ const fetchModels = async (productId: string) => {
 };
 
 const addModel = async () => {
-
+  console.log("addModel lancé");
   if (
     !product ||
     !modelName.trim() ||
@@ -257,6 +259,10 @@ const addModel = async () => {
     alert("Remplis tous les champs obligatoires");
     return;
   }
+  if (editingModel) {
+  console.log("Mode modification :", editingModel.id);
+  return;
+}
 
   const { error } = await supabase
     .from("product_models")
@@ -335,6 +341,20 @@ const addModel = async () => {
     }
 
   }, []);
+
+  useEffect(() => {
+  if (!editingModel) return;
+
+  setShowAddModel(true);
+
+  setModelName(editingModel.model_name || "");
+  setModelPrice(editingModel.model_price || "");
+  setModelDescription(editingModel.model_description || "");
+  setModelWeight(editingModel.model_weight || "");
+  setModelStock(editingModel.stock || "");
+  setModelImage(editingModel.model_image || "");
+
+}, [editingModel]);
 
   // 💾 SAVE
   const updateProduct = async () => {
@@ -759,12 +779,20 @@ const addModel = async () => {
 
       <div
   key={model.id}
-  className=" mt-4 border rounded-xl p-4 flex items-center justify-between"
+  className="mt-4 flex items-center justify-between rounded-2xl border border-gray-200 bg-white p-5 shadow-sm hover:shadow-md transition-all duration-200"
 >
+
+ <div className="flex items-center gap-6">
+
+  <img
+    src={model.model_image}
+    alt={model.model_name}
+    className="w-24 h-24 rounded-xl border object-cover"
+  />
 
   <div>
 
-    <p className="font-bold">
+    <p className="font-bold text-lg">
       {model.model_name}
     </p>
 
@@ -772,23 +800,34 @@ const addModel = async () => {
       {Number(model.model_price).toFixed(2)} €
     </p>
 
+    <p className="text-sm text-gray-500">
+      📦 Stock : {model.stock}
+    </p>
+
+    <p className="text-sm text-gray-500">
+      ⚖️ {model.model_weight} g
+    </p>
+
   </div>
+
+</div>
 
   <div className="flex gap-2">
 
     <button
       type="button"
+       onClick={() => setEditingModel(model)}
       className="rounded-xl border border-blue-200 bg-white px-4 py-2 text-sm font-medium text-blue-600 shadow-sm hover:bg-blue-50"
     >
       ✏️ Modifier
     </button>
 
-    <button
-      type="button"
-      className="rounded-xl border border-red-200 bg-white px-4 py-2 text-sm font-medium text-red-600 shadow-sm hover:bg-red-50"
-    >
-      🗑 Supprimer
-    </button>
+   <button
+  type="button"
+  className="rounded-xl bg-red-500 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-red-600 flex items-center gap-2"
+>
+  🗑️ Supprimer
+</button>
 
   </div>
 

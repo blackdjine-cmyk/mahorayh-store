@@ -248,6 +248,27 @@ const fetchModels = async (productId: string) => {
   }
 };
 
+const deleteModel = async (id: string) => {
+
+  const { error } = await supabase
+    .from("product_models")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    console.log(error);
+    alert(error.message);
+    return;
+  }
+
+  alert("Variante supprimée");
+
+  if (product) {
+    fetchModels(String(product.id));
+  }
+
+};
+
 const addModel = async () => {
   console.log("addModel lancé");
   if (
@@ -260,8 +281,38 @@ const addModel = async () => {
     return;
   }
   if (editingModel) {
-  console.log("Mode modification :", editingModel.id);
+ const { error } = await supabase
+  .from("product_models")
+  .update({
+    model_name: modelName.trim(),
+    model_price: Number(modelPrice),
+    model_image: modelImage,
+    model_description: modelDescription.trim(),
+    stock: Number(modelStock || 0),
+    model_weight: Number(modelWeight || 0),
+  })
+  .eq("id", editingModel.id);
+
+if (error) {
+  console.log(error);
+  alert(error.message);
   return;
+}
+
+alert("Variante modifiée");
+
+setEditingModel(null);
+
+setModelName("");
+setModelPrice("");
+setModelImage("");
+setModelDescription("");
+setModelStock("");
+setModelWeight("");
+
+fetchModels(String(product.id));
+
+return;
 }
 
   const { error } = await supabase
@@ -824,6 +875,7 @@ const addModel = async () => {
 
    <button
   type="button"
+   onClick={() => deleteModel(model.id)}
   className="rounded-xl bg-red-500 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-red-600 flex items-center gap-2"
 >
   🗑️ Supprimer

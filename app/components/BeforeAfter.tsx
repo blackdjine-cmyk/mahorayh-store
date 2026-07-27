@@ -19,28 +19,56 @@ export default function BeforeAfter() {
         <div className="grid md:grid-cols-2 gap-8">
 
           {/* AVANT */}
-          <div className="bg-white p-4 rounded-2xl shadow-md hover:shadow-xl hover:-translate-y-1 transition duration-300">
+          <div className="bg-white p-5 rounded-[30px] shadow-xl hover:shadow-2xl hover:-translate-y-2 transition duration-300">
             <img
-              src="https://image.noelshack.com/fichiers/2026/18/6/1777746320-photo-metisse-avant.jpg"
+              src="avant-image.png"
               alt="Avant traitement"
               className="rounded-xl w-full object-cover hover:scale-105 transition duration-500"
             />
-            <p className="text-sm text-gray-500 mt-4">
-              Avant traitement
-            </p>
+            <div className="mt-5">
+
+           <span className="inline-block bg-amber-100 text-amber-700 px-4 py-1 rounded-full text-sm font-bold">
+            AVANT
+           </span>
+
+           <div className="mt-6 space-y-4 text-gray-700 text-left max-w-[220px] mx-auto">
+
+           <p>❌ Taches pigmentaires</p>
+
+           <p>❌ Teint irrégulier</p>
+
+           <p>❌ Manque d'éclat</p>
+
+           </div>
+
+            </div>
           </div>
 
-          {/* APRES */}
-          <div className="bg-white p-4 rounded-2xl shadow-md hover:shadow-xl hover:-translate-y-1 transition duration-300">
-            <img
-              src="https://image.noelshack.com/fichiers/2026/18/6/1777746407-photo-m-tisse-apres.jpg"
-              alt="Après traitement"
-              className="rounded-xl w-full object-cover hover:scale-105 transition duration-500"
-            />
-            <p className="text-sm text-gray-500 mt-4">
-              Après 3 semaines
-            </p>
-          </div>
+         {/* APRES */}
+         <div className="bg-white p-4 rounded-2xl shadow-md hover:shadow-xl hover:-translate-y-1 transition duration-300">
+
+         <div className="relative">
+         <img
+         src="apres-image.png"
+         alt="Après traitement"
+         className="rounded-xl w-full object-cover hover:scale-105 transition duration-500"
+         />
+
+         </div>
+
+         <div className="text-center mt-5">
+         <span className="inline-block bg-green-100 text-green-700 font-bold px-5 py-2 rounded-full">
+          APRÈS
+         </span>
+         </div>
+
+         <div className="mt-6 space-y-4 text-gray-700 text-left max-w-[220px] mx-auto">
+         <p>✅ Peau plus lumineuse</p>
+         <p>✅ Teint uniforme</p>
+         <p>✅ Éclat naturel</p>
+         </div>
+
+         </div>
 
         </div>
 
@@ -53,6 +81,11 @@ export default function BeforeAfter() {
         <p className="text-xs text-gray-400 mt-2">
           ✔ Sans routine compliquée • ✔ Adapté aux peaux sensibles
         </p>
+
+        {/* TEXTE DE CONFIANCE */}
+         <p className="text-center text-sm text-gray-600 mt-8 font-medium">
+         ✨ Des résultats visibles avec une utilisation régulière de la routine
+         </p>
 
         {/* BOUTON */}
         <div className="mt-8">

@@ -27,7 +27,7 @@ export default function Hero() {
            className="block md:hidden mb-6"
            >
            <img
-           src="https://image.noelshack.com/fichiers/2026/18/6/1777727887-le-pack.jpg"
+           src="/hero-curcuma-officiel.png"
            alt="Mahorayh Beauté"
            className="w-full rounded-[30px] shadow-xl"
            />
@@ -114,7 +114,7 @@ export default function Hero() {
            className="hidden md:flex justify-center self-start"
           >
          <img
-         src="https://image.noelshack.com/fichiers/2026/18/6/1777727887-le-pack.jpg"
+         src="/hero-curcuma-officiel.png"
          alt="Mahorayh Beauté"
          className="w-full max-w-[520px] rounded-[30px] shadow-2xl hover:scale-[1.02] transition duration-300 cursor-pointer"
         />

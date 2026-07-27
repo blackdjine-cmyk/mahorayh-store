@@ -125,7 +125,7 @@ if (productsData && productsData.length > 0) {
   const featuredProduct =
   productsData.find(
     (product) =>
-      product.name === "Routine Éclat au Curcuma"
+      product.id === 1
   ) || productsData[0];
 
   console.log("Products :", productsData);

@@ -880,6 +880,9 @@ if (!selectedProduct) {
     mt-16
 
    w-full
+   max-w-[500px]
+   lg:max-w-full
+   mx-auto
 
     bg-gradient-to-br
     from-[#fffdf9]

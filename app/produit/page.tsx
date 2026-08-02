@@ -871,6 +871,7 @@ if (!selectedProduct) {
       </div>
 </div>
     
+<div className="max-w-[1100px] mx-auto">
 
 {/*------- AVIS CLIENTS ----*/ }
 
@@ -879,10 +880,6 @@ if (!selectedProduct) {
     mt-16
 
    w-full
-max-w-[500px]
-lg:max-w-[1100px]
-
-    mx-auto
 
     bg-gradient-to-br
     from-[#fffdf9]
@@ -1098,11 +1095,9 @@ lg:max-w-[1100px]
 
   </div>
 
- 
-
     {/* DÉCOUVREZ AUSSI */}
 
-<div className="mt-20">
+    <div className="mt-20">
 
   <h2 className="
     text-3xl
@@ -1112,30 +1107,28 @@ lg:max-w-[1100px]
   ">
     Découvrez aussi
   </h2>
-
  <div
-  className="
-    flex
-    gap-4
+className="
+w-full
 
-    overflow-x-auto
-    scrollbar-hide
+flex
+gap-4
 
-    pb-4
-    px-4
+overflow-x-auto
+scrollbar-hide
 
-    snap-x
-    snap-mandatory
+pb-4
+px-4
 
-    lg:grid
-    lg:grid-cols-3
-    lg:gap-6
-    lg:max-w-[1100px]
-    lg:mx-auto
-    lg:px-0
-  "
+snap-x
+snap-mandatory
+
+lg:grid
+lg:grid-cols-3
+lg:gap-6
+lg:px-0
+"
 >
-
     {products
       .filter(
         (product) =>
@@ -1149,33 +1142,33 @@ lg:max-w-[1100px]
             changeProduct(product)
           }
         className="
-min-w-[170px]
-max-w-[290px]
-lg:min-w-0
+        min-w-[170px]
+        max-w-[290px]
+        lg:min-w-0
 
-bg-[#fffdf9]
+       bg-[#fffdf9]
 
-rounded-[32px]
+       rounded-[32px]
 
-border-2
-border-[#e5d9c7]
+       border-2
+       border-[#e5d9c7]
 
-shadow-[0_12px_40px_rgba(0,0,0,0.10)]
+       shadow-[0_12px_40px_rgba(0,0,0,0.10)]
 
-overflow-hidden
+       overflow-hidden
 
-cursor-pointer
+       cursor-pointer
 
-transition-all
-duration-300
+       transition-all
+       duration-300
 
-hover:-translate-y-1
-hover:shadow-[0_18px_50px_rgba(0,0,0,0.14)]
-"
+       hover:-translate-y-1
+       hover:shadow-[0_18px_50px_rgba(0,0,0,0.14)]
+       "
         >
 
          <div className="overflow-hidden rounded-t-3xl">
-  <img
+        <img
     src={
       product.image ||
       product.images?.[0]
@@ -1346,6 +1339,7 @@ z-20
 
 </div>
 )}
+</div>
 
 {/* =======================================
     MODAL DESCRIPTION COMPLÈTE PRODUIT

@@ -871,18 +871,17 @@ if (!selectedProduct) {
       </div>
 </div>
     
-<div className="max-w-[1100px] mx-auto">
+<div className="max-w-[1100px] mx-auto ">
 
 {/*------- AVIS CLIENTS ----*/ }
 
 <div
   className="
-    mt-16
+    mt-3
 
-   w-full
-   max-w-[500px]
-   lg:max-w-full
-   mx-auto
+    w-[calc(100%-32px)]
+    max-w-full
+    mx-auto
 
     bg-gradient-to-br
     from-[#fffdf9]
@@ -900,20 +899,26 @@ if (!selectedProduct) {
   "
 >
 
-  <h2 className="text-3xl font-bold mb-6">
-    Avis clients
-  </h2>
+  <h2 className="text-3xl font-bold  mb-6">
+  Avis clients
+</h2>
 
-  <div className="flex items-center gap-4 mb-6 flex-wrap">
-    <span className="text-yellow-500 text-3xl">
-      ⭐⭐⭐⭐⭐
-    </span>
+  <div className="flex items-center gap-4 mb-4 flex-wrap">
+    <span
+  className="
+    text-yellow-500
+    text-[24px]
+    lg:text-[28px]
+  "
+>
+  ⭐⭐⭐⭐⭐
+</span>
 
-    <span className="text-2xl font-bold">
+    <span className="text-xl font-bold lg:text-2xl">
       {averageRating}/5
     </span>
 
-    <span className="text-gray-500">
+    <span className="text-sm text-gray-500">
       ({reviews.length} avis)
     </span>
   </div>
@@ -933,8 +938,10 @@ if (!selectedProduct) {
       )
     }
     className="
-      px-6
-      py-3
+      px-4
+      py-2.5
+      text-sm
+      font-semibold
       rounded-2xl
       bg-purple-600
       text-white
@@ -951,8 +958,10 @@ if (!selectedProduct) {
     setShowReviews(!showReviews)
   }
   className="
-    px-6
-    py-3
+    px-4
+    py-2.5
+    text-sm
+    font-semibold
     rounded-2xl
     border
     border-purple-600
@@ -1100,7 +1109,7 @@ if (!selectedProduct) {
 
     {/* DÉCOUVREZ AUSSI */}
 
-    <div className="mt-20">
+    <div className="mt-8">
 
   <h2 className="
     text-3xl

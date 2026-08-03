@@ -284,6 +284,20 @@ if (!selectedProduct) {
   fetchReviews();
 };
 
+const badgeStyles: Record<string, string> = {
+  "⭐ Produit populaire":
+    "bg-purple-100 text-purple-700",
+
+  "🌸 Parfum Floral":
+    "bg-pink-100 text-pink-700",
+
+  "✨ Peau Lumineuse":
+    "bg-amber-100 text-amber-700",
+};
+
+const badgeClass =
+  badgeStyles[selectedProduct.badge] ||
+  "bg-gray-100 text-gray-700";
   
     return (
   <>
@@ -654,13 +668,17 @@ if (!selectedProduct) {
 >
 
           <div>
-            <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm">
-              ⭐ Produit populaire
-            </span>
+            {selectedProduct.badge && (
+           <span
+           className={`${badgeClass} px-3 py-1 rounded-full text-sm`}
+            >
+           {selectedProduct.badge}
+           </span>
+           )}
 
-            <h1 className="text-4xl font-bold mt-4">
+            <h2 className="text-3xl lg:text-4xl font-bold mt-4 leading-tight">
               {selectedProduct.name}
-            </h1>
+            </h2>
           </div>
 
           <div>
@@ -671,7 +689,7 @@ if (!selectedProduct) {
             </span>
             )}
 
-            <span className="text-5xl font-bold text-purple-600">
+            <span className="text-3xl lg:text-4xl font-bold text-purple-600">
             {activePrice}€
            </span>
           </div>
@@ -829,12 +847,28 @@ if (!selectedProduct) {
   </div>
 )} 
 
-          <div className="bg-white rounded-3xl p-6 shadow-md space-y-3">
-            <div>🚚 Livraison rapide</div>
-            <div>🔒 Paiement sécurisé</div>
-            <div>⭐ Satisfaction client</div>
-            <div>💜 Adapté aux peaux noires et métissées</div>
-          </div>
+        <div className="bg-white rounded-3xl p-6 shadow-md space-y-5">
+            
+          <div className="flex items-start gap-3 text-[17px]">
+           <span className="w-7 flex justify-center mt-1">🚚</span>
+           <span>Livraison rapide</span>
+         </div>
+
+          <div className="flex items-start gap-3 text-[17px]">
+           <span className="w-7 flex justify-center mt-1">🔒</span>
+           <span>Paiement sécurisé</span>
+         </div>
+
+          <div className="flex items-start gap-3 text-[17px]">
+           <span className="w-7 flex justify-center mt-1">⭐</span>
+           <span>Satisfaction client</span>
+         </div>
+
+         <div className="flex items-start gap-3 text-[17px]">
+          <span className="w-7 flex justify-center mt-1">💜</span>
+          <span>Adapté aux peaux noires et métissées</span>
+         </div>
+        </div>
 
           <button
             onClick={() =>

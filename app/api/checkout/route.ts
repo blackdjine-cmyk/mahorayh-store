@@ -13,20 +13,23 @@ export async function POST(req: Request) {
   try {
     console.log("CHECKOUT API APPELÉE");
     const {
-   cart,
-   nom,
-   email,
-   telephone,
-   codePostal,
-   adresse,
-   shippingCost,
-   } = await req.json();
+  cart,
+  userId,
+  nom,
+  email,
+  telephone,
+  codePostal,
+  adresse,
+  shippingCost,
+} = await req.json();
+console.log("USER ID REÇU :", userId);
 
    const {
   data: { user },
 } = await supabase.auth.getUser();
 
-console.log("USER :", user);
+console.log("USER COMPLET :", user);
+console.log("USER ID :", user?.id);
 
    console.log("CART CHECKOUT :", cart);
 
@@ -59,7 +62,7 @@ const { data, error } = await supabase
  .insert([
   
     {
-   user_id: user?.id || null,
+  user_id: userId || null,
 
   client: nom,
   email: email,
@@ -91,6 +94,33 @@ const { data, error } = await supabase
 
 console.log("SUPABASE DATA :", data);
 console.log("SUPABASE ERROR :", error);
+
+// 💾 Création / mise à jour du client
+if (userId) {
+  const {
+  data: clientData,
+  error: clientError,
+} = await supabase
+    .from("clients")
+    .upsert(
+      {
+       user_id: userId,
+        nom: nom,
+        email: email,
+        telephone: telephone,
+        adresse: adresse,
+        code_postal: codePostal,
+        pays: "France",
+      },
+      {
+        onConflict: "user_id",
+      }
+    );
+
+  console.log("CLIENT DATA :", clientData);
+console.log("CLIENT ERROR :", clientError);
+}
+
 const emailResend = await resend.emails.send({
   from: "onboarding@resend.dev",
   to: "blackdjine@gmail.com",

@@ -9,9 +9,11 @@ const [nom, setNom] = useState("");
 const [email, setEmail] = useState("");
 const [telephone, setTelephone] = useState("");
 const [codePostal, setCodePostal] = useState("");
+const [ville, setVille] = useState("");
 const [adresse, setAdresse] = useState("");
 const [isLoading, setIsLoading] = useState(false);
 const [errorMessage, setErrorMessage] = useState("");
+const [userId, setUserId] = useState("");
 useEffect(() => {
   const loadUser = async () => {
     const {
@@ -19,36 +21,25 @@ useEffect(() => {
     } = await supabase.auth.getUser();
 
     if (user) {
+  setUserId(user.id);   
   setEmail(user.email || "");
 
-  const res = await fetch(
-    `/api/historique?email=${user.email}`
-  );
+const { data: client, error } = await supabase
+  .from("clients")
+  .select("*")
+  .eq("user_id", user.id)
+  .single();
 
-  const commandes = await res.json();
+console.log("CLIENT :", client);
+console.log("CLIENT ERROR :", error);
 
-  if (
-    Array.isArray(commandes) &&
-    commandes.length > 0
-  ) {
-    const derniereCommande = commandes[0];
-
-    setNom(
-      derniereCommande.client || ""
-    );
-
-    setTelephone(
-      derniereCommande.telephone || ""
-    );
-
-    setAdresse(
-      derniereCommande.adresse || ""
-    );
-
-    setCodePostal(
-      derniereCommande.code_postal || ""
-    );
-  }
+if (client) {
+  setNom(client.nom || "");
+  setTelephone(client.telephone || "");
+  setAdresse(client.adresse || "");
+  setCodePostal(client.code_postal || "");
+  setVille(client.ville || "");
+}
 }
   };
 
@@ -122,6 +113,27 @@ const handleCheckout = async () => {
   setErrorMessage("");
   setIsLoading(true);
 
+setErrorMessage("");
+setIsLoading(true);
+
+// 💾 Mise à jour du client
+await fetch("/api/client", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    user_id: userId,
+    nom,
+    email,
+    telephone,
+    adresse,
+    code_postal: codePostal,
+    ville,
+    pays: "France",
+  }),
+});
+
   try {
     const res = await fetch("/api/checkout", {
       method: "POST",
@@ -130,6 +142,7 @@ const handleCheckout = async () => {
       },
       body: JSON.stringify({
         cart,
+        userId,
         nom,
         email,
         telephone,
@@ -389,7 +402,27 @@ const handleCheckout = async () => {
       type="text"
       placeholder="Code postal"
       value={codePostal}
-      onChange={(e) => setCodePostal(e.target.value)}
+      onChange={async (e) => {
+  const cp = e.target.value;
+
+  setCodePostal(cp);
+
+  if (cp.length === 5) {
+    try {
+      const res = await fetch(
+        `https://api-adresse.data.gouv.fr/search/?q=${cp}&limit=1`
+      );
+
+      const data = await res.json();
+
+      if (data.features?.length > 0) {
+        setVille(data.features[0].properties.city);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+}}
       className="
       w-full
       border
@@ -409,6 +442,31 @@ const handleCheckout = async () => {
      focus:shadow-md
     "
     />
+
+    <input
+  type="text"
+  placeholder="Ville"
+  value={ville}
+  onChange={(e) => setVille(e.target.value)}
+  className="
+    w-full
+    border
+    border-gray-200
+    bg-white
+    p-4
+    rounded-2xl
+    text-black
+    placeholder-gray-400
+    outline-none
+    shadow-sm
+    transition-all
+    duration-300
+    focus:border-purple-500
+    focus:ring-2
+    focus:ring-purple-200
+    focus:shadow-md
+  "
+/>
 
     <textarea
       placeholder="Adresse de livraison"

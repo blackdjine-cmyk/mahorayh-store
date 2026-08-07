@@ -147,6 +147,7 @@ await fetch("/api/client", {
         email,
         telephone,
         codePostal,
+        ville,
         adresse,
         shippingCost,
       }),

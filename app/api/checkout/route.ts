@@ -19,6 +19,7 @@ export async function POST(req: Request) {
   email,
   telephone,
   codePostal,
+  ville,
   adresse,
   shippingCost,
 } = await req.json();
@@ -54,6 +55,7 @@ const session = await stripe.checkout.sessions.create({
   cancel_url: `${req.headers.get("origin")}/panier`,
 });
 // 💾 Sauvegarde commande (JSON)
+console.log("VILLE REÇUE :", ville);
 
 const invoiceNumber =
   `MB-${new Date().getFullYear()}-${Date.now()}`;
@@ -68,6 +70,7 @@ const { data, error } = await supabase
   email: email,
   telephone: telephone,
   code_postal: codePostal,
+  ville: ville,
   adresse: adresse,
   shipping_cost: shippingCost,
 
@@ -110,6 +113,7 @@ if (userId) {
         telephone: telephone,
         adresse: adresse,
         code_postal: codePostal,
+        ville: ville,
         pays: "France",
       },
       {

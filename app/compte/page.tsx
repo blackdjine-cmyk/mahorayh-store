@@ -3,6 +3,15 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabase";
 import { useRouter } from "next/navigation";
+import {
+  User,
+  Mail,
+  Phone,
+  MapPin,
+  Building2,
+  Mailbox,
+  BadgeInfo,
+} from "lucide-react";
 
 type Commande = {
   id: string;
@@ -17,8 +26,8 @@ export default function ComptePage() {
     id?: string;
   } | null>(null);
 
-  const [commandes, setCommandes] =
-    useState<Commande[]>([]);
+  const [commandes, setCommandes] = useState<Commande[]>([]);
+  const [client, setClient] = useState<any>(null);
 
   const router = useRouter();
 
@@ -34,6 +43,15 @@ export default function ComptePage() {
     }
 
     setUser(user);
+
+      
+    const { data: clientData } = await supabase
+  .from("clients")
+  .select("*")
+  .eq("user_id", user.id)
+  .single();
+
+setClient(clientData);
 
     try {
       const res = await fetch(
@@ -62,7 +80,7 @@ export default function ComptePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gray-100 flex justify-center px-4 py-10">
 
       <div className="bg-white shadow-2xl rounded-3xl p-8 w-full max-w-lg text-center">
 
@@ -71,90 +89,186 @@ export default function ComptePage() {
           {user?.email?.charAt(0).toUpperCase()}
         </div>
 
-        {/* TITRE */}
-        <h1 className="text-4xl font-bold text-gray-900 mb-2">
-          Mon compte
+        {/* =========================
+              EN-TÊTE PREMIUM
+           ========================= */}
+
+        <div className="mb-8">
+
+         <h1 className="text-4xl font-extrabold text-purple-700">
+           Mon compte
         </h1>
 
-        <p className="text-gray-500 mb-8">
-          Bienvenue dans votre espace client Mahorayh Beauté
+       <div className="w-24 h-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mx-auto mt-3 mb-4"></div>
+
+       <p className="text-gray-600 text-lg">
+         ✨ Bienvenue dans votre espace client
+      </p>
+
+       <p className="text-purple-600 font-semibold mt-2">
+          Mahorayh Beauté
         </p>
 
-        {/* INFOS CLIENT */}
-        <div className="bg-gray-50 rounded-2xl p-6 text-left shadow-sm space-y-4 mb-8">
+      </div>
 
-          <div>
-            <p className="text-sm text-gray-500">
-              Nom
-            </p>
+      {/* ==========================
+          INFORMATIONS PERSONNELLES
+          ========================== */}
 
-            <p className="font-semibold text-gray-900">
-              {user?.email?.split("@")[0] || "Client"}
-            </p>
-          </div>
+   <div className="bg-white rounded-3xl border border-purple-100 shadow-lg p-6 hover:shadow-xl transition-all duration-300">
 
-          <div>
-            <p className="text-sm text-gray-500">
-              Email
-            </p>
+  <div className="mb-6">
+    <h3 className="text-lg font-bold text-purple-700">
+      Informations personnelles
+    </h3>
 
-            <p className="font-semibold text-gray-900">
-              {user?.email || "Chargement..."}
-            </p>
-          </div>
-
-          <div>
-            <p className="text-sm text-gray-500">
-              ID Client
-            </p>
-
-            <p className="font-semibold text-gray-900 break-all">
-              {user?.id || "Chargement..."}
-            </p>
-          </div>
-
-        </div>
-
-        {/* STATISTIQUES CLIENT */}
-
-<div className="grid grid-cols-2 gap-4 mb-8">
-
-  <div className="bg-purple-50 rounded-2xl p-5 text-center">
-
-    <p className="text-sm text-gray-500">
-      Nombre de commandes
+    <p className="text-sm text-gray-500 mt-1">
+      Vos coordonnées enregistrées
     </p>
+  </div>
 
-    <p className="text-3xl font-bold text-purple-700">
-      {commandes.length}
-    </p>
+  <div className="border-t border-purple-100">
+
+    {/* Nom */}
+    <div className="py-4 border-b border-gray-100">
+      <div className="flex items-center gap-2 text-gray-500">
+        <User className="w-5 h-5 text-purple-600" />
+        <span>Nom</span>
+      </div>
+
+      <p className="mt-2 text-left font-bold text-gray-900">
+        {client?.nom}
+      </p>
+    </div>
+
+    {/* Email */}
+    <div className="py-4 border-b border-gray-100">
+      <div className="flex items-center gap-2 text-gray-500">
+        <Mail className="w-5 h-5 text-purple-600" />
+        <span>Email</span>
+      </div>
+
+      <p className="mt-2 text-left text-gray-900 break-words">
+        {client?.email}
+      </p>
+    </div>
+
+    {/* Téléphone */}
+    <div className="py-4 border-b border-gray-100">
+      <div className="flex items-center gap-2 text-gray-500">
+        <Phone className="w-5 h-5 text-purple-600" />
+        <span>Téléphone</span>
+      </div>
+
+      <p className="mt-2 text-left text-gray-900">
+        {client?.telephone}
+      </p>
+    </div>
+
+    {/* Adresse */}
+    <div className="py-4 border-b border-gray-100">
+      <div className="flex items-center gap-2 text-gray-500">
+        <MapPin className="w-5 h-5 text-purple-600" />
+        <span>Adresse</span>
+      </div>
+
+      <p className="mt-2 text-left text-gray-900 text-[15px] leading-6">
+        {client?.adresse}
+      </p>
+    </div>
+
+    {/* Ville */}
+    <div className="py-4 border-b border-gray-100">
+      <div className="flex items-center gap-2 text-gray-500">
+        <Building2 className="w-5 h-5 text-purple-600" />
+        <span>Ville</span>
+      </div>
+
+      <p className="mt-2 text-left text-gray-900">
+        {client?.ville}
+      </p>
+    </div>
+
+    {/* Code postal */}
+    <div className="py-4 border-b border-gray-100">
+      <div className="flex items-center gap-2 text-gray-500">
+        <Mailbox className="w-5 h-5 text-purple-600" />
+        <span>Code postal</span>
+      </div>
+
+      <p className="mt-2 text-left text-gray-900">
+        {client?.code_postal}
+      </p>
+    </div>
+
+    {/* ID Client */}
+    <div className="py-4">
+      <div className="flex items-center gap-2 text-gray-500">
+        <BadgeInfo className="w-5 h-5 text-purple-600" />
+        <span>ID Client</span>
+      </div>
+
+      <p className="mt-2 text-left text-xs font-mono text-gray-400 break-all">
+        {user?.id}
+      </p>
+    </div>
 
   </div>
 
-  <div className="bg-purple-50 rounded-2xl p-5 text-center">
+</div>
 
-    <p className="text-sm text-gray-500">
+ {/* =========================
+      STATISTIQUES CLIENT
+     ========================= */}
+
+<div className="grid grid-cols-2 gap-5 mt-8">
+
+  {/* Nombre de commandes */}
+  <div className="bg-gradient-to-br from-white to-purple-50 border border-purple-100 rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 text-center">
+
+    <div className="text-2xl mb-2">
+      📦
+    </div>
+
+    <p className="text-sm text-gray-500 font-medium">
+      Nombre de commandes
+    </p>
+
+    <p className="mt-1 text-2xl font-bold text-purple-700">
+      {commandes.length}
+   </p>
+
+  </div>
+
+  {/* Total dépensé */}
+  <div className="bg-gradient-to-br from-white to-purple-50 border border-purple-100 rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 text-center">
+
+    <div className="text-2xl mb-2">
+      💳
+    </div>
+
+    <p className="text-sm text-gray-500 font-medium">
       Total dépensé
     </p>
 
-    <p className="text-3xl font-bold text-purple-700">
+    <p className="mt-1 text-2xl font-bold text-purple-700 whitespace-nowrap">
 
-      {commandes
-        .reduce(
-          (total, commande) =>
-            total + Number(commande.total),
-          0
-        )
-        .toFixed(2)} €
+  {commandes
+    .reduce(
+      (total, commande) =>
+        total + Number(commande.total),
+      0
+    )
+    .toFixed(2)} €
 
-    </p>
+</p>
 
   </div>
 
 </div>
 
         {/* HISTORIQUE COMMANDES */}
-        <div className="bg-purple-50 rounded-2xl p-5 mb-8 text-left">
+        <div className="bg-purple-50 rounded-2xl p-5 mt-8 text-left">
 
           <p className="font-semibold text-purple-800 mb-4">
             📦 Historique des commandes
@@ -172,14 +286,14 @@ export default function ComptePage() {
 
               {commandes.map((commande) => (
 
-                <div
-                  key={commande.id}
-                  className="bg-white rounded-xl p-4 shadow-sm"
-                >
+               <div
+               key={commande.id}
+               className="bg-white rounded-2xl p-5 shadow-md hover:shadow-lg transition-all duration-300"
+               >
 
-                  <p className="font-semibold text-gray-900">
-                    Commande #{commande.id}
-                  </p>
+                 <p className="font-bold text-xl text-gray-900 mb-1">
+                   📦 Commande #{commande.id}
+                 </p>
 
                   <p className="text-sm text-gray-500">
                     {new Date(
@@ -256,7 +370,7 @@ export default function ComptePage() {
         {/* LOGOUT */}
         <button
           onClick={handleLogout}
-          className="w-full bg-red-500 hover:bg-red-600 text-white py-3 rounded-2xl font-semibold transition"
+          className="mt-8 w-full bg-red-500 hover:bg-red-600 text-white py-3 rounded-2xl font-semibold transition"
         >
           Déconnexion
         </button>

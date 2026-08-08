@@ -54,6 +54,16 @@ export default function LoginPage() {
           required
         />
 
+        <div className="text-right mb-4">
+        <button
+         type="button"
+         onClick={() => router.push("/mot-de-passe-oublie")}
+         className="text-sm text-purple-600 hover:text-purple-700 hover:underline"
+        >
+        Mot de passe oublié ?
+       </button>
+      </div>
+
         <button
           type="submit"
           className="w-full bg-black text-white p-3 rounded-lg hover:opacity-90"

@@ -28,6 +28,8 @@ export default function ComptePage() {
 
   const [commandes, setCommandes] = useState<Commande[]>([]);
   const [client, setClient] = useState<any>(null);
+  const [editMode, setEditMode] = useState(false);
+  const [editClient, setEditClient] = useState<any>(null);
 
   const router = useRouter();
 
@@ -79,6 +81,43 @@ setClient(clientData);
     router.push("/");
   };
 
+  // ==========================
+// ENREGISTRER LES INFORMATIONS CLIENT
+// ==========================
+const handleSaveClient = async () => {
+   console.log("🟣 BOUTON ENREGISTRER CLIQUÉ");
+  if (!user || !editClient) return;
+    console.log("🟢 DONNÉES À ENREGISTRER :", editClient);
+  try {
+    const { data, error } = await supabase
+      .from("clients")
+      .update({
+        nom: editClient.nom,
+        telephone: editClient.telephone,
+        adresse: editClient.adresse,
+        code_postal: editClient.code_postal,
+        ville: editClient.ville,
+        updated_at: new Date().toISOString(),
+      })
+      .eq("user_id", user.id)
+      .select()
+      .single();
+      console.log("🔵 RÉPONSE SUPABASE :", { data, error });
+
+    if (error) {
+      console.error("Erreur mise à jour client :", error);
+      return;
+    }
+
+    setClient(data);
+    setEditClient(data);
+    setEditMode(false);
+
+  } catch (error) {
+    console.error("Erreur enregistrement :", error);
+  }
+};
+
   return (
     <div className="min-h-screen bg-gray-100 flex justify-center px-4 py-10">
 
@@ -111,110 +150,295 @@ setClient(clientData);
 
       </div>
 
-      {/* ==========================
-          INFORMATIONS PERSONNELLES
-          ========================== */}
+    {/* ==========================
+    INFORMATIONS PERSONNELLES
+    ========================== */}
 
-   <div className="bg-white rounded-3xl border border-purple-100 shadow-lg p-6 hover:shadow-xl transition-all duration-300">
+<div className="bg-white rounded-3xl border border-purple-100 shadow-md p-6">
 
-  <div className="mb-6">
-    <h3 className="text-lg font-bold text-purple-700">
-      Informations personnelles
-    </h3>
+  {editMode ? (
 
-    <p className="text-sm text-gray-500 mt-1">
-      Vos coordonnées enregistrées
-    </p>
-  </div>
+    /* ==========================
+       MODE MODIFICATION
+       ========================== */
 
-  <div className="border-t border-purple-100">
+    <div>
 
-    {/* Nom */}
-    <div className="py-4 border-b border-gray-100">
-      <div className="flex items-center gap-2 text-gray-500">
-        <User className="w-5 h-5 text-purple-600" />
-        <span>Nom</span>
+      <div className="flex items-center gap-3 mb-6">
+        <div className="w-10 h-10 rounded-full bg-purple-600 text-white flex items-center justify-center">
+          ✏️
+        </div>
+
+        <div>
+          <p className="font-bold text-gray-900">
+            Modifier mes informations
+          </p>
+
+          <p className="text-sm text-gray-500">
+            Modifiez vos coordonnées
+          </p>
+        </div>
       </div>
 
-      <p className="mt-2 text-left font-bold text-gray-900">
-        {client?.nom}
-      </p>
-    </div>
+      {/* Nom */}
+      <div className="py-4 border-b border-gray-100">
+        <div className="flex items-center gap-2 text-gray-500 mb-2">
+          <User className="w-5 h-5 text-purple-600" />
+          <span>Nom</span>
+        </div>
 
-    {/* Email */}
-    <div className="py-4 border-b border-gray-100">
-      <div className="flex items-center gap-2 text-gray-500">
-        <Mail className="w-5 h-5 text-purple-600" />
-        <span>Email</span>
+        <input
+          type="text"
+          value={editClient?.nom || ""}
+          onChange={(e) =>
+            setEditClient({
+              ...editClient,
+              nom: e.target.value,
+            })
+          }
+          className="w-full border border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+        />
       </div>
 
-      <p className="mt-2 text-left text-gray-900 break-words">
-        {client?.email}
-      </p>
-    </div>
+      {/* Email */}
+      <div className="py-4 border-b border-gray-100">
+        <div className="flex items-center gap-2 text-gray-500 mb-2">
+          <Mail className="w-5 h-5 text-purple-600" />
+          <span>Email</span>
+        </div>
 
-    {/* Téléphone */}
-    <div className="py-4 border-b border-gray-100">
-      <div className="flex items-center gap-2 text-gray-500">
-        <Phone className="w-5 h-5 text-purple-600" />
-        <span>Téléphone</span>
+        <input
+          type="email"
+          value={editClient?.email || ""}
+          disabled
+          className="w-full bg-gray-100 border border-gray-200 rounded-xl px-4 py-2 text-gray-500 cursor-not-allowed"
+        />
+
+        <p className="text-xs text-gray-400 mt-2">
+          L'adresse email ne peut pas être modifiée ici.
+        </p>
       </div>
 
-      <p className="mt-2 text-left text-gray-900">
-        {client?.telephone}
-      </p>
-    </div>
+      {/* Téléphone */}
+      <div className="py-4 border-b border-gray-100">
+        <div className="flex items-center gap-2 text-gray-500 mb-2">
+          <Phone className="w-5 h-5 text-purple-600" />
+          <span>Téléphone</span>
+        </div>
 
-    {/* Adresse */}
-    <div className="py-4 border-b border-gray-100">
-      <div className="flex items-center gap-2 text-gray-500">
-        <MapPin className="w-5 h-5 text-purple-600" />
-        <span>Adresse</span>
+        <input
+          type="tel"
+          value={editClient?.telephone || ""}
+          onChange={(e) =>
+            setEditClient({
+              ...editClient,
+              telephone: e.target.value,
+            })
+          }
+          className="w-full border border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+        />
       </div>
 
-      <p className="mt-2 text-left text-gray-900 text-[15px] leading-6">
-        {client?.adresse}
-      </p>
-    </div>
+      {/* Adresse */}
+      <div className="py-4 border-b border-gray-100">
+        <div className="flex items-center gap-2 text-gray-500 mb-2">
+          <MapPin className="w-5 h-5 text-purple-600" />
+          <span>Adresse</span>
+        </div>
 
-    {/* Ville */}
-    <div className="py-4 border-b border-gray-100">
-      <div className="flex items-center gap-2 text-gray-500">
-        <Building2 className="w-5 h-5 text-purple-600" />
-        <span>Ville</span>
+        <input
+          type="text"
+          value={editClient?.adresse || ""}
+          onChange={(e) =>
+            setEditClient({
+              ...editClient,
+              adresse: e.target.value,
+            })
+          }
+          className="w-full border border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+        />
       </div>
 
-      <p className="mt-2 text-left text-gray-900">
-        {client?.ville}
-      </p>
-    </div>
+      {/* Ville */}
+      <div className="py-4 border-b border-gray-100">
+        <div className="flex items-center gap-2 text-gray-500 mb-2">
+          <Building2 className="w-5 h-5 text-purple-600" />
+          <span>Ville</span>
+        </div>
 
-    {/* Code postal */}
-    <div className="py-4 border-b border-gray-100">
-      <div className="flex items-center gap-2 text-gray-500">
-        <Mailbox className="w-5 h-5 text-purple-600" />
-        <span>Code postal</span>
+        <input
+          type="text"
+          value={editClient?.ville || ""}
+          onChange={(e) =>
+            setEditClient({
+              ...editClient,
+              ville: e.target.value,
+            })
+          }
+          className="w-full border border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+        />
       </div>
 
-      <p className="mt-2 text-left text-gray-900">
-        {client?.code_postal}
-      </p>
-    </div>
+      {/* Code postal */}
+      <div className="py-4">
+        <div className="flex items-center gap-2 text-gray-500 mb-2">
+          <Mailbox className="w-5 h-5 text-purple-600" />
+          <span>Code postal</span>
+        </div>
 
-    {/* ID Client */}
-    <div className="py-4">
-      <div className="flex items-center gap-2 text-gray-500">
-        <BadgeInfo className="w-5 h-5 text-purple-600" />
-        <span>ID Client</span>
+        <input
+          type="text"
+          value={editClient?.code_postal || ""}
+          onChange={(e) =>
+            setEditClient({
+              ...editClient,
+              code_postal: e.target.value,
+            })
+          }
+          className="w-full border border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+        />
       </div>
 
-      <p className="mt-2 text-left text-xs font-mono text-gray-400 break-all">
-        {user?.id}
-      </p>
+      {/* BOUTONS */}
+      <div className="flex flex-col sm:flex-row gap-3 mt-6">
+
+        <button
+          type="button"
+          onClick={() => {
+          setEditClient({ ...client });
+          setEditMode(false);
+          }}
+          className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 py-2 rounded-xl font-semibold transition"
+        >
+          Annuler
+        </button>
+
+        <button
+          type="button"
+          onClick={handleSaveClient}
+          className="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-xl font-semibold transition"
+        >
+          💾 Enregistrer
+        </button>
+
+      </div>
+
     </div>
 
-  </div>
+  ) : (
 
+    /* ==========================
+       MODE AFFICHAGE
+       ========================== */
+
+    <div>
+
+      <p className="text-sm text-gray-500 mt-1">
+        Vos coordonnées enregistrées
+      </p>
+
+      {/* Nom */}
+      <div className="py-4 border-b border-gray-100">
+        <div className="flex items-center gap-2 text-gray-500">
+          <User className="w-5 h-5 text-purple-600" />
+          <span>Nom</span>
+        </div>
+
+        <p className="mt-2 text-left font-bold text-gray-900">
+          {client?.nom}
+        </p>
+      </div>
+
+      {/* Email */}
+      <div className="py-4 border-b border-gray-100">
+        <div className="flex items-center gap-2 text-gray-500">
+          <Mail className="w-5 h-5 text-purple-600" />
+          <span>Email</span>
+        </div>
+
+        <p className="mt-2 text-left text-gray-900 break-words">
+          {client?.email}
+        </p>
+      </div>
+
+      {/* Téléphone */}
+      <div className="py-4 border-b border-gray-100">
+        <div className="flex items-center gap-2 text-gray-500">
+          <Phone className="w-5 h-5 text-purple-600" />
+          <span>Téléphone</span>
+        </div>
+
+        <p className="mt-2 text-left text-gray-900">
+          {client?.telephone}
+        </p>
+      </div>
+
+      {/* Adresse */}
+      <div className="py-4 border-b border-gray-100">
+        <div className="flex items-center gap-2 text-gray-500">
+          <MapPin className="w-5 h-5 text-purple-600" />
+          <span>Adresse</span>
+        </div>
+
+        <p className="mt-2 text-left text-gray-900 text-[15px] leading-6">
+          {client?.adresse}
+        </p>
+      </div>
+
+      {/* Ville */}
+      <div className="py-4 border-b border-gray-100">
+        <div className="flex items-center gap-2 text-gray-500">
+          <Building2 className="w-5 h-5 text-purple-600" />
+          <span>Ville</span>
+        </div>
+
+        <p className="mt-2 text-left text-gray-900">
+          {client?.ville}
+        </p>
+      </div>
+
+      {/* Code postal */}
+      <div className="py-4 border-b border-gray-100">
+        <div className="flex items-center gap-2 text-gray-500">
+          <Mailbox className="w-5 h-5 text-purple-600" />
+          <span>Code postal</span>
+        </div>
+
+        <p className="mt-2 text-left text-gray-900">
+          {client?.code_postal}
+        </p>
+      </div>
+
+      {/* ID Client */}
+      <div className="py-4">
+        <div className="flex items-center gap-2 text-gray-500">
+          <BadgeInfo className="w-5 h-5 text-purple-600" />
+          <span>ID Client</span>
+        </div>
+
+        <p className="mt-2 text-left text-xs font-mono text-gray-400 break-all">
+          {user?.id}
+        </p>
+      </div>
+
+    </div>
+
+  )}
+
+</div>
+
+{/* MODIFIER LES INFORMATIONS */}
+<div className="mt-4 w-full flex justify-center">
+  <button
+    type="button"
+    onClick={() => {
+      setEditClient({ ...client });
+      setEditMode(true);
+    }}
+    className="w-full max-w-[330px] bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-xl transition"
+  >
+    ✏️ Modifier mes informations
+  </button>
 </div>
 
  {/* =========================

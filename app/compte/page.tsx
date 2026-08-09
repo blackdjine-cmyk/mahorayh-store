@@ -51,7 +51,7 @@ export default function ComptePage() {
   .from("clients")
   .select("*")
   .eq("user_id", user.id)
-  .single();
+  .maybeSingle();
 
 setClient(clientData);
 
@@ -88,8 +88,18 @@ const handleSaveClient = async () => {
    console.log("🟣 BOUTON ENREGISTRER CLIQUÉ");
   if (!user || !editClient) return;
     console.log("🟢 DONNÉES À ENREGISTRER :", editClient);
-  try {
-    const { data, error } = await supabase
+try {
+  const { data: existingClient } = await supabase
+    .from("clients")
+    .select("*")
+    .eq("user_id", user.id)
+    .maybeSingle();
+
+  let data;
+  let error;
+
+  if (existingClient) {
+    const result = await supabase
       .from("clients")
       .update({
         nom: editClient.nom,
@@ -97,25 +107,50 @@ const handleSaveClient = async () => {
         adresse: editClient.adresse,
         code_postal: editClient.code_postal,
         ville: editClient.ville,
+        pays: editClient.pays,
         updated_at: new Date().toISOString(),
       })
       .eq("user_id", user.id)
       .select()
       .single();
-      console.log("🔵 RÉPONSE SUPABASE :", { data, error });
 
-    if (error) {
-      console.error("Erreur mise à jour client :", error);
-      return;
-    }
+    data = result.data;
+    error = result.error;
+  } else {
+    const result = await supabase
+      .from("clients")
+      .insert({
+        user_id: user.id,
+        nom: editClient.nom,
+        email: user.email,
+        telephone: editClient.telephone,
+        adresse: editClient.adresse,
+        code_postal: editClient.code_postal,
+        ville: editClient.ville,
+        pays: editClient.pays,
+        updated_at: new Date().toISOString(),
+      })
+      .select()
+      .single();
 
-    setClient(data);
-    setEditClient(data);
-    setEditMode(false);
-
-  } catch (error) {
-    console.error("Erreur enregistrement :", error);
+    data = result.data;
+    error = result.error;
   }
+
+  console.log("🔵 RÉPONSE SUPABASE :", { data, error });
+
+  if (error) {
+    console.error("Erreur enregistrement client :", error);
+    return;
+  }
+
+  setClient(data);
+  setEditClient(data);
+  setEditMode(false);
+
+} catch (error) {
+  console.error("Erreur enregistrement :", error);
+}
 };
 
   return (
@@ -299,6 +334,26 @@ const handleSaveClient = async () => {
         />
       </div>
 
+      {/* Pays */}
+      <div className="py-4">
+        <div className="flex items-center gap-2 text-gray-500 mb-2">
+         <MapPin className="w-5 h-5 text-purple-600" />
+         <span>Pays</span>
+        </div>
+
+        <input
+          type="text"
+          value={editClient?.pays || ""}
+          onChange={(e) =>
+            setEditClient({
+              ...editClient,
+              pays: e.target.value,
+            })
+          }
+          className="w-full border border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+        />
+      </div>
+
       {/* BOUTONS */}
       <div className="flex flex-col sm:flex-row gap-3 mt-6">
 
@@ -324,108 +379,128 @@ const handleSaveClient = async () => {
       </div>
 
     </div>
+) : (
 
-  ) : (
-
-    /* ==========================
+  <>
+    {/* ==========================
        MODE AFFICHAGE
-       ========================== */
+       ========================== */}
 
-    <div>
+    {client ? (
+      <div>
 
-      <p className="text-sm text-gray-500 mt-1">
-        Vos coordonnées enregistrées
-      </p>
+        <p className="text-sm text-gray-500 mt-1">
+          Vos coordonnées enregistrées
+        </p>
 
-      {/* Nom */}
-      <div className="py-4 border-b border-gray-100">
-        <div className="flex items-center gap-2 text-gray-500">
-          <User className="w-5 h-5 text-purple-600" />
-          <span>Nom</span>
+        {/* Nom */}
+        <div className="py-4 border-b border-gray-100">
+          <div className="flex items-center gap-2 text-gray-500">
+            <User className="w-5 h-5 text-purple-600" />
+            <span>Nom</span>
+          </div>
+
+          <p className="mt-2 text-left font-bold text-gray-900">
+            {client?.nom}
+          </p>
         </div>
 
-        <p className="mt-2 text-left font-bold text-gray-900">
-          {client?.nom}
-        </p>
-      </div>
+        {/* Email */}
+        <div className="py-4 border-b border-gray-100">
+          <div className="flex items-center gap-2 text-gray-500">
+            <Mail className="w-5 h-5 text-purple-600" />
+            <span>Email</span>
+          </div>
 
-      {/* Email */}
-      <div className="py-4 border-b border-gray-100">
-        <div className="flex items-center gap-2 text-gray-500">
-          <Mail className="w-5 h-5 text-purple-600" />
-          <span>Email</span>
+          <p className="mt-2 text-left text-gray-900 break-words">
+            {client?.email}
+          </p>
         </div>
 
-        <p className="mt-2 text-left text-gray-900 break-words">
-          {client?.email}
-        </p>
-      </div>
+        {/* Téléphone */}
+        <div className="py-4 border-b border-gray-100">
+          <div className="flex items-center gap-2 text-gray-500">
+            <Phone className="w-5 h-5 text-purple-600" />
+            <span>Téléphone</span>
+          </div>
 
-      {/* Téléphone */}
-      <div className="py-4 border-b border-gray-100">
-        <div className="flex items-center gap-2 text-gray-500">
-          <Phone className="w-5 h-5 text-purple-600" />
-          <span>Téléphone</span>
+          <p className="mt-2 text-left text-gray-900">
+            {client?.telephone}
+          </p>
         </div>
 
-        <p className="mt-2 text-left text-gray-900">
-          {client?.telephone}
-        </p>
-      </div>
+        {/* Adresse */}
+        <div className="py-4 border-b border-gray-100">
+          <div className="flex items-center gap-2 text-gray-500">
+            <MapPin className="w-5 h-5 text-purple-600" />
+            <span>Adresse</span>
+          </div>
 
-      {/* Adresse */}
-      <div className="py-4 border-b border-gray-100">
-        <div className="flex items-center gap-2 text-gray-500">
+          <p className="mt-2 text-left text-gray-900 text-[15px] leading-6">
+            {client?.adresse}
+          </p>
+        </div>
+
+        {/* Ville */}
+        <div className="py-4 border-b border-gray-100">
+          <div className="flex items-center gap-2 text-gray-500">
+            <Building2 className="w-5 h-5 text-purple-600" />
+            <span>Ville</span>
+          </div>
+
+          <p className="mt-2 text-left text-gray-900">
+            {client?.ville}
+          </p>
+        </div>
+
+        {/* Code postal */}
+        <div className="py-4 border-b border-gray-100">
+          <div className="flex items-center gap-2 text-gray-500">
+            <Mailbox className="w-5 h-5 text-purple-600" />
+            <span>Code postal</span>
+          </div>
+
+          <p className="mt-2 text-left text-gray-900">
+            {client?.code_postal}
+          </p>
+        </div>
+
+        {/* Pays */}
+        <div className="py-4 border-b border-gray-100">
+         <div className="flex items-center gap-2 text-gray-500 mb-2">
           <MapPin className="w-5 h-5 text-purple-600" />
-          <span>Adresse</span>
+          <span>Pays</span>
         </div>
 
-        <p className="mt-2 text-left text-gray-900 text-[15px] leading-6">
-          {client?.adresse}
-        </p>
+       <p className="text-left text-gray-900">
+         {client?.pays}
+       </p>
       </div>
 
-      {/* Ville */}
-      <div className="py-4 border-b border-gray-100">
-        <div className="flex items-center gap-2 text-gray-500">
-          <Building2 className="w-5 h-5 text-purple-600" />
-          <span>Ville</span>
+        {/* ID Client */}
+        <div className="py-4">
+          <div className="flex items-center gap-2 text-gray-500">
+            <BadgeInfo className="w-5 h-5 text-purple-600" />
+            <span>ID Client</span>
+          </div>
+
+          <p className="mt-2 text-left text-xs font-mono text-gray-400 break-all">
+            {user?.id}
+          </p>
         </div>
 
-        <p className="mt-2 text-left text-gray-900">
-          {client?.ville}
+      </div>
+    ) : (
+      <div className="py-8 text-center">
+        <p className="text-gray-600">
+          Votre profil client n'est pas encore configuré.
         </p>
       </div>
+    )}
 
-      {/* Code postal */}
-      <div className="py-4 border-b border-gray-100">
-        <div className="flex items-center gap-2 text-gray-500">
-          <Mailbox className="w-5 h-5 text-purple-600" />
-          <span>Code postal</span>
-        </div>
+  </>
 
-        <p className="mt-2 text-left text-gray-900">
-          {client?.code_postal}
-        </p>
-      </div>
-
-      {/* ID Client */}
-      <div className="py-4">
-        <div className="flex items-center gap-2 text-gray-500">
-          <BadgeInfo className="w-5 h-5 text-purple-600" />
-          <span>ID Client</span>
-        </div>
-
-        <p className="mt-2 text-left text-xs font-mono text-gray-400 break-all">
-          {user?.id}
-        </p>
-      </div>
-
-    </div>
-
-  )}
-
-</div>
+)}
 
 {/* MODIFIER LES INFORMATIONS */}
 <div className="mt-4 w-full flex justify-center">
@@ -602,5 +677,6 @@ const handleSaveClient = async () => {
       </div>
 
     </div>
+  </div>
   );
 }

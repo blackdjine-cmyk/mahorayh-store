@@ -172,6 +172,23 @@ export default function EditPage() {
     setUploading(false);
   };
 
+// 🔄 RÉORGANISER LES PHOTOS
+const moveImage = (index: number, direction: "up" | "down") => {
+  const newImages = [...images];
+
+  const newIndex =
+    direction === "up" ? index - 1 : index + 1;
+
+  if (newIndex < 0 || newIndex >= newImages.length) return;
+
+  [newImages[index], newImages[newIndex]] = [
+    newImages[newIndex],
+    newImages[index],
+  ];
+
+  setImages(newImages);
+};
+
   const fetchReviews = async (productId: string) => {
 
   const { data, error } = await supabase
@@ -600,6 +617,7 @@ return;
          >
          ×
         </button>
+
        </div>
       )}
         </div>
@@ -637,9 +655,41 @@ return;
          ✕
        </button>
 
+     {/* RÉORGANISER */}
+     <div className="absolute top-1 left-1 flex gap-1">
+
+  <button
+    type="button"
+    onClick={() => moveImage(index, "up")}
+    disabled={index === 0}
+    className="w-6 h-6 rounded bg-gray-700 text-white text-xs disabled:opacity-30"
+  >
+    ↑
+  </button>
+
+  <button
+    type="button"
+    onClick={() => moveImage(index, "down")}
+    disabled={index === images.length - 1}
+    className="w-6 h-6 rounded bg-gray-700 text-white text-xs disabled:opacity-30"
+  >
+    ↓
+  </button>
+
+</div>
+
        <button
        type="button"
-       onClick={() => setImage(img)}
+       onClick={() => {
+       setImage(img);
+
+       setImages((prev) => {
+       const newImages = [...prev];
+       const [selectedImage] = newImages.splice(index, 1);
+       newImages.unshift(selectedImage);
+       return newImages;
+       });
+      }}
        className={`absolute bottom-1 left-1 px-2 py-1 rounded text-[10px] font-semibold transition ${
        image === img
        ? "bg-green-600 text-white"

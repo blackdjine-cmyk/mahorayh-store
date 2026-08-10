@@ -4,6 +4,6 @@ export default function robots() {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://mahorayhbeaute.net/sitemap.xml",
+    sitemap: "https://www.mahorayh-beaute.fr/sitemap.xml",
   };
 }

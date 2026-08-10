@@ -4,7 +4,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 
 export const metadata = {
-  metadataBase: new URL("https://mahorayhbeaute.net"),
+  metadataBase: new URL("https://www.mahorayh-beaute.fr"),
 
   title: "Mahorayh Beauté | Soins naturels & cosmétiques pour une peau éclatante",
 
@@ -34,7 +34,7 @@ export const metadata = {
     title: "Mahorayh Beauté",
     description:
       "Soins naturels & cosmétiques premium pour une peau éclatante.",
-    url: "https://mahorayhbeaute.net",
+    url: "https://www.mahorayh-beaute.fr",
     siteName: "Mahorayh Beauté",
     locale: "fr_FR",
     type: "website",

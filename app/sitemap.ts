@@ -1,37 +1,37 @@
 export default function sitemap() {
   return [
     {
-      url: "https://mahorayhbeaute.net",
+      url: "https://www.mahorayh-beaute.fr",
       lastModified: new Date(),
     },
     {
-      url: "https://mahorayhbeaute.net/produit",
+      url: "https://www.mahorayh-beaute.fr/produit",
       lastModified: new Date(),
     },
     {
-      url: "https://mahorayhbeaute.net/panier",
+      url: "https://www.mahorayh-beaute.fr/panier",
       lastModified: new Date(),
     },
     {
-      url: "https://mahorayhbeaute.net/resultats",
+      url: "https://www.mahorayh-beaute.fr/resultats",
       lastModified: new Date(),
     },
     {
-      url: "https://mahorayhbeaute.net/success",
+      url: "https://www.mahorayh-beaute.fr/success",
       lastModified: new Date(),
     },
 
     // Pages juridiques
     {
-      url: "https://mahorayhbeaute.net/mentions-legales",
+      url: "https://www.mahorayh-beaute.fr/mentions-legales",
       lastModified: new Date(),
     },
     {
-      url: "https://mahorayhbeaute.net/conditions-generales-de-vente",
+      url: "https://www.mahorayh-beaute.fr/conditions-generales-de-vente",
       lastModified: new Date(),
     },
     {
-      url: "https://mahorayhbeaute.net/politique-de-confidentialite",
+      url: "https://www.mahorayh-beaute.fr/politique-de-confidentialite",
       lastModified: new Date(),
     },
   ];

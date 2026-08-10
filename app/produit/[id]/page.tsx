@@ -64,6 +64,17 @@ export default async function ProduitPage({
   const { id } = await params;
   const product = await getProduct(id);
 
+  const { data: reviews } = await supabase
+  .from("reviews")
+  .select("note")
+  .eq("product_id", product?.id);
+
+const reviewCount = reviews?.length ?? 0;
+const ratingValue =
+  reviewCount > 0
+    ? reviews!.reduce((sum, review) => sum + review.note, 0) / reviewCount
+    : 0;
+
   return (
   <>
     {product && (
@@ -80,10 +91,15 @@ export default async function ProduitPage({
             image: product.image ? [product.image] : [],
             sku: String(product.id),
             brand: {
-              "@type": "Brand",
-              name: "Mahorayh Beauté",
+            "@type": "Brand",
+             name: "Mahorayh Beauté",
             },
-            offers: {
+             aggregateRating: {
+             "@type": "AggregateRating",
+             ratingValue: ratingValue,
+             reviewCount: reviewCount,
+            },
+             offers: {
               "@type": "Offer",
               price: product.price,
               priceCurrency: "EUR",

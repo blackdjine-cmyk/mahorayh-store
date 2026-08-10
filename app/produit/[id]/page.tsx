@@ -94,11 +94,15 @@ const ratingValue =
             "@type": "Brand",
              name: "Mahorayh Beauté",
             },
+             ...(reviewCount > 0
+            ? {
              aggregateRating: {
              "@type": "AggregateRating",
              ratingValue: ratingValue,
              reviewCount: reviewCount,
             },
+             }
+             : {}),
              offers: {
               "@type": "Offer",
               price: product.price,

@@ -93,7 +93,7 @@ doc.addImage(
   doc.setFontSize(10);
   doc.text("mahorayhbeaute@gmail.com", 85, 40);
 
-  doc.text("www.mahorayhbeaute.com", 85, 46);
+  doc.text("www.mahorayh-beaute.fr", 85, 46);
 
   doc.setDrawColor(111, 66, 193);
   doc.setLineWidth(0.8);
@@ -204,11 +204,9 @@ doc.addImage(
   doc.setFontSize(12);
 
   commande.produits?.forEach((item: any) => {
-    const nomProduit = item.name
-  .replace(/✨/g, "")
-  .replace(/⭐/g, "")
-  .replace(/🌟/g, "")
-  .replace(/💎/g, "")
+   
+    const nomProduit = String(item.name ?? "")
+  .replace(/[\p{Extended_Pictographic}\uFE0F\u200D]/gu, "")
   .trim();
 
 doc.text(

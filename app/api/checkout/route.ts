@@ -1,5 +1,5 @@
 import Stripe from "stripe";
-import { supabase } from "@/lib/supabase";
+
 import { Resend } from "resend";
 import { createServerClient } from "@supabase/ssr";
 import { createClient } from "@supabase/supabase-js";
@@ -138,7 +138,7 @@ if (userId) {
   const {
   data: clientData,
   error: clientError,
-} = await supabase
+} = await supabaseAdmin
     .from("clients")
     .upsert(
       {

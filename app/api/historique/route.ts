@@ -1,18 +1,42 @@
 import { NextResponse } from "next/server";
-import { supabase } from "@/lib/supabase";
+import { createServerClient } from "@supabase/ssr";
+import { cookies } from "next/headers";
 
 export async function GET(req: Request) {
   try {
-    const email = new URL(req.url).searchParams.get("email");
+    const cookieStore = await cookies();
 
-    if (!email) {
+    const supabaseServer = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        cookies: {
+          getAll() {
+            return cookieStore.getAll();
+          },
+          setAll(cookiesToSet) {
+            try {
+              cookiesToSet.forEach(({ name, value, options }) =>
+                cookieStore.set(name, value, options)
+              );
+            } catch {}
+          },
+        },
+      }
+    );
+
+    const {
+      data: { user },
+    } = await supabaseServer.auth.getUser();
+
+    if (!user) {
       return NextResponse.json([]);
     }
 
-    const { data, error } = await supabase
+    const { data, error } = await supabaseServer
       .from("commandes")
       .select("*")
-      .eq("email", email)
+      .eq("user_id", user.id)
       .order("created_at", {
         ascending: false,
       });

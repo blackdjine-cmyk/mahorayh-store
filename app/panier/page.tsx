@@ -135,6 +135,8 @@ await fetch("/api/client", {
 });
 
   try {
+    const { data: { session } } = await supabase.auth.getSession();
+    console.log("SESSION CHECKOUT :", session);
     const res = await fetch("/api/checkout", {
       method: "POST",
       headers: {

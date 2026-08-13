@@ -1,7 +1,16 @@
 import Stripe from "stripe";
 import { supabase } from "@/lib/supabase";
 import { Resend } from "resend";
+import { createServerClient } from "@supabase/ssr";
+import { createClient } from "@supabase/supabase-js";
+import { cookies } from "next/headers";
+
 const resend = new Resend(process.env.RESEND_API_KEY);
+
+const supabaseAdmin = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SECRET_KEY!
+);
 
 // 🔐 Initialisation Stripe
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
@@ -11,6 +20,25 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
 // 🔥 Route POST
 export async function POST(req: Request) {
   try {
+    const cookieStore = await cookies();
+    const supabaseServer = createServerClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+  {
+    cookies: {
+      getAll() {
+        return cookieStore.getAll();
+      },
+      setAll(cookiesToSet) {
+        try {
+          cookiesToSet.forEach(({ name, value, options }) =>
+            cookieStore.set(name, value, options)
+          );
+        } catch {}
+      },
+    },
+  }
+);
     console.log("CHECKOUT API APPELÉE");
     const {
   cart,
@@ -25,9 +53,9 @@ export async function POST(req: Request) {
 } = await req.json();
 console.log("USER ID REÇU :", userId);
 
-   const {
+const {
   data: { user },
-} = await supabase.auth.getUser();
+} = await supabaseServer.auth.getUser();
 
 console.log("USER COMPLET :", user);
 console.log("USER ID :", user?.id);
@@ -59,7 +87,7 @@ console.log("VILLE REÇUE :", ville);
 
 const invoiceNumber =
   `MB-${new Date().getFullYear()}-${Date.now()}`;
-const { data, error } = await supabase
+const { data, error } = await supabaseAdmin
   .from("commandes")
  .insert([
   
@@ -97,6 +125,13 @@ const { data, error } = await supabase
 
 console.log("SUPABASE DATA :", data);
 console.log("SUPABASE ERROR :", error);
+
+if (error) {
+  return Response.json(
+    { error: error.message },
+    { status: 500 }
+  );
+}
 
 // 💾 Création / mise à jour du client
 if (userId) {

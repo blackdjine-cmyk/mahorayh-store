@@ -46,7 +46,7 @@ const handleLogout = async () => {
 };
 
 const handleBuyClick = () => {
-  if (pathname === "/produit") {
+  if (pathname.startsWith("/produit")) {
     document.getElementById("achat")?.scrollIntoView({
       behavior: "smooth",
       block: "start",

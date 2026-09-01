@@ -62,31 +62,57 @@ console.log("USER ID :", user?.id);
 
    console.log("CART CHECKOUT :", cart);
 
-    // 🛒 Transformer le panier pour Stripe
-    const line_items = cart.map((item: any) => ({
-      price_data: {
-        currency: "eur",
-        product_data: {
-          name: item.name,
-        },
-        unit_amount: Math.round(item.price * 100),
-      },
-      quantity: item.quantity,
-    }));
+   const total = cart.reduce(
+  (acc: number, item: any) =>
+    acc + item.price * item.quantity,
+  0
+) + shippingCost;
 
+   // 🛒 Transformer le panier pour Stripe
+const line_items = cart.map((item: any) => ({
+  price_data: {
+    currency: "eur",
+    product_data: {
+      name: item.name,
+    },
+    unit_amount: Math.round(item.price * 100),
+  },
+  quantity: item.quantity,
+}));
+
+// 🚚 Ajouter les frais de livraison à Stripe
+if (shippingCost > 0) {
+  line_items.push({
+    price_data: {
+      currency: "eur",
+      product_data: {
+        name: "Livraison",
+      },
+      unit_amount: Math.round(shippingCost * 100),
+    },
+    quantity: 1,
+  });
+}
+
+// 🧾 Numéro unique de commande
+const invoiceNumber =
+  `MB-${new Date().getFullYear()}-${Date.now()}`;
     // 💳 Créer session Stripe
 const session = await stripe.checkout.sessions.create({
   payment_method_types: ["card"],
   line_items,
   mode: "payment",
+
+  metadata: {
+  invoice_number: invoiceNumber,
+},
+
   success_url: `${req.headers.get("origin")}/success`,
   cancel_url: `${req.headers.get("origin")}/panier`,
 });
 // 💾 Sauvegarde commande (JSON)
 console.log("VILLE REÇUE :", ville);
 
-const invoiceNumber =
-  `MB-${new Date().getFullYear()}-${Date.now()}`;
 const { data, error } = await supabaseAdmin
   .from("commandes")
  .insert([
@@ -103,7 +129,7 @@ const { data, error } = await supabaseAdmin
   shipping_cost: shippingCost,
 
   invoice_number: invoiceNumber,
-  invoice_status: "paid",
+   invoice_status: "pending",
 
    total:
   cart.reduce(
@@ -160,110 +186,6 @@ if (userId) {
 console.log("CLIENT ERROR :", clientError);
 }
 
-const emailResend = await resend.emails.send({
-  from: "onboarding@resend.dev",
-  to: "blackdjine@gmail.com",
-  subject: "Nouvelle commande Mahorayh Beauté",
-
-  html: `
-    <h2>Nouvelle commande reçue</h2>
-
-    <p><strong>Client :</strong> ${nom}</p>
-    <p><strong>Email :</strong> ${email}</p>
-    <p><strong>Téléphone :</strong> ${telephone}</p>
-    <p><strong>Code postal :</strong> ${codePostal}</p>
-    <p><strong>Adresse :</strong> ${adresse}</p>
-
-    <hr />
-
-    <p><strong>Total :</strong> ${cart.reduce(
-      (acc: number, item: any) =>
-        acc + item.price * item.quantity,
-      0
-    )} €</p>
-  `,
-});
-
-console.log("EMAIL RESEND :", emailResend);
-
-// 📩 EMAIL CLIENT
-const clientEmail = await resend.emails.send({
-  from: "onboarding@resend.dev",
-  to: email,
-
-  subject: "Confirmation de votre commande Mahorayh Beauté 💜",
-
-  html: `
-    <div style="font-family: Arial, sans-serif; padding: 20px;">
-
-      <h1 style="color:#7e22ce;">
-        Merci pour votre commande 💜
-      </h1>
-
-      <p>
-        Bonjour <strong>${nom}</strong>,
-      </p>
-
-      <p>
-        Votre commande a bien été reçue par Mahorayh Beauté.
-      </p>
-
-      <hr />
-
-      <h2>📦 Résumé de votre commande</h2>
-
-      ${cart
-        .map(
-          (item: any) => `
-            <div style="margin-bottom:15px;">
-
-              <p>
-                <strong>${item.name}</strong>
-              </p>
-
-              <p>
-                Quantité : ${item.quantity}
-              </p>
-
-              <p>
-                Prix : ${item.price} €
-              </p>
-
-            </div>
-          `
-        )
-        .join("")}
-
-      <hr />
-
-      <p>
-        <strong>Total :</strong>
-        ${cart.reduce(
-          (acc: number, item: any) =>
-            acc + item.price * item.quantity,
-          0
-        )} €
-      </p>
-
-      <br />
-
-      <p>
-        🚚 Votre commande sera préparée rapidement.
-      </p>
-
-      <p>
-        Merci pour votre confiance 💜
-      </p>
-
-      <h3 style="color:#7e22ce;">
-        Mahorayh Beauté
-      </h3>
-
-    </div>
-  `,
-});
-
-console.log("CLIENT EMAIL :", clientEmail);
     return Response.json({ url: session.url });
 
   } catch (error) {

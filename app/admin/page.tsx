@@ -43,10 +43,20 @@ export default function AdminPage() {
   const [ordersLoading, setOrdersLoading] = useState(false);
 
   // 🔐 LOGIN
-  const handleLogin = () => {
+ const handleLogin = async () => {
   const trimmedPassword = password.trim();
 
-  if (trimmedPassword === "admin123") {
+  const response = await fetch("/api/admin", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      password: trimmedPassword,
+    }),
+  });
+
+  if (response.ok) {
     setIsAuth(true);
     setPassword("");
     return;

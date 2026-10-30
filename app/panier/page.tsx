@@ -171,6 +171,76 @@ await fetch("/api/client", {
     );
   }
 };
+// 🅿️ PAIEMENT PAYPAL
+const handlePayPal = async () => {
+  if (cart.length === 0) {
+    setErrorMessage("Votre panier est vide");
+    return;
+  }
+
+  if (!nom || !email || !telephone || !codePostal || !ville || !adresse) {
+    setErrorMessage("Veuillez remplir tous les champs");
+    return;
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (!emailRegex.test(email)) {
+    setErrorMessage("Veuillez entrer une adresse e-mail valide");
+    return;
+  }
+
+  setErrorMessage("");
+  setIsLoading(true);
+
+  try {
+    await fetch("/api/client", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        user_id: userId,
+        nom,
+        email,
+        telephone,
+        adresse,
+        code_postal: codePostal,
+        ville,
+        pays: "France",
+      }),
+    });
+
+    const res = await fetch("/api/paypal", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        action: "create",
+        cart,
+        userId,
+        nom,
+        email,
+        telephone,
+        codePostal,
+        ville,
+        adresse,
+        shippingCost,
+      }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok || !data.url) {
+      throw new Error(data.error || "Impossible de lancer PayPal");
+    }
+
+    window.location.href = data.url;
+  } catch (error) {
+    console.error("Erreur PayPal :", error);
+    setErrorMessage(
+      error instanceof Error ? error.message : "Erreur lors du paiement PayPal"
+    );
+    setIsLoading(false);
+  }
+};
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
       <h1 className="text-4xl font-bold mb-8">
@@ -511,7 +581,15 @@ await fetch("/api/client", {
     : "bg-gradient-to-r from-fuchsia-500 to-purple-600 shadow-lg shadow-purple-300/40 hover:scale-[1.02] hover:shadow-xl hover:shadow-purple-400/50 active:scale-95"
 }`}
 >
-  {isLoading ? "⏳ Traitement..." : "💳 Passer au paiement"}
+  {isLoading ? "⏳ Traitement..." : "💳 Payer par carte bancaire"}
+</button>
+
+<button
+  onClick={handlePayPal}
+  disabled={isLoading}
+  className="w-full px-6 py-4 rounded-2xl font-semibold text-white bg-[#003087] hover:bg-[#001f5b] transition-all duration-300 disabled:bg-gray-400"
+>
+  Payer avec PayPal
 </button>
 
     <button

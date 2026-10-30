@@ -252,7 +252,10 @@ export async function POST(req: Request) {
         await ordersController.createOrder({
           body: {
             intent: CheckoutPaymentIntent.Capture,
-
+             applicationContext: {
+             returnUrl: "https://www.mahorayh-beaute.fr/paypal/return",
+             cancelUrl: "https://www.mahorayh-beaute.fr/panier?paypal=annule",
+            },
             purchaseUnits: [
               {
                 invoiceId: invoiceNumber,
@@ -354,10 +357,19 @@ export async function POST(req: Request) {
         );
       }
 
-      return Response.json({
+      const approveLink = paypalOrder.links?.find(
+      (link) => link.rel === "approve"
+      )?.href;
+
+     if (!approveLink) {
+     throw new Error("Lien d'approbation PayPal introuvable.");
+      }
+
+        return Response.json({
         id: paypalOrder.id,
         invoiceNumber,
-      });
+        url: approveLink,
+     });
     }
 
     // ==========================================
@@ -408,17 +420,40 @@ export async function POST(req: Request) {
           id: orderId,
         });
 
-      const paiement = captureResponse.result;
+     const paiement = captureResponse.result;
 
-      if (paiement.status !== "COMPLETED") {
-        return Response.json(
-          {
-            error: "Le paiement PayPal n'est pas confirmé.",
-            status: paiement.status,
-          },
-          { status: 402 }
-        );
-      }
+const capture = paiement.purchaseUnits?.[0]?.payments?.captures?.[0];
+
+const montantCapture = Number(capture?.amount?.value);
+const deviseCapture = capture?.amount?.currencyCode;
+
+const montantCommande = Number(commande.total);
+
+if (
+  paiement.status !== "COMPLETED" ||
+  capture?.status !== "COMPLETED" ||
+  deviseCapture !== "EUR" ||
+  !Number.isFinite(montantCapture) ||
+  !Number.isFinite(montantCommande) ||
+  Math.round(montantCapture * 100) !==
+    Math.round(montantCommande * 100)
+) {
+  console.error("Vérification du paiement PayPal échouée :", {
+    orderId,
+    status: paiement.status,
+    captureStatus: capture?.status,
+    montantCapture,
+    montantCommande,
+    deviseCapture,
+  });
+
+  return Response.json(
+    {
+      error: "Le paiement PayPal n'est pas confirmé ou son montant est incorrect.",
+    },
+    { status: 402 }
+  );
+}
 
       // Mettre à jour uniquement une commande en attente.
       const { data: commandePayee, error: updateError } =

@@ -248,6 +248,7 @@ export async function POST(req: Request) {
       const invoiceNumber = genererNumeroCommande();
 
       // Création de la commande chez PayPal.
+ 
       const paypalResponse =
         await ordersController.createOrder({
           body: {
@@ -261,9 +262,23 @@ export async function POST(req: Request) {
                 invoiceId: invoiceNumber,
 
                 amount: {
-                  currencyCode: "EUR",
-                  value: euros(total),
-                },
+                currencyCode: "EUR",
+                value: euros(total),
+                breakdown: {
+                itemTotal: {
+                currencyCode: "EUR",
+                value: euros(sousTotal),
+              },
+             ...(livraison > 0
+              ? {
+             shipping: {
+             currencyCode: "EUR",
+             value: euros(livraison),
+            },
+           }
+       : {}),
+      },
+      },
 
                 items: cart.map((item) => ({
                   name: item.name.substring(0, 127),
@@ -276,14 +291,7 @@ export async function POST(req: Request) {
                   category: ItemCategory.PhysicalGoods,
                 
                 })),
-
-                ...(livraison > 0
-                  ? {
-                      shipping: {
-                        options: [],
-                      },
-                    }
-                  : {}),
+    
               },
             ],
           },
